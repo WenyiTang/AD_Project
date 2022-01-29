@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,19 +12,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-public class Comment {
-	
+public class Session {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String caption;
-	@ManyToOne
-	private User author;
 	
-	public Comment(Integer id, String caption) {
-		super();
-		this.id=id;
-		this.caption = caption;
-	}
+	@OneToOne(mappedBy="session")
+	private User user;
 
 }
