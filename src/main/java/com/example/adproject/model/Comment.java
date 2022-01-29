@@ -1,11 +1,9 @@
 package com.example.adproject.model;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import javax.persistence.Entity;
-
-import com.example.adproject.helper.FeelingEnum;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Comment {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 }
