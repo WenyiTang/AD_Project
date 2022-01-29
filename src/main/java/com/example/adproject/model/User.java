@@ -31,8 +31,8 @@ public class User {
 	@Past
 	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private LocalDate dateOfBirth;
-	private Double height;
-	private Double weight;
+	private double height;
+	private double weight;
 	private String profilePic;
 	
 	@OneToMany(mappedBy = "author")
@@ -40,4 +40,19 @@ public class User {
 	
 	@OneToOne
 	private Session session;
+	
+	public User(Integer id, String username, String password, String name, String gender, LocalDate dateOfBirth, 
+			double height, double weight, String profilePic) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+		this.height = height;
+		this.weight = weight;
+		this.profilePic = profilePic;
+	
+	}
 }

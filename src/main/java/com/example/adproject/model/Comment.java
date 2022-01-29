@@ -20,5 +20,11 @@ public class Comment {
 	private String caption;
 	@ManyToOne
 	private User author;
+	
+	public Comment(Integer id, String caption) {
+		super();
+		this.id=id;
+		this.caption = caption;
+	}
 
 }
