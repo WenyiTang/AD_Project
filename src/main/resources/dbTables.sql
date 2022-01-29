@@ -40,11 +40,7 @@ CREATE TABLE foodDiaryApp.MealEntry (
 	PRIMARY KEY (mealentryid),
 	CONSTRAINT goalidfk
 		FOREIGN KEY (goalid) REFERENCES foodDiaryApp.Goal (goalid) ON DELETE NO ACTION ON UPDATE NO ACTION,
-	CONSTRAINT likeridfk
-		FOREIGN KEY (likerid) REFERENCES foodDiaryApp.User (userid) ON DELETE NO ACTION ON UPDATE NO ACTION,
 	CONSTRAINT authoridfk
 		FOREIGN KEY (authorid) REFERENCES foodDiaryApp.User (userid) ON DELETE NO ACTION ON UPDATE NO ACTION,
-	CONSTRAINT commentidfk
-		FOREIGN KEY (commentid) REFERENCES foodDiaryApp.Comment (commentid) ON DELETE NO ACTION ON UPDATE NO ACTION
 		
 );
