@@ -30,7 +30,7 @@ CREATE TABLE foodDiaryApp.MealEntry (
 	title VARCHAR NULL,
 	description VARCHAR NULL,
 	flagged BOOLEAN NULL,
-	feelings ENUM(...) NULL,
+	feelings ENUM('CRYING', 'PENSIVE', 'HAPPY', 'JOYFUL') NULL,
 	trackscore INTEGER NULL,
 	timestamp DATETIME NULL,
 	goalid INTEGER NOT NULL,
