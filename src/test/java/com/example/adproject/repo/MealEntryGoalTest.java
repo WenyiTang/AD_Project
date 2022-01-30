@@ -81,7 +81,7 @@ public class MealEntryGoalTest {
 		mealEntry1.setTrackScore(0);
 		mealEntry1.setTimeStamp(LocalDateTime.now());
 		mealEntry1.setGoal(goal1);
-		mealEntry1.setAuthor(newUser);
+		//mealEntry1.setAuthor(newUser);
 		merepo.save(mealEntry1);
 	}
 	
@@ -113,41 +113,5 @@ public class MealEntryGoalTest {
 		merepo.save(mealEntry1);
 	}
 	
-	@Test
-	@Order(4)
-	public void testComment() {
-		User u = urepo.findById(1).get();
-		MealEntry mealEntry1 = merepo.findById(1).get();
-		Comment c1 = new Comment();
-		c1.setCaption("testwy");
-		c1.setMealEntry(mealEntry1);
-		c1.setAuthor(u);
-		crepo.save(c1);
-		
-		Comment c2 = new Comment();
-		c2.setCaption("testwy2");
-		c2.setMealEntry(mealEntry1);
-		c2.setAuthor(u);
-		crepo.save(c2);
-	}
 	
-	@Test
-	@Order(5)
-	public void getCommentsFromUser() {
-		User u = urepo.findById(1).get();
-		List<Comment> comments = u.getComments();
-		for (Comment c : comments) {
-			System.out.println(c.getCaption());
-		}
-	}
-	
-	@Test
-	@Order(6)
-	public void getCommentsFromMealEntry() {
-		MealEntry mealEntry1 = merepo.findById(1).get();
-		List<Comment> comments = mealEntry1.getComments();
-		for (Comment c : comments) {
-			System.out.println(c.getCaption());
-		}
-	}
 }

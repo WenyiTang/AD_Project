@@ -2,26 +2,37 @@ package com.example.adproject.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.example.adproject.helper.FeelingEnum;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class MealEntry {
@@ -34,14 +45,20 @@ public class MealEntry {
 	private String title;
 	private String description;
 	private boolean flagged;
+	@Column(columnDefinition = "ENUM('CRYING', 'PENSIVE','HAPPY','JOYFUL')")
+	@Enumerated(EnumType.STRING)
 	private FeelingEnum feeling;
 	private int trackScore;
 	private LocalDateTime timeStamp;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Goal goal;
 	
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "meal_entry_likers", 
+	  joinColumns = @JoinColumn(name = "meal_entry_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> likers;
 	
 	@ManyToOne
@@ -68,5 +85,4 @@ public class MealEntry {
 		this.author = author;
 		this.comments = comments;
 	}
-	
 }
