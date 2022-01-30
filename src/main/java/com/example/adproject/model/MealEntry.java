@@ -3,7 +3,10 @@ package com.example.adproject.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +32,8 @@ public class MealEntry {
 	private String title;
 	private String description;
 	private boolean flagged;
+	@Column(columnDefinition = "ENUM('CRYING', 'PENSIVE', 'HAPPY', 'JOYFUL')")
+	@Enumerated(EnumType.STRING)
 	private FeelingEnum feeling;
 	private int trackScore;
 	private LocalDateTime timeStamp;

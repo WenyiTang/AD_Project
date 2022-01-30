@@ -2,7 +2,10 @@ package com.example.adproject.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,6 +26,8 @@ public class Goal {
 	private String goalDescription;
 	private int totalMealCount;
 	private int targetCount;
+	@Column(columnDefinition = "ENUM('STARTED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED')")
+	@Enumerated(EnumType.STRING)
 	private StatusEnum status;
 	private LocalDate startDate;
 	private LocalDate endDate;
