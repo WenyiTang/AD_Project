@@ -45,7 +45,7 @@ public class MealEntry {
 	private String title;
 	private String description;
 	private boolean flagged;
-	@Column(columnDefinition = "ENUM('CRYING', 'PENSIVE','HAPPY','JOYFUL')")
+	@Column(columnDefinition = "ENUM('CRYING', 'PENSIVE', 'HAPPY', 'JOYFUL')")
 	@Enumerated(EnumType.STRING)
 	private FeelingEnum feeling;
 	private int trackScore;
