@@ -81,7 +81,7 @@ public class MealEntryGoalTest {
 		mealEntry1.setTrackScore(0);
 		mealEntry1.setTimeStamp(LocalDateTime.now());
 		mealEntry1.setGoal(goal1);
-		mealEntry1.setAuthor(newUser);
+		//mealEntry1.setAuthor(newUser);
 		merepo.save(mealEntry1);
 	}
 	
@@ -112,4 +112,6 @@ public class MealEntryGoalTest {
 		mealEntry1.setComments(comments);
 		merepo.save(mealEntry1);
 	}
+	
+	
 }

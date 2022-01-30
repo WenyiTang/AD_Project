@@ -74,8 +74,8 @@ public class AdminReportTest {
 	@Test
 	@Order(3)
 	public void resolveReportInappropriate() {
-		Report myreport = rrepo.findReportById(1);
-		Admin me = arepo.findAdminById(2);
+		Report myreport = rrepo.findById(1).get();
+		Admin me = arepo.findById(2).get();
 		myreport.setComments("inappropriate");
 		myreport.setStatus(ReportEnum.RESOLVED);
 		myreport.setDateResolved(LocalDate.now());
@@ -86,8 +86,8 @@ public class AdminReportTest {
 	@Test
 	@Order(4)
 	public void resolveReportOK() {
-		Report myreport = rrepo.findReportById(2);
-		Admin me = arepo.findAdminById(1);
+		Report myreport = rrepo.findById(2).get();
+		Admin me = arepo.findById(1).get();
 		myreport.setStatus(ReportEnum.RESOLVED);
 		myreport.setDateResolved(LocalDate.now());
 		myreport.setResolvedBy(me);

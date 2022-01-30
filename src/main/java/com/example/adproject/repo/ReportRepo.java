@@ -8,6 +8,4 @@ import com.example.adproject.model.Report;
 
 public interface ReportRepo extends JpaRepository<Report, Integer>{
 
-	@Query("select r from Report r where id = :id")
-	public Report findReportById(@Param("id") Integer id);
 }
