@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -30,9 +31,11 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String username;
+	private String email;
 	private String password;
 	private String name;
 	private String gender;
+	
 	@Past
 	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private LocalDate dateOfBirth;
@@ -43,6 +46,14 @@ public class User {
 	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL })
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Comment> comments;
+	
+	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL })
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<MealEntry> entries;
+	
+	@OneToMany(targetEntity=Goal.class,cascade = CascadeType.ALL, orphanRemoval = true)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Goal> goals;
 	
 	@OneToOne
 	private Session session;
