@@ -3,14 +3,19 @@ package com.example.adproject.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Past;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
@@ -35,7 +40,8 @@ public class User {
 	private double weight;
 	private String profilePic;
 	
-	@OneToMany(mappedBy = "author")
+	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL })
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Comment> comments;
 	
 	@OneToOne
@@ -53,6 +59,5 @@ public class User {
 		this.height = height;
 		this.weight = weight;
 		this.profilePic = profilePic;
-	
 	}
 }

@@ -20,6 +20,8 @@ public class Comment {
 	private String caption;
 	@ManyToOne
 	private User author;
+	@ManyToOne
+	private MealEntry mealEntry;
 	
 	public Comment(Integer id, String caption) {
 		super();
