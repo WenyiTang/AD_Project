@@ -154,7 +154,6 @@ public class EntryCommentLikeTest {
 	@Order(6)
 	public void deleteGoalFromMealEntry() {
 		
-		Goal g = grepo.findById(1).get();
 		List<MealEntry> ml = merepo.findAll();
 		System.out.println(ml.size());
 		for (MealEntry m : ml) {

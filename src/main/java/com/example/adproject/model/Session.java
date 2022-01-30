@@ -18,7 +18,7 @@ public class Session {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@OneToOne(mappedBy="session")
+	@OneToOne
 	private User user;
 
 }

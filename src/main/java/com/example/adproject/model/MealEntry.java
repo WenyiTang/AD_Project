@@ -2,7 +2,6 @@ package com.example.adproject.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,12 +20,9 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import com.example.adproject.helper.FeelingEnum;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
