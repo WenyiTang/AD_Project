@@ -59,6 +59,15 @@ public class User {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OrderColumn
 	private List<Goal> goals;
+
+	// This is the inverse side
+    @OneToMany(mappedBy = "recipient")
+    private List<FriendRequest> receivedRequests;
+
+
+    // This is the inverse side
+    @OneToMany(mappedBy="sender")
+    private List<FriendRequest> sentRequests;
 	
 //	@OneToOne
 //	private Session session;
