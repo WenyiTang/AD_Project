@@ -17,6 +17,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -83,4 +84,12 @@ public class User {
 		this.weight = weight;
 		this.profilePic = profilePic;
 	}
+	
+	// Constructor used in FriendRequestTest unit tests
+	public User(String username, String password){
+		this.username = username;
+		this.password = password;
+	}
+
+	
 }
