@@ -1,0 +1,64 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="html_head" id="html_head">
+	<meta charset="ISO-8859-1">
+	<title>Leave Application Processing System - LAPS</title>
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+		integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
+		crossorigin="anonymous"></script>
+	<link th:rel="stylesheet" th:href="@{/css/bootstrap.css}">
+</head>
+
+<body>
+	<div th:fragment="menu" id="menu">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">LAPS</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="main_nav" th:if="${user.role.name == 'USER'}">
+					<ul class="navbar-nav">
+						<li class="nav-item dropdown">
+							<a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown" type="button"> My
+								Leaves </a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" th:href="@{/leave/add}"> Add new leaves</a></li>
+								<li><a class="dropdown-item" th:href="@{/staff/history/}"> My Leaves History In This
+										Year</a></li>
+								<li><a class="dropdown-item" th:href="@{/staff/history/all}"> My Leaves History
+										(All)</a></li>
+								<li><a class="dropdown-item" th:href="@{/staff/balance/}"> My Leave Balance</a></li>
+							</ul>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown" type="button">
+								Overtime </a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" th:href="@{/staff/addot}"> Update OT Hours</a></li>
+								<li><a class="dropdown-item" th:href="@{/staff/listot}"> My OT Hours</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item"><a class="nav-link" th:href="@{/logout}"> Logout </a></li>
+					</ul>
+				</div>
+				<div class="collapse navbar-collapse" id="main_nav" th:if="${user.role.name() == 'ADMIN'}">
+					<ul class="navbar-nav">
+						<li class="nav-item"><a class="nav-link" th:href="@{/admin/user/list}"> Manage Staff </a>
+						</li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/logout}"> Logout </a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+</body>
+
+</html>

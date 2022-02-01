@@ -1,4 +1,4 @@
-package com.example.adproject.login;
+package com.example.adproject.security;
 
 import javax.sql.DataSource;
 
@@ -16,7 +16,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AuthenticationSuccessHandler successHandler; 
@@ -37,14 +37,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.anyRequest().authenticated()
-		.and().formLogin()
-			.successHandler(successHandler)
-			.permitAll()
+				.antMatchers("/adminDashboard").hasAuthority("ADMIN")
+				.antMatchers("/Dashboard").hasAuthority("USER")
+				.anyRequest().authenticated()
 			.and()
-			.sessionManagement()
+				.formLogin()
+				.successHandler(successHandler)
+				.permitAll()
 			.and()
-			.logout(); 
+				.sessionManagement()
+			.and()
+				.logout(); 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS); 
 		
 	}

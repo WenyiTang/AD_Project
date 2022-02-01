@@ -1,4 +1,4 @@
-package com.example.adproject.login;
+package com.example.adproject.security;
 
 import java.security.Principal;
 
@@ -31,7 +31,9 @@ public class LoginController {
 	}
 	
 	@RequestMapping("/adminDashboard")
-	public String adminDashboard() {
+	public String adminDashboard(Model model, Principal principal) {
+		User user = uService.findUserByUsername(principal.getName());
+		model.addAttribute("user", user);
 		return "adminDashboard"; 
 	}
 }

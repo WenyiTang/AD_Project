@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-	
-</head>
+
+<head th:replace="fragments/layout.html :: html_head" />
 
 <body>
+	<div th:replace="fragments/layout.html::menu" />
+	</div>
 	<h2>Admin Dashboard</h2>
-	<li><a th:href="@{/logout}">Logout</a ></li>
 </body>
+
 </html>
