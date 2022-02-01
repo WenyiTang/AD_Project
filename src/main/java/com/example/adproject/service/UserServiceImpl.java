@@ -14,33 +14,37 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserServiceImpl implements UserService {
 
-    @Autowired 
-    UserRepo uRepo;
+	@Autowired
+	UserRepo uRepo;
 
-    @Autowired
-    FriendRequestRepo fRepo;
+	@Autowired
+	FriendRequestRepo fRepo;
 
-    @Autowired
-    FriendRequestService fService;
+	@Autowired
+	FriendRequestService fService;
 
-    @Override
-    public List<User> findFriendsOf(User user) {
-        ArrayList<User> friends = new ArrayList<User>();
+	@Override
+	public List<User> findFriendsOf(User user) {
+		ArrayList<User> friends = new ArrayList<User>();
 
-        List<FriendRequest> acceptedRequests = fRepo.findAcceptedRequestsByUser(user);
+		List<FriendRequest> acceptedRequests = fRepo.findAcceptedRequestsByUser(user);
 
-        for(FriendRequest request : acceptedRequests){
-            if(request.getSender().getUsername().equals(user.getUsername())){
-                friends.add(request.getRecipient());
-            }
-            else {
-                friends.add(request.getSender());
-            }
-        }
+		for (FriendRequest request : acceptedRequests) {
+			if (request.getSender().getUsername().equals(user.getUsername())) {
+				friends.add(request.getRecipient());
+			} else {
+				friends.add(request.getSender());
+			}
+		}
 
+		return friends;
+	}
+	
+	@Override 
+	public User findUserByUsername(String username) {
+		return uRepo.findByUsername(username); 
+	}
+	
+	
 
-
-        return friends;
-    }
-    
 }

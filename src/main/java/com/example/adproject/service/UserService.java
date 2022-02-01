@@ -11,4 +11,5 @@ public interface UserService {
 
     List<User> findFriendsOf(User user);
     
+    User findUserByUsername(String username); 
 }
