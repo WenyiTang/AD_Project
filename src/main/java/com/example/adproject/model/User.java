@@ -7,17 +7,11 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -28,8 +22,6 @@ import javax.validation.constraints.Past;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.example.adproject.helper.RoleEnum;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -84,10 +76,19 @@ public class User {
 	@OneToMany(mappedBy = "sender")
 	private List<FriendRequest> sentRequests;
 	
-	@Column(name="role", columnDefinition = "ENUM('USER', 'ADMIN')")
-	@Enumerated(EnumType.STRING)
-	private RoleEnum role; 
-
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "users_roles",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id")
+			)
+	private Set<Role> roles = new HashSet<>();
+	
+	/* Test of using enum for role differentiation for Spring Security */
+//	@Column(name="role", columnDefinition = "ENUM('USER', 'ADMIN')")
+//	@Enumerated(EnumType.STRING)
+//	private RoleEnum role; 
+	
 //	@OneToOne
 //	private Session session;
 

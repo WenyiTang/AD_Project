@@ -1,4 +1,4 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head th:fragment="html_head" id="html_head">
 	<meta charset="ISO-8859-1">
@@ -22,7 +22,7 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 
-				<div class="collapse navbar-collapse" id="main_nav" th:if="${user.role.name == 'USER'}">
+				<div class="collapse navbar-collapse" id="main_nav" sec:authorize="hasAnyAuthority('USER')">
 					<ul class="navbar-nav">
 						<li class="nav-item dropdown">
 							<a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown" type="button"> My
@@ -49,7 +49,7 @@
 						<li class="nav-item"><a class="nav-link" th:href="@{/logout}"> Logout </a></li>
 					</ul>
 				</div>
-				<div class="collapse navbar-collapse" id="main_nav" th:if="${user.role.name() == 'ADMIN'}">
+				<div class="collapse navbar-collapse" id="main_nav" sec:authorize="hasAnyAuthority('ADMIN')">
 					<ul class="navbar-nav">
 						<li class="nav-item"><a class="nav-link" th:href="@{/admin/user/list}"> Manage Staff </a>
 						</li>
