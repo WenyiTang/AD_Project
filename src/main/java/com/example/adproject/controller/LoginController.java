@@ -42,6 +42,7 @@ public class LoginController {
 
         if(password.equals(user.getPassword())){
             session.setAttribute("username", username);
+            session.setAttribute("id", user.getId());
             return "redirect:/friends";
             
         }

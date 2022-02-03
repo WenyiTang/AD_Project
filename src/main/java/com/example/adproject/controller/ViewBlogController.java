@@ -2,6 +2,8 @@ package com.example.adproject.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.example.adproject.model.Comment;
 import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.User;
@@ -14,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/blog")
@@ -47,9 +51,11 @@ public class ViewBlogController {
     } 
 
     @GetMapping("/view/entry/{id}")
-    public String viewMealEntry(Model model, @PathVariable Integer id) {
+    public String viewMealEntry(HttpSession session, Model model, @PathVariable Integer id) {
         MealEntry entry = mRepo.findById(id).get();
-
+        
+        String activeUsername = session.getAttribute("username").toString();
+        User activeUser = uRepo.findByUsername(activeUsername);
         if(entry == null) {
             return null;
         }
@@ -60,10 +66,25 @@ public class ViewBlogController {
         model.addAttribute("entry", entry);
         model.addAttribute("user",user);
         model.addAttribute("comments",comments);
+        model.addAttribute("activeUser",activeUser);
 
 
         return "./blog/meal_entry";
         
+    }
+
+    @PostMapping("/comment/{id}")
+    public String addComment(HttpSession session, Model model, @PathVariable Integer id, @RequestParam String caption) {
+        MealEntry entry = mRepo.findById(id).get();
+
+        String activeUsername = session.getAttribute("username").toString();
+        User activeUser = uRepo.findByUsername(activeUsername);
+
+        Comment comment = new Comment(caption,activeUser,entry);
+
+        cRepo.saveAndFlush(comment);
+
+        return "redirect:/blog/view/entry/" + id.toString();
     }
     
 }
