@@ -63,7 +63,7 @@ public class MealEntry {
 	private User author;
 	
 	@OneToMany(mappedBy = "mealEntry", cascade = { CascadeType.ALL })
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Comment> comments;
 	
 	

@@ -27,9 +27,9 @@ public class Comment {
 	private String caption;
 	// Added CascadeType.REMOVE to remove comment from associated MealEntry and author User
 	// Without CascadeType.REMOVE, I couldn't delete comments
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
 	private User author;
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
 	private MealEntry mealEntry;
 	
 	public Comment(Integer id, String caption) {

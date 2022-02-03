@@ -148,7 +148,7 @@ public class ViewBlog {
     @Order(4)
     void testInsertComments() {
         cRepo.deleteAll();
-        int id = 7;//hard coded for now
+        int id = 1;//hard coded for now
         MealEntry entry = mRepo.findById(id).get();
         if(entry == null) {
             fail();
@@ -172,14 +172,5 @@ public class ViewBlog {
 
     }
 
-    @Test
-    @Order(5) 
-    void testDeleteComments() {
-        cRepo.deleteAll();
-        List<Comment> comments = cRepo.findAll();
-        assertEquals(0,comments.size());
-
-        
-    }
-    
+   
 }

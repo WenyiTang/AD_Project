@@ -45,8 +45,8 @@ public class User {
 	private double weight;
 	private String profilePic;
 	
-	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL }, orphanRemoval=true)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Comment> comments;
 	
 	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL })
