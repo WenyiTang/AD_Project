@@ -58,7 +58,7 @@ public class ViewBlog {
 
     private String[] captions = {"Hi everyone!","Wow! looks great.", "So yummy!", "noice! where was this?", "did you make it yourself?", "nice photography skills"};
 
-    @Test
+    //@Test
     @Order(1)
     void testInsertUsers(){
         fRepo.deleteAll();

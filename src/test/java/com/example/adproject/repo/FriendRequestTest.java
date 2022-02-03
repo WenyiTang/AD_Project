@@ -195,6 +195,39 @@ public class FriendRequestTest {
 
 
     }
+    //Give chandler some friends lol
+
+    @Test
+    @Order(9)
+    void chandlerSendsFriendRequests() {
+        List<User> users = uRepo.findAll();
+        User sender = users.get(4); // monica
+
+        for(int i = 1; i < users.size(); i++){
+            fService.sendRequest(sender, users.get(i));
+        }
+
+        List<FriendRequest> monicaRequests = fRepo.findRequestsByUser(sender);
+
+        assertEquals(users.size()-1, monicaRequests.size());
+
+        User phoebe = uRepo.findByUsername("phoebe");
+        User ross = uRepo.findByUsername("ross");
+        User joey = uRepo.findByUsername("joey");
+
+        users = new ArrayList<User>();
+        users.add(phoebe);
+        users.add(ross);
+        users.add(joey);
+
+
+        // Accept monica's friend requests
+        for (User user : users){
+            List<FriendRequest> pendingRequests = fRepo.findPendingRequestsByRecipient(user);
+            fService.acceptRequest(pendingRequests.get(0).getId());
+        }
+
+    }
     //Uncomment and run the test below to clear the FriendRequest and User table
     //@Test
     @Order(9)

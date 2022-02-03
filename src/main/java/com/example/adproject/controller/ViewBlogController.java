@@ -30,11 +30,11 @@ public class ViewBlogController {
     
 
 
-    @GetMapping("/view")
-    public String viewUserBlog(Model model) {
+    @GetMapping("/view/{id}")
+    public String viewUserBlog(Model model, @PathVariable Integer id) {
 
-        //
-        User user = uRepo.findByUsername("Monica");
+        
+        User user = uRepo.findById(id).get();
         if(user == null) {
             return null;
         }
@@ -46,7 +46,7 @@ public class ViewBlogController {
         return "./blog/food_blog";
     } 
 
-    @GetMapping("/view/{id}")
+    @GetMapping("/view/entry/{id}")
     public String viewMealEntry(Model model, @PathVariable Integer id) {
         MealEntry entry = mRepo.findById(id).get();
 
@@ -60,6 +60,7 @@ public class ViewBlogController {
         model.addAttribute("entry", entry);
         model.addAttribute("user",user);
         model.addAttribute("comments",comments);
+
 
         return "./blog/meal_entry";
         
