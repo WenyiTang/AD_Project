@@ -42,11 +42,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override 
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
+			.antMatchers("/forgot_password/**").permitAll()
+			.antMatchers("/reset_password/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
-			.formLogin().permitAll()
+			.formLogin()
+				.loginPage("/login")
+				.usernameParameter("username")
+				.permitAll()
 			.and()
-			.logout().permitAll()
+			.logout()
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/login?logout")
+			.permitAll()
 			.and()
 			.exceptionHandling().accessDeniedPage("/403");
 	}

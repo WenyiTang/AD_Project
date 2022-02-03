@@ -52,6 +52,8 @@ public class User {
 	private double weight;
 	private String profilePic;
 	private boolean enabled; 
+	@Column(name = "reset_password_token")
+	private String resetPasswordToken; 
 
 	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL })
 	@LazyCollection(LazyCollectionOption.FALSE)
