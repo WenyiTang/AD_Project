@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.adproject.helper.FeelingEnum;
 
@@ -45,6 +46,7 @@ public class MealEntry {
 	@Enumerated(EnumType.STRING)
 	private FeelingEnum feeling;
 	private int trackScore;
+	@DateTimeFormat(pattern ="dd-MM-yyyy")
 	private LocalDateTime timeStamp;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -81,4 +83,21 @@ public class MealEntry {
 		this.author = author;
 		this.comments = comments;
 	}
+
+	public MealEntry(String imageURL, boolean visibility, String title, String description, 
+					 boolean flagged, FeelingEnum feeling, int trackScore, LocalDateTime timeStamp, 
+					 User author) {
+		this.imageURL = imageURL;
+		this.visibility = visibility;
+		this.title = title;
+		this.description = description;
+		this.flagged = flagged;
+		this.feeling = feeling;
+		this.trackScore = trackScore;
+		this.timeStamp = timeStamp;
+		this.author = author;
+	}
+
+
+
 }

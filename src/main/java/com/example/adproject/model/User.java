@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,7 +45,7 @@ public class User {
 	private double weight;
 	private String profilePic;
 	
-	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Comment> comments;
 	
