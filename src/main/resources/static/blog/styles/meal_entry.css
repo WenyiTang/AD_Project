@@ -61,10 +61,14 @@ h1 {
 }
 
 .content-area { 
-    display: flex;
+    /* display: flex;
     flex-direction: row;
-    flex: 1 1 0px;
-    justify-content: center;
+    flex: 0 0 0px;
+    justify-content: center; */
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
 }
 
 .pic {
@@ -75,18 +79,32 @@ h1 {
     
 }
 .details {
-    width:50%;
+    width: min(100%,400px);
     margin: 1em;
 }
 .details > * {
     margin-bottom: 1em;
+
 }
 .socials {
-    width: 50%;
+    width: 100%;
     margin:1em;
 }
 .comments-section {
-    border: 1px solid black;
+    color:black;
+}
+.comments-section > p {
+    margin-top:0.5em;
+    margin-bottom: 0.5em;
+    width: 250px;
+
 }
 
+.comment-div {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+.comment-author {
+    font-weight: bold;
+}
 

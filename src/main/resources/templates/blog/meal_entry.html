@@ -43,7 +43,16 @@
                 <img src="/blog/images/flag_logo.svg" alt="">
             </div>
             <div class = "comments-section">
-                <p th:each = "comment:${comments}" th:text = "${comment}"></p>
+
+                
+                <p class = "comment-div" th:each = "comment:${comments}">
+                    <span class = "comment-author" th:text = "${#strings.capitalize(comment.author.username)} + ':    '"></span>
+                    <span class = "comment" th:text = "${comment.caption}"></span>
+                </p>
+
+                <p>
+                    
+                </p>
                 
             </div>
         </div>
