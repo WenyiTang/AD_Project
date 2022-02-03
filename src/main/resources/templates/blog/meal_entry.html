@@ -50,15 +50,14 @@
                     <span class = "comment" th:text = "${comment.caption}"></span>
                 </p>
 
-                <p class = "comment-div">
                     
+                <form class = "comment-div" th:action="@{'/blog/comment/' + ${entry.id}}" method="POST">
                     <span class = "comment-author" th:text = "${#strings.capitalize(activeUser.username)} + ':'"></span>
-                    <form th:action="@{'/blog/comment/' + ${entry.id}}" method="POST">
-                        <input class = "new-comment" type="text" name="caption" id="">
-                        <input type="submit" style = "display: none;" name="" id="">
-                    </form>
+                    <input class = "new-comment" type="text" name="caption" id="">
+                    <input type="submit" style = "display: none;" name="" id="">
+                </form>
 
-                </p>
+             
                 
             </div>
         </div>

@@ -81,6 +81,7 @@ h1 {
 .details {
     width: min(100%,400px);
     margin: 1em;
+    justify-self: end;
 }
 .details > * {
     margin-bottom: 1em;
@@ -89,11 +90,12 @@ h1 {
 .socials {
     width: 100%;
     margin:1em;
+    justify-self: start;
 }
 .comments-section {
     color:black;
 }
-.comments-section > p {
+.comments-section > p, form {
     margin-top:0.5em;
     margin-bottom: 0.5em;
     width: 250px;
