@@ -2,6 +2,7 @@ package com.example.adproject.controller;
 
 import java.util.List;
 
+import com.example.adproject.model.Comment;
 import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.User;
 import com.example.adproject.repo.CommentRepo;
@@ -53,9 +54,12 @@ public class ViewBlogController {
             return null;
         }
         User user = entry.getAuthor();
+        
+        List<Comment> comments = cRepo.findCommentByMealEntry(entry);
 
         model.addAttribute("entry", entry);
         model.addAttribute("user",user);
+        model.addAttribute("comments",comments);
 
         return "./blog/meal_entry";
         

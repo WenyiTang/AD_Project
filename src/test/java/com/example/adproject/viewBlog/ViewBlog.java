@@ -149,6 +149,48 @@ public class ViewBlog {
     void testInsertComments() {
         cRepo.deleteAll();
         int id = 1;//hard coded for now
+        int numberOfComments = 6;
+        List<Comment> insertedComments = insertCommentsToMealEntry(id,numberOfComments);
+
+        
+
+        List<Comment> comments = cRepo.findAll();
+
+        assertEquals(comments.size(), insertedComments.size());
+
+    }
+
+    @Test
+    @Order(5)
+    void testFindCommentsByMealEntry() {
+        // first we insert more comments to the 3rd meal entry
+        cRepo.deleteAll();
+        int[] ids = {1,3};
+        int[] numbersOfComments = {6,3};
+
+        for(int i = 0 ; i < ids.length; i++) {
+            insertCommentsToMealEntry(ids[i], numbersOfComments[i]);
+        }
+
+        int id = ids[0];
+        int numberOfComment = numbersOfComments[0];
+
+        MealEntry entry = mRepo.findById(id).get();
+        if(entry == null) {
+            fail();
+        }
+
+        List<Comment> comments = cRepo.findCommentByMealEntry(entry);
+
+        assertEquals(numberOfComment,comments.size());
+
+    }
+
+
+
+
+
+    private ArrayList<Comment> insertCommentsToMealEntry(int id,int num) {
         MealEntry entry = mRepo.findById(id).get();
         if(entry == null) {
             fail();
@@ -159,16 +201,13 @@ public class ViewBlog {
 
 
 
-        for(int i = 0; i < users.size();i++) {
+        for(int i = 0; i < num;i++) {
             commentsToInsert.add(new Comment(captions[i],users.get(i),entry));
 
         }
 
         cRepo.saveAll(commentsToInsert);
-
-        List<Comment> comments = cRepo.findAll();
-
-        assertEquals(comments.size(), commentsToInsert.size());
+        return commentsToInsert;
 
     }
 

@@ -43,7 +43,8 @@
                 <img src="/blog/images/flag_logo.svg" alt="">
             </div>
             <div class = "comments-section">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta adipisci cum natus voluptate illum beatae autem nobis voluptas fugiat, modi officia laborum unde culpa obcaecati temporibus quasi dignissimos facilis, alias vel error hic? Pariatur odit fugiat suscipit magnam error at velit quis, soluta, culpa quam ex perferendis optio, nesciunt blanditiis!</p>
+                <p th:each = "comment:${comments}" th:text = "${comment}"></p>
+                
             </div>
         </div>
 
