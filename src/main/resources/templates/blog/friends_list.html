@@ -8,6 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        .friends-list{
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
     <div class = "navbar">
@@ -30,6 +38,8 @@
     </div>
 
     <div class ="friends-list">
+
+            <h1>Friends List</h1>
 
             <a style = "display: block;" th:each = "friend:${friends}" th:text = "${friend.username}" th:href = "@{'blog/view/' + ${friend.id}}"></a>
         

@@ -10,7 +10,7 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-h1 {
+.page-title {
     color:white;
     font-weight: 300;
 }

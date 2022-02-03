@@ -25,7 +25,8 @@
         </div>
 
         <div>
-            <h1 th:text = "${#strings.capitalize(user.username)} + '\'s Entry'"></h1>
+            <h1 class = "page-title" th:text = "${#strings.capitalize(user.username)} + '\'s Entry'"></h1>
+            <a th:href="@{'/blog/view/' + ${user.id}}">back</a>
         </div>
     </div>
 
