@@ -1,5 +1,6 @@
 package com.example.adproject.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -62,6 +63,9 @@ public class ViewBlogController {
         User user = entry.getAuthor();
         
         List<Comment> comments = cRepo.findCommentByMealEntry(entry);
+        
+        // Reverse order of comments so that it shows most recent on top 
+        Collections.reverse(comments);
 
         model.addAttribute("entry", entry);
         model.addAttribute("user",user);

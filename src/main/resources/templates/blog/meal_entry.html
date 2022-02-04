@@ -44,22 +44,17 @@
                 <img src="/blog/images/flag_logo.svg" alt="">
             </div>
             <div class = "comments-section">
-
-                
-                <p class = "comment-div" th:each = "comment:${comments}">
-                    <span class = "comment-author" th:text = "${#strings.capitalize(comment.author.username)} + ':    '"></span>
-                    <span class = "comment" th:text = "${comment.caption}"></span>
-                </p>
-
-                    
                 <form class = "comment-div" th:action="@{'/blog/comment/' + ${entry.id}}" method="POST">
                     <span class = "comment-author" th:text = "${#strings.capitalize(activeUser.username)} + ':'"></span>
                     <input class = "new-comment" type="text" name="caption" id="">
                     <input type="submit" style = "display: none;" name="" id="">
                 </form>
 
-             
                 
+                <p class = "comment-div" th:each = "comment:${comments}">
+                    <span class = "comment-author" th:text = "${#strings.capitalize(comment.author.username)} + ':    '"></span>
+                    <span class = "comment" th:text = "${comment.caption}"></span>
+                </p>
             </div>
         </div>
 
