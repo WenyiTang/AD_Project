@@ -10,10 +10,10 @@
 </head>
 
 <body>
+	<div align="center">
+		<img class="img-fluid" th:src="@{/images/logo.png}" />
+	</div >
 	<div class="container-fluid text-center">
-		<!--<div>
-			<img class="img-fluid" th:src="@{/images/food_diary_logo.png}" />
-		</div>-->
 		<form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
 
 			<div th:if="${param.error}">
@@ -31,9 +31,6 @@
 				</p>
 				<p>
 					<input type="password" name="password" class="form-control" placeholder="Password" required />
-				</p>
-				<p>
-					<input type="checkbox" name="remember-me" />&nbsp;Remember Me
 				</p>
 				<p>
 					<input type="submit" value="Login" class="btn btn-primary btn-block" />
