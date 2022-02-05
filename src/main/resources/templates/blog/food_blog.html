@@ -43,13 +43,15 @@
             <h2 class = "title" th:text = "${entry.title}" ></h2>
             <p class = "date" th:text = ${{entry.timeStamp}}></p>
             <p class = "description" th:text = "${entry.description}"></p>
-            <p class = "likes">Liked by Gunther and 32 others</p>
+            <p class = "likes">Liked by <span class ="total-likes" th:text = "${mService.getTotalNumberOfLikesById(entry.id)}" th:attr="id = 'total-likes-mealentry-' + ${entry.id}, data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}"></span> users</p>
             <div class = "like-flag">
-                <!-- <img src="/blog/images/thumb-logo-no-fill.svg" class = "thumb-logo" alt=""> -->
                 
                 <img th:if = "${mService.hasUserLikedThis(activeUser.id,entry.id)}" th:attr="data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}"  src="/blog/images/thumb-logo-blue-fill.svg" class = "thumb-logo" alt=""> 
+                
                 <img th:unless = "${mService.hasUserLikedThis(activeUser.id,entry.id)}" th:attr="data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}" src="/blog/images/thumb-logo-no-fill.svg" class = "thumb-logo" alt=""> 
+                
                 <img src="/blog/images/flag_logo.svg" alt="">
+
             </div>
 
 

@@ -22,6 +22,10 @@ function toggleLike(id) {
 
   let userId = thumbLogo.getAttribute("data-userId");
 
+  let totalLikesSpan = document.querySelector("#total-likes-mealentry-" + mealEntryId.toString());
+
+  let totalLikes = totalLikesSpan.innerHTML;
+
   // if entry is not liked by user
   if (imgSrc == "/blog/images/thumb-logo-no-fill.svg") {
     fetch(
@@ -38,8 +42,16 @@ function toggleLike(id) {
         },
       }
     ).then(
-      // Change to blue only after http response status is ok
-      thumbLogo.setAttribute("src", "/blog/images/thumb-logo-blue-fill.svg")
+        // Change to blue only after http response status is ok
+        () => {
+            thumbLogo.setAttribute("src", "/blog/images/thumb-logo-blue-fill.svg");
+            //Increment number of likes
+            // Note that if another user also likes the page,
+            // active user would need to refresh page to update number of likes shown
+            totalLikes++;
+            totalLikesSpan.innerHTML = totalLikes;
+        }
+    
     );
   }
   // if entry is liked by user
@@ -57,8 +69,15 @@ function toggleLike(id) {
         },
       }
     ).then(
-      // Change to blue only after http response status is ok
-      thumbLogo.setAttribute("src", "/blog/images/thumb-logo-no-fill.svg")
+      // Change to no-fill only after http response status is ok
+      () => {
+        thumbLogo.setAttribute("src", "/blog/images/thumb-logo-no-fill.svg")
+        totalLikes--;
+        totalLikesSpan.innerHTML = totalLikes;
+      }
     );
   }
+
+
+  
 }
