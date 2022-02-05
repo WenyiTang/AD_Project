@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>My Food Diary</title>
+</head>
+
+<body>
+	<h1>Login Page</h1>
+	<form th:action="@{/home}" th:object="${loginForm}"method="post">
+
+  <div class="container">
+    <label for="username"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" id="username" name="username" required>
+
+    <label for="password"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" id="password" name="password" required>
+
+    <button type="submit">Login</button>
+  </div>
+
+</form>
+
+</body>
+</html  >

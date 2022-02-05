@@ -10,6 +10,7 @@ import com.example.adproject.repo.UserRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -42,5 +43,16 @@ public class UserServiceImpl implements UserService {
 
         return friends;
     }
-    
+
+	@Transactional
+	public User authenticate(String uname, String pwd) {
+		User u = uRepo.findUserByNamePwd(uname, pwd);
+		return u;
+	}
+
+	@Override
+	public User findUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

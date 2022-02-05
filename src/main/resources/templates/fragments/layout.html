@@ -1,0 +1,27 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="html_head" id="html_head">
+	<meta charset="ISO-8859-1">
+	<title>My Food Diary</title>
+	<link rel="stylesheet" th:href="@{/css/simple.css}" />
+</head>
+
+<body>
+	<div th:fragment="menu" id="menu">
+		<!-- Navigation -->
+		<nav class="navbar">
+			<a th:href="@{/home}">Home</a>
+			<a th:href="@{/data}">Data</a>
+			<a th:href="@{/goals}">Goals</a>
+			<a th:href="@{/socials}">Socials</a>
+			<div th:if="${session.usession?.user}">
+
+	<div th:fragment="header" id="header">
+		<div th:if="${not #strings.isEmpty(usession)}">
+			<h2><em th:utext="'Hello '+ ${session.usession.user.name}"></em></h2>
+		</div>
+	</div>
+
+</body>
+
+</html>
