@@ -1,6 +1,7 @@
 package com.example.adproject.viewBlog;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -103,7 +104,18 @@ public class likesTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
+    void testHasUserLikedThis() {
+        Integer mealEntryId = 1;
+        Integer userId = 2;
+
+
+        assertTrue(mService.hasUserLikedThis(userId, mealEntryId));
+
+    }
+
+    @Test
+    @Order(8)
     void testRemoveAllLikes() {
         Integer mealEntryId = 1;
         mService.removeAllLikesById(mealEntryId);

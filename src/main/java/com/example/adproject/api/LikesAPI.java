@@ -34,17 +34,17 @@ public class LikesAPI {
     }
 
     @PostMapping("/like")
-    public void likeMealEntry(@RequestParam Integer userId,@RequestParam Integer mealEntryId) {
+    public void likeMealEntry(@RequestParam Integer userId, @RequestParam Integer mealEntryId) {
         
         mService.likeEntryById(userId, mealEntryId);
 
     }
 
     @PostMapping("/unlike")
-    public void unlikeMealEntry(@RequestParam Integer userId,@RequestParam Integer mealEntryId) {
+    public void unlikeMealEntry(@RequestParam Integer userId, @RequestParam Integer mealEntryId) {
         
         mService.unlikeEntryById(userId, mealEntryId);
-        
+
     }
     
 

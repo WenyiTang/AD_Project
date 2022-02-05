@@ -24,6 +24,8 @@ public interface MealEntryService {
 
     public Integer getTotalNumberOfLikesById(Integer mealEntryId);
 
+    public Boolean hasUserLikedThis(Integer userId, Integer mealEntryId);
+
 
     
 }

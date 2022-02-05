@@ -113,6 +113,20 @@ public class MealEntryServiceImpl implements MealEntryService{
     }
 
 
+    @Override
+    public Boolean hasUserLikedThis(Integer userId, Integer mealEntryId) {
+        List<User> likers = getLikersById(mealEntryId);
+
+        for(User liker : likers) {
+            if(liker.getId() == userId){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
     
     
 }
