@@ -40,9 +40,9 @@ public class ViewBlogController {
 
 
     @GetMapping("/view/{id}")
-    public String viewUserBlog(Model model, @PathVariable Integer id) {
-
-        
+    public String viewUserBlog(HttpSession session, Model model, @PathVariable Integer id) {
+        String activeUsername = session.getAttribute("username").toString();
+        User activeUser = uRepo.findByUsername(activeUsername);
         User user = uRepo.findById(id).get();
         if(user == null) {
             return null;
@@ -53,6 +53,7 @@ public class ViewBlogController {
         model.addAttribute("entries",entries);
         model.addAttribute("user",user);
         model.addAttribute("mService",mService);
+        model.addAttribute("activeUser", activeUser);
         return "./blog/food_blog";
     } 
 

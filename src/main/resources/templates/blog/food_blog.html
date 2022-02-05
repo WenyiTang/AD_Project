@@ -47,8 +47,8 @@
             <div class = "like-flag">
                 <!-- <img src="/blog/images/thumb-logo-no-fill.svg" class = "thumb-logo" alt=""> -->
                 
-                <img th:if = "${mService.hasUserLikedThis(user.id,entry.id)}" src="/blog/images/thumb-logo-blue-fill.svg" class = "thumb-logo" alt=""> 
-                <img th:unless = "${mService.hasUserLikedThis(user.id,entry.id)}" src="/blog/images/thumb-logo-no-fill.svg" class = "thumb-logo" alt=""> 
+                <img th:if = "${mService.hasUserLikedThis(activeUser.id,entry.id)}" th:attr="data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}"  src="/blog/images/thumb-logo-blue-fill.svg" class = "thumb-logo" alt=""> 
+                <img th:unless = "${mService.hasUserLikedThis(activeUser.id,entry.id)}" th:attr="data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}" src="/blog/images/thumb-logo-no-fill.svg" class = "thumb-logo" alt=""> 
                 <img src="/blog/images/flag_logo.svg" alt="">
             </div>
 
