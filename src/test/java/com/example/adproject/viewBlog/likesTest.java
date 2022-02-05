@@ -1,12 +1,15 @@
 package com.example.adproject.viewBlog;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
 
 import com.example.adproject.AdProjectApplication;
 import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.User;
 import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
+import com.example.adproject.service.MealEntryService;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -28,36 +31,85 @@ public class likesTest {
 
     @Autowired
     private UserRepo uRepo;
+
+    @Autowired
+    private MealEntryService mService;
     
 
 
     //Run this after dropping database and running FriendRequestTest and ViewBlog
     @Test
     @Order(1)
-    void testLikeEntry() {
-        MealEntry mealEntry = mRepo.findById(1).get();
+    void testLikeEntryByObject() {
+        Integer mealEntryId = 1;
+        MealEntry mealEntry = mRepo.findById(mealEntryId).get();
         User user = uRepo.findByUsername("chandler");
-        mealEntry.getLikers().add(user);
 
-        mRepo.saveAndFlush(mealEntry);
-        
+        mService.likeEntryByObject(user, mealEntry);
+        MealEntry entryAfterLike = mRepo.findById(mealEntryId).get();
+        List<User> likers = entryAfterLike.getLikers();
+        assertEquals(likers.size(),1);
     }
 
     @Test
     @Order(2)
-    void testUnlikeEntry() {
+    void testUnlikeEntryByObject() {
+        Integer mealEntryId = 1;
         MealEntry mealEntry = mRepo.findById(1).get();
         User user = uRepo.findByUsername("chandler");
 
-        if(!mealEntry.getLikers().remove(user)) {
-            fail();
-        }
-        mRepo.saveAndFlush(mealEntry);
-     
-     
-
-      
+        mService.unlikeEntryByObject(user, mealEntry);
+        MealEntry entryAfterLike = mRepo.findById(mealEntryId).get();
+        List<User> likers = entryAfterLike.getLikers();
+        assertEquals(likers.size(),0);
         
+
+    }
+
+    @Test
+    @Order(3)
+    void testLikeEntryByIds() {
+        Integer mealEntryId = 1;
+        Integer userId = 5;
+        mService.likeEntryById(userId,mealEntryId);
+        MealEntry entryAfterLike = mRepo.findById(mealEntryId).get();
+        List<User> likers = entryAfterLike.getLikers();
+        assertEquals(likers.size(),1);
+    }
+
+    @Test
+    @Order(4)
+    void testUnikeEntryByIds() {
+        Integer mealEntryId = 1;
+        Integer userId = 5;
+        mService.unlikeEntryById(userId,mealEntryId);
+        MealEntry entryAfterLike = mRepo.findById(mealEntryId).get();
+        List<User> likers = entryAfterLike.getLikers();
+        assertEquals(likers.size(),0);
+    }
+
+    @Test
+    @Order(5)
+    void testGetLikersById() {
+        Integer mealEntryId = 1;
+        Integer[] userIds = {1,2,3,4,5,6};
+
+        for(Integer userId : userIds) {
+            mService.likeEntryById(userId,mealEntryId);
+        }
+        List<User> likers = mService.getLikersById(mealEntryId);
+
+        assertEquals(likers.size(),userIds.length);
+    }
+
+    @Test
+    @Order(6)
+    void testRemoveAllLikes() {
+        Integer mealEntryId = 1;
+        mService.removeAllLikesById(mealEntryId);
+        List<User> likers = mService.getLikersById(mealEntryId);
+
+        assertEquals(likers.size(),0);
 
     }
 }
