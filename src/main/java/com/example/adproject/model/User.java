@@ -100,12 +100,12 @@ public class User {
 			return false;
 		}
 		User user = (User) o;
-		return Objects.equals(id, user.id);
+		return Objects.equals(id, user.id) && Objects.equals(username, user.username);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, username, email, password, name, gender, dateOfBirth, height, weight, profilePic, comments, entries, likedEntries, goals, receivedRequests, sentRequests);
+		return Objects.hash(id, username);
 	}
 
 

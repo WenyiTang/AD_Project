@@ -56,9 +56,7 @@ public class likesTest {
      
      
 
-        //user.getLikedEntries().remove(mealEntry);
-
-        //uRepo.saveAndFlush(user);
+      
         
 
     }
