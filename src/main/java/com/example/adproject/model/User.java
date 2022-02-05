@@ -2,10 +2,10 @@ package com.example.adproject.model;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +18,6 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -91,6 +90,24 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		if (!(o instanceof User)) {
+			return false;
+		}
+		User user = (User) o;
+		return Objects.equals(id, user.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, username, email, password, name, gender, dateOfBirth, height, weight, profilePic, comments, entries, likedEntries, goals, receivedRequests, sentRequests);
+	}
+
 
 	
 }
