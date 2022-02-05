@@ -100,6 +100,19 @@ public class MealEntryServiceImpl implements MealEntryService{
     }
 
 
+    @Override
+    public Integer getTotalNumberOfLikesById(Integer mealEntryId) {
+        MealEntry mealEntry = mRepo.findById(mealEntryId).get();
+
+        if (mealEntry == null) {
+            return -1;
+        }
+
+       
+        return mealEntry.getLikers().size();
+    }
+
+
     
     
 }

@@ -22,6 +22,8 @@ public interface MealEntryService {
 
     public void removeAllLikesById(Integer mealEntryId);
 
+    public Integer getTotalNumberOfLikesById(Integer mealEntryId);
+
 
     
 }
