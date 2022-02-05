@@ -45,7 +45,10 @@
             <p class = "description" th:text = "${entry.description}"></p>
             <p class = "likes">Liked by Gunther and 32 others</p>
             <div class = "like-flag">
-                <img src="/blog/images/thumb-logo-no-fill.svg" class = "thumb-logo" alt="">
+                <!-- <img src="/blog/images/thumb-logo-no-fill.svg" class = "thumb-logo" alt=""> -->
+                
+                <img th:if = "${mService.hasUserLikedThis(user.id,entry.id)}" src="/blog/images/thumb-logo-blue-fill.svg" class = "thumb-logo" alt=""> 
+                <img th:unless = "${mService.hasUserLikedThis(user.id,entry.id)}" src="/blog/images/thumb-logo-no-fill.svg" class = "thumb-logo" alt=""> 
                 <img src="/blog/images/flag_logo.svg" alt="">
             </div>
 
@@ -55,6 +58,6 @@
 
 
     </div>
-    <script src = "/blog/javascript/toggle_thumb_logo.js"></script>
+    <script src = "/blog/javascript/toggle_like.js"></script>
 </body>
 </html>

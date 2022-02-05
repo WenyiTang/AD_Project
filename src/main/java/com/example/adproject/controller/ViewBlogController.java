@@ -11,6 +11,7 @@ import com.example.adproject.model.User;
 import com.example.adproject.repo.CommentRepo;
 import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
+import com.example.adproject.service.MealEntryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,9 @@ public class ViewBlogController {
 
     @Autowired
     CommentRepo cRepo;
+
+    @Autowired
+    MealEntryService mService;
     
 
 
@@ -48,6 +52,7 @@ public class ViewBlogController {
  
         model.addAttribute("entries",entries);
         model.addAttribute("user",user);
+        model.addAttribute("mService",mService);
         return "./blog/food_blog";
     } 
 
@@ -71,6 +76,7 @@ public class ViewBlogController {
         model.addAttribute("user",user);
         model.addAttribute("comments",comments);
         model.addAttribute("activeUser",activeUser);
+        model.addAttribute("mService",mService);
 
 
         return "./blog/meal_entry";
