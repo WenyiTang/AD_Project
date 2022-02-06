@@ -1,29 +1,50 @@
 function submitReport() {
     let otherReasonRadioBtn = document.querySelector("#other-reason");
+    let otherReasonTextInput = document.querySelector("#other-reason-text");
+
 
     if(otherReasonRadioBtn.checked) {
+
         //Set value of other-reason radio button to value of text input
-        let otherReasonTextInput = document.querySelector("#other-reason-text")
+        
         otherReasonRadioBtn.setAttribute("value",otherReasonTextInput.value);
     }
     
     let flagForm = document.querySelector("#flag-form");
 
+     // trim() removes trailing whitespaces
+    let reason = flagForm.reason.value.trim();
+
+    //Form validation
+    // Cannot submit form without reason
+    // Will also be triggered if user selects "Other", but leaves text input blank 
+    // or if user only inputs whitespaces to text input.
+    if(!reason) {
+        let warningText = "Please select a reason";
+        if(flagForm.firstChild.innerText === warningText) {
+            // Don't add warning text if it is already there
+            return;
+        }
+        
+        let warningTextDiv = document.createElement("p");
+        let warningTextNode = document.createTextNode(warningText);
+        warningTextDiv.appendChild(warningTextNode);
+        warningTextDiv.setAttribute("style","color:red;")
+
+        flagForm.insertBefore(warningTextDiv,flagForm.firstChild);
+        return;
+    }
+
     let userId = flagForm.getAttribute("data-userId");
 
     let mealEntryId = flagForm.getAttribute("data-mealEntryId");
-
-    // console.log("userId = " + userId);
-    // console.log("mealEntryId = " + mealEntryId);
-
-    // console.log("flagform value = " + flagForm.reason.value);
 
     fetch (
         "http://localhost:8080/api/report/submit?" +
         new URLSearchParams({
             userId: userId,
             mealEntryId: mealEntryId,
-            reason: flagForm.reason.value
+            reason: reason
         }), {
             method: "POST",
             headers: {

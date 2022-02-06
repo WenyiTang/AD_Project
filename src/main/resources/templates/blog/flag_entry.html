@@ -68,7 +68,10 @@
                 <div class="reason-div">
                     <label for="">Other:</label>
                     <input type="radio" name="reason" id="other-reason">
-                    <input class = "other-reason" type="text" name="" id="other-reason-text">
+
+                    <!-- The onkeydown attribute is to prevent user from "submitting" the form by typing in the text
+                        input and pressing the enter key -->
+                    <input class = "other-reason" type="text" name="" id="other-reason-text" onkeydown="return (event.keyCode!=13);">
                 </div>
 
                 <div>
