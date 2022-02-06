@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
+import javax.persistence.Transient;
 import javax.validation.constraints.Past;
 
 import org.hibernate.annotations.LazyCollection;
@@ -46,10 +47,11 @@ public class User {
 	private String gender;
 
 	@Past
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
 	private double height;
 	private double weight;
+	@Column(nullable=true, length=64)
 	private String profilePic;
 	private boolean enabled; 
 	@Column(name = "reset_password_token")
@@ -121,5 +123,15 @@ public class User {
 		this.email = email; 
 		this.enabled = enabled; 
 	}
+	
+	// For displaying profile pic
+	@Transient
+	public String getImagePath() {
+		if (profilePic == null || id == null) {
+			return null; 
+		}
+		return "/user-profilePic/" + id + "/" + profilePic; 
+	}
+	
 
 }

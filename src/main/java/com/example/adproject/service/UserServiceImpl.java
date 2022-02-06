@@ -70,5 +70,12 @@ public class UserServiceImpl implements UserService {
 		user.setResetPasswordToken(null);
 		uRepo.save(user); 
 	}
+	
+	@Override
+	public User save(User user) {
+		uRepo.save(user); 
+		
+		return uRepo.findByUsername(user.getUsername()); 
+	}
 
 }
