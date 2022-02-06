@@ -42,7 +42,7 @@
 
         <div class="flag-area">
             <h2>Flag as inappropriate</h2>
-            <form th:attr="id = 'total-likes-mealentry-' + ${entry.id}, data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}" action="" id="flag-form">
+            <form th:attr="data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}" action="" id="flag-form">
                 <h3>Reason:</h3>
 
                 <div class="reason-div">
