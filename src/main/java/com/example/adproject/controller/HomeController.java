@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.adproject.service.MealEntryService;
+import com.example.adproject.service.UserService;
 
 
 @Controller
@@ -17,12 +18,16 @@ public class HomeController {
 	@Autowired
 	private MealEntryService service;
 	
+	@Autowired
+	private UserService uService;
+	
 	@RequestMapping("/index")
-	public String getHomePage(Model model) {
-		long countOnT = service.getAllEntry().stream()
+	public String getHomePage(Model model, Principal principal) {
+		Integer userId = uService.findUserByUsername(principal.getName()).getId();
+		long countOnT = service.findEntryByAuthor(userId).stream()
 						.filter(x->x.getTrackScore()==1)
 						.count();
-		long countOffT = service.getAllEntry().stream()
+		long countOffT = service.findEntryByAuthor(userId).stream()
 						.filter(x->x.getTrackScore() == 0)
 						.count();
 		
@@ -31,12 +36,5 @@ public class HomeController {
 		return "index";
 	}
 	
-//	@RequestMapping("/dashboard")
-//	public String userDashboard(Model model, Principal principal) {
-//		Integer userId = uService.findUserByUsername(principal.getName()).userId;
-//		Employee employee = eService.findByUserId(userId);
-//		model.addAttribute("employee",employee);
-//		return "dashboard";
-//	}
 
 }

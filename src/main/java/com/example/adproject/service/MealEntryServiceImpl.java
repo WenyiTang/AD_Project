@@ -4,21 +4,23 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.User;
 import com.example.adproject.repo.MealEntryRepo;
 
 
-public interface MealEntryService {
-	
-//	@Autowired
-//	private MealEntryRepo repository;
-//	
-//	public List<MealEntry> getAllEntry(){
-//		return repository.findAll();
-//	}
+@Service
+public class MealEntryServiceImpl implements MealEntryService {
 
-	public List<MealEntry> findEntryByAuthor(Integer userId);
+	@Autowired
+	private MealEntryRepo repository;
+
+	@Transactional
+	public List<MealEntry> findEntryByAuthor(Integer userId){
+		return repository.findEntryByAuthor(userId);
+	}
+
 	
 }
