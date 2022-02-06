@@ -49,11 +49,13 @@
 								<li><a class="dropdown-item" th:href="@{/staff/listot}"> Manage Socials</a></li>
 							</ul>
 						</li>
-					</ul>
-					<ul class="navbar-nav ms-auto">
-						<li class="nav-item">
-						<form th:action="@{/logout}" method="POST"><input type="submit" value="Logout"/></form>
-						<!--<a class="nav-link" th:href="@{/logout}"> Logout </a>-->
+						<li class="nav-item dropdown">
+							<a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown" type="button">
+								Account </a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" th:href="@{/staff/addot}"> Edit Profile </a></li>
+								<li><a class="dropdown-item" th:href="@{/logout}"> Logout </a></li>								
+							</ul>
 						</li>
 					</ul>
 				</div>
