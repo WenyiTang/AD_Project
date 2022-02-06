@@ -1,12 +1,14 @@
 package com.example.adproject.viewBlog;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
 import com.example.adproject.AdProjectApplication;
 import com.example.adproject.model.Report;
 import com.example.adproject.repo.ReportRepo;
+import com.example.adproject.service.MealEntryService;
 import com.example.adproject.service.ReportService;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -31,6 +33,9 @@ public class ReportTest {
     @Autowired
     ReportRepo rRepo;
 
+    @Autowired 
+    MealEntryService mService;
+
     @Test
     @Order(1)
     void testSubmitReport() {
@@ -47,9 +52,19 @@ public class ReportTest {
         assertEquals(reports.size(),1);
         
     }
-
+    
     @Test
     @Order(2)
+    void testHasUserFlaggedThis() {
+        Integer userId = 1;
+        Integer mealEntryId = 1;
+
+        assertTrue(mService.hasUserFlaggedThis(userId, mealEntryId));
+
+    }
+
+    @Test
+    @Order(3)
     void testDeleteReportsByMealEntryId() {
         Integer mealEntryId = 1;
         rService.deleteReportsByMealEntryId(mealEntryId);

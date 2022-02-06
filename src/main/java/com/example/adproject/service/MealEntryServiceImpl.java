@@ -19,6 +19,9 @@ public class MealEntryServiceImpl implements MealEntryService{
     @Autowired
     UserRepo uRepo;
 
+    @Autowired
+    ReportService rService;
+
     @Override
     public void likeEntryByObject(User user, MealEntry mealEntry) {
         if(user == null || mealEntry == null) {
@@ -130,8 +133,17 @@ public class MealEntryServiceImpl implements MealEntryService{
 
     @Override
     public Boolean hasUserFlaggedThis(Integer userId, Integer mealEntryId) {
-        // TODO Auto-generated method stub
-        return null;
+        List<Report> reports = rService.getReportsByMealEntryId(mealEntryId);
+        User reporter = uRepo.findById(userId).get();
+        if (reports == null || reporter == null) {
+            return false;
+        }
+        for(Report report : reports) {
+            if(report.getReporter().equals(reporter)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
