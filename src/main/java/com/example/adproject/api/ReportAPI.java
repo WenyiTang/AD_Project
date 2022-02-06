@@ -20,7 +20,7 @@ public class ReportAPI {
     @Autowired
     ReportService rService;
 
-    @PostMapping("/flag")
+    @PostMapping("/submit")
     public Report submitReport(@RequestParam Integer userId, 
                                  @RequestParam Integer mealEntryId,
                                  @RequestParam String reason)

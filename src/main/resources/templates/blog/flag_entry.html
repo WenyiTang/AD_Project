@@ -27,7 +27,7 @@
 
         <div>
             <h1 class = "page-title" th:text = "${#strings.capitalize(user.username)} + '\'s Entry'"></h1>
-            <a th:href="@{'/blog/view/' + ${user.id}}">back</a>
+            <a th:href="@{'/blog/view/entry/' + ${entry.id}}">back</a>
         </div>
     </div>
 
@@ -42,7 +42,7 @@
 
         <div class="flag-area">
             <h2>Flag as inappropriate</h2>
-            <form action="" id="flag-form">
+            <form th:attr="id = 'total-likes-mealentry-' + ${entry.id}, data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}" action="" id="flag-form">
                 <h3>Reason:</h3>
 
                 <div class="reason-div">
@@ -72,11 +72,11 @@
                 </div>
 
                 <div>
-                    <button type="button" onclick="submitFlagForm()">Submit</button>
+                    <button type="button" onclick="submitReport()">Submit</button>
                 </div>
 
             </form>
-            <script src="/blog/javascript/submit_flag.js"></script>
+            <script src="/blog/javascript/submit_report.js"></script>
 
 
         </div>

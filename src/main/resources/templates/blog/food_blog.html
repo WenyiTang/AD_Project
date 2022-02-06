@@ -50,7 +50,9 @@
                 
                 <img th:unless = "${mService.hasUserLikedThis(activeUser.id,entry.id)}" th:attr="data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}" src="/blog/images/thumb-logo-no-fill.svg" class = "thumb-logo" alt=""> 
                 
-                <img src="/blog/images/flag_logo.svg" alt="">
+                <a th:href="@{'/blog/report/entry/' + ${entry.id}}">
+                    <img src="/blog/images/flag-logo-no-fill.svg" alt="">
+                </a>
 
             </div>
 

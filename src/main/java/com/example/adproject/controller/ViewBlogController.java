@@ -98,7 +98,7 @@ public class ViewBlogController {
         return "redirect:/blog/view/entry/" + id.toString();
     }
 
-    @GetMapping("/view/entry/flag/{id}")
+    @GetMapping("/report/entry/{id}")
     public String flagEntry(HttpSession session, Model model, @PathVariable Integer id) {
 
         MealEntry entry = mRepo.findById(id).get();

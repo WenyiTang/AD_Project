@@ -1,4 +1,4 @@
-function submitFlagForm() {
+function submitReport() {
     let otherReasonRadioBtn = document.querySelector("#other-reason");
 
     if(otherReasonRadioBtn.checked) {
@@ -10,6 +10,13 @@ function submitFlagForm() {
     let flagForm = document.querySelector("#flag-form");
 
     // console.log("flagform value = " + flagForm.reason.value);
+
+    // fetch (
+    //     "http://localhost:8080/api/report/flag?" +
+    //     new URLSearchParams({
+
+    //     })
+    // )
 
     
 }
