@@ -270,4 +270,35 @@ public class EntryCommentLikeTest {
 		System.out.println(m1.getLikers().size());
 	}
 	
+	@Test
+	@Order(14)
+	public void seedEntries() {
+		User u1 = urepo.findById(1).get();
+		Goal g1 = grepo.findById(1).get();
+		MealEntry mealEntry1 = new MealEntry();
+		mealEntry1.setImageURL("www.someurl.sg");
+		mealEntry1.setVisibility(false);
+		mealEntry1.setTitle("Chicken rice");
+		mealEntry1.setDescription("Chicken rice, Chilli, roasted, quick meal");
+		mealEntry1.setFlagged(true);
+		mealEntry1.setFeeling(FeelingEnum.CRYING);
+		mealEntry1.setTrackScore(1);
+		mealEntry1.setTimeStamp(LocalDateTime.now());
+		mealEntry1.setGoal(g1);
+		mealEntry1.setAuthor(u1);
+		merepo.save(mealEntry1);
+		
+		MealEntry mealEntry2 = new MealEntry();
+		mealEntry2.setImageURL("www.someurl.sg");
+		mealEntry2.setVisibility(false);
+		mealEntry2.setTitle("Nasi Lemak");
+		mealEntry2.setDescription("Nasi lemak, fried chicken, sambal, fragrant rice");
+		mealEntry2.setFlagged(true);
+		mealEntry2.setFeeling(FeelingEnum.PENSIVE);
+		mealEntry2.setTrackScore(0);
+		mealEntry2.setTimeStamp(LocalDateTime.now());
+		mealEntry2.setGoal(g1);
+		mealEntry2.setAuthor(u1);
+		merepo.save(mealEntry2);
+	}
 }
