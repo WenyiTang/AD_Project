@@ -3,6 +3,7 @@ package com.example.adproject.service;
 import java.util.List;
 
 import com.example.adproject.model.MealEntry;
+import com.example.adproject.model.Report;
 import com.example.adproject.model.User;
 import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
@@ -125,6 +126,16 @@ public class MealEntryServiceImpl implements MealEntryService{
 
         return false;
     }
+
+
+    @Override
+    public Boolean hasUserFlaggedThis(Integer userId, Integer mealEntryId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+  
 
 
     

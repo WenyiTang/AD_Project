@@ -97,5 +97,24 @@ public class ViewBlogController {
 
         return "redirect:/blog/view/entry/" + id.toString();
     }
+
+    @GetMapping("/view/entry/flag/{id}")
+    public String flagEntry(HttpSession session, Model model, @PathVariable Integer id) {
+
+        MealEntry entry = mRepo.findById(id).get();
+        
+        String activeUsername = session.getAttribute("username").toString();
+        User activeUser = uRepo.findByUsername(activeUsername);
+        if(entry == null) {
+            return null;
+        }
+        User user = entry.getAuthor();
+
+        model.addAttribute("entry", entry);
+        model.addAttribute("user",user);
+        model.addAttribute("activeUser",activeUser);
+
+        return "./blog/flag_entry";
+    }
     
 }

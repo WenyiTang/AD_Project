@@ -3,6 +3,7 @@ package com.example.adproject.service;
 import java.util.List;
 
 import com.example.adproject.model.MealEntry;
+import com.example.adproject.model.Report;
 import com.example.adproject.model.User;
 
 import org.springframework.stereotype.Component;
@@ -25,6 +26,10 @@ public interface MealEntryService {
     public Integer getTotalNumberOfLikesById(Integer mealEntryId);
 
     public Boolean hasUserLikedThis(Integer userId, Integer mealEntryId);
+
+    public Boolean hasUserFlaggedThis(Integer userId, Integer mealEntryId);
+
+ 
 
 
     

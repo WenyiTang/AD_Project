@@ -2,6 +2,7 @@
 let thumbLogos = document.querySelectorAll(".thumb-logo");
 
 // Add event listener to all thumb logos
+// Can probably get thymeleaf to do this o.o
 let idCount = 0;
 thumbLogos.forEach((thumbLogo) => {
   thumbLogo.setAttribute("id", "thumb-logo-" + idCount.toString());

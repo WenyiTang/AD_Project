@@ -1,0 +1,87 @@
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag Meal Entry</title>
+    <link rel="stylesheet" href="/blog/styles/flag_entry.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class = "navbar">
+
+        <div id = "upper-half">
+            <div id = "logo">
+                <img src="/blog/images/app_logo.svg" alt="Salad">
+                <h1 id = "app-title">Food Diary</h1>
+            </div>
+
+            <div id = "account-avatar">
+                <img id = "avatar" src="/blog/images/avatar.png" alt="User avatar">
+                <span id = "account">Account</span>
+            </div>
+        </div>
+
+        <div>
+            <h1 class = "page-title" th:text = "${#strings.capitalize(user.username)} + '\'s Entry'"></h1>
+            <a th:href="@{'/blog/view/' + ${user.id}}">back</a>
+        </div>
+    </div>
+
+
+    <div class = "content-area">
+        <div class = "details">
+            <img class = "pic" th:src="@{${entry.imageURL}}" alt="">
+            <h2 class = "title" th:text = "${entry.title}" ></h2>
+            <p class = "date" th:text = ${{entry.timeStamp}}></p>
+            <p class = "description" th:text = "${entry.description}"></p>
+        </div>
+
+        <div class="flag-area">
+            <h2>Flag as inappropriate</h2>
+            <form action="" id="flag-form">
+                <h3>Reason:</h3>
+
+                <div class="reason-div">
+                    <label for="">Offensive language</label>
+                    <input type="radio" name="reason" value = "offensive language" id="">
+                </div>
+
+                <div class="reason-div">
+                    <label for="">Offensive image</label>
+                    <input type="radio" name="reason" value = "offensive image" id="">
+                </div>
+
+                <div class="reason-div">
+                    <label for="">Irrelevant</label>
+                    <input type="radio" name="reason" value = "irrelevant" id="">
+                </div>
+
+                <div class="reason-div">
+                    <label for="">Advertisement</label>
+                    <input type="radio" name="reason" value = "advertisement" id="">
+                </div>
+
+                <div class="reason-div">
+                    <label for="">Other:</label>
+                    <input type="radio" name="reason" id="other-reason">
+                    <input class = "other-reason" type="text" name="" id="other-reason-text">
+                </div>
+
+                <div>
+                    <button type="button" onclick="submitFlagForm()">Submit</button>
+                </div>
+
+            </form>
+            <script src="/blog/javascript/submit_flag.js"></script>
+
+
+        </div>
+       
+            
+
+    </div>
+</body>
