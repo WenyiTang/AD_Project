@@ -1,6 +1,7 @@
 package com.example.adproject.security;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.adproject.model.Goal;
+import com.example.adproject.model.MealEntry;
 import com.example.adproject.repo.GoalRepo;
 import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.service.UserService;
@@ -38,11 +40,15 @@ public class LoginController {
 						.count();
 		
 		Goal currentGoal= gRepo.findCurrentGoal(userId);
+		List<Goal> completedGoal = gRepo.findCompletedGoals(userId);
+		List<MealEntry> allEntries = mRepo.findEntryByAuthor(userId);
 		
-		
+
 		model.addAttribute("onTrack", countOnT);
 		model.addAttribute("offTrack", countOffT);
 		model.addAttribute("currentGoal", currentGoal);
+		model.addAttribute("completedGoal", completedGoal);
+		model.addAttribute("allEntries", allEntries);
 		model.addAttribute("title", "Food Diary - Home"); 
 		return "index"; 
 	}
