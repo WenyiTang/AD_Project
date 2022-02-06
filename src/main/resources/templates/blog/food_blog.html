@@ -42,6 +42,9 @@
             </a>
             <h2 class = "title" th:text = "${entry.title}" ></h2>
             <p class = "date" th:text = ${{entry.timeStamp}}></p>
+            <p class = "inappropriate-text" th:if = "${mService.hasUserFlaggedThis(activeUser.id,entry.id)}">
+                You have flagged this post as inappropriate
+            </p>
             <p class = "description" th:text = "${entry.description}"></p>
             <p class = "likes">Liked by <span class ="total-likes" th:text = "${mService.getTotalNumberOfLikesById(entry.id)}" th:attr="id = 'total-likes-mealentry-' + ${entry.id}, data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}"></span> users</p>
             <div class = "like-flag">
@@ -50,7 +53,11 @@
                 
                 <img th:unless = "${mService.hasUserLikedThis(activeUser.id,entry.id)}" th:attr="data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}" src="/blog/images/thumb-logo-no-fill.svg" class = "thumb-logo" alt=""> 
                 
-                <a th:href="@{'/blog/report/entry/' + ${entry.id}}">
+                <span title = "You have flagged this entry as inappropriate" th:if = "${mService.hasUserFlaggedThis(activeUser.id,entry.id)}">
+                    <img  src="/blog/images/flag-logo-red-fill.svg" alt="">
+                </span>
+
+                <a th:unless = "${mService.hasUserFlaggedThis(activeUser.id,entry.id)}" th:href="@{'/blog/report/entry/' + ${entry.id}}">
                     <img src="/blog/images/flag-logo-no-fill.svg" alt="">
                 </a>
 

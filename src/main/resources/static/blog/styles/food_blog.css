@@ -73,7 +73,7 @@ body {
     grid-template-areas: 
     "pic title likes"
     "pic date like-flag"
-    "pic description blank"    
+    "pic description inappropriate-text"    
     
     ;
 }
@@ -99,6 +99,13 @@ body {
 }
 .description {
     grid-area: description;
+}
+.inappropriate-text {
+    grid-area:inappropriate-text;
+    color:red;
+
+    /* This width seems to keep things aligned */
+    width:100px;
 }
 
 .likes {

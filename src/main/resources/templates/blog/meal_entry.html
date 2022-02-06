@@ -42,9 +42,15 @@
             <div class = "like-flag">
                 <img th:if = "${mService.hasUserLikedThis(activeUser.id,entry.id)}"  th:attr="data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}" src="/blog/images/thumb-logo-blue-fill.svg" class = "thumb-logo" alt=""> 
                 <img th:unless = "${mService.hasUserLikedThis(activeUser.id,entry.id)}"  th:attr="data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}" src="/blog/images/thumb-logo-no-fill.svg" class = "thumb-logo" alt=""> 
-                <a th:href="@{'/blog/report/entry/' + ${entry.id}}">
+                <span title = "You have flagged this entry as inappropriate" th:if = "${mService.hasUserFlaggedThis(activeUser.id,entry.id)}">
+                    <img  src="/blog/images/flag-logo-red-fill.svg" alt="">
+                </span>
+                <a th:unless = "${mService.hasUserFlaggedThis(activeUser.id,entry.id)}" th:href="@{'/blog/report/entry/' + ${entry.id}}">
                     <img src="/blog/images/flag-logo-no-fill.svg" alt="">
                 </a>
+                <p class = "inappropriate-text" th:if = "${mService.hasUserFlaggedThis(activeUser.id,entry.id)}">
+                    You have flagged this post as inappropriate
+                </p>
             </div>
             <div class = "comments-section">
                 <form class = "comment-div" th:action="@{'/blog/comment/' + ${entry.id}}" method="POST">
