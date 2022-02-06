@@ -15,4 +15,6 @@ public interface MealEntryRepo extends JpaRepository<MealEntry, Integer>{
 	@Query("Select me from MealEntry me where me.author.id = :userid")
 	public List<MealEntry> findEntryByAuthor(@Param("userid") Integer userId);
 
+
+
 }
