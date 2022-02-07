@@ -7,12 +7,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,10 +45,14 @@ public class ManageUserController {
 	}
 	
 	@PostMapping("/create-account")
-	public ModelAndView createNewAccount(@ModelAttribute("user") User user, @RequestParam("fileImage") MultipartFile multipartFile, BindingResult result) throws IOException {
+	public ModelAndView createNewAccount(@Valid @ModelAttribute("user") User user, BindingResult result, @RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
 		
 		if (result.hasErrors()) {
-			return new ModelAndView("create-account"); 
+			ModelAndView mav_error = new ModelAndView(); 
+			String message_error = "Account creation failed. Please try again."; 
+			mav_error.addObject("message_error", message_error); 
+			mav_error.setViewName("create_account"); 
+			return mav_error; 
 		}
 		
 		
@@ -83,7 +90,7 @@ public class ManageUserController {
 		}
 				
 		
-		ModelAndView mav = new ModelAndView(); 
+		ModelAndView mav = new ModelAndView("create_account", "user", new User() {}); 
 		String message = "Account creation successful. Please login.";
 		mav.addObject("message", message);
 		mav.setViewName("create_account");

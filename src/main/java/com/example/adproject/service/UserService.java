@@ -13,6 +13,8 @@ public interface UserService {
     
     User findUserByUsername(String username); 
     
+    User findUserByEmail(String email); 
+    
     void updateResetPasswordToken(String token, String email) throws UserNotFoundException; 
     
     User getByResetPasswordToken(String token);

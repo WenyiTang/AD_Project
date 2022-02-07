@@ -46,6 +46,11 @@ public class UserServiceImpl implements UserService {
 		return uRepo.findByUsername(username); 
 	}
 	
+	@Override 
+	public User findUserByEmail(String email) {
+		return uRepo.findByEmail(email); 
+	}
+	
 	@Override
 	public void updateResetPasswordToken(String token, String email) throws UserNotFoundException {
 		User user = uRepo.findByEmail(email); 
