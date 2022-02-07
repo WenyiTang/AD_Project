@@ -62,18 +62,21 @@ h4{
 	font-size:30px;
 }
 
+
 .button1 a{
-			display:block;
-			width:250px;
-			height:40px;
-           margin-top:30px;
-            background:dodgerblue;
-            border:2px solid darkslategray;
-            border-radius:30px;
-            text-align: center;
-           	font-size: 25px;
-           	text-decoration: none;
-           	color:white;
+			display: block;
+    float: left;
+    width: 250px;
+    height: 40px;
+    margin-inline-end: 300px;
+    margin-top: 30px;
+    background: dodgerblue;
+    border: 2px solid darkslategray;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 25px;
+    text-decoration: none;
+    color: white;
 }
 #container2{overflow: hidden;}
 
@@ -179,3 +182,24 @@ margin-right: 30px;
     font-size:24px;
 }
 
+/* for BMI */
+
+.button1 p {
+    float: left;
+    display: block;
+    margin-left: 90px;
+    font-size: 25px;
+    font-weight: normal;
+    color: #669;
+}
+.button1 span {
+    float: left;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 25px;
+    color: #039;
+    font-weight: bold}
+    
+.button1 {
+	margin-top: 15px;
+    display: block;
+}

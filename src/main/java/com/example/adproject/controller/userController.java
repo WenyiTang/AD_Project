@@ -148,7 +148,14 @@ public class userController {
 		ModelAndView mav = new ModelAndView("staff-course-myProfile");
 		user = uService.findUser(userId);
 		List<Goal> completedGoal = grepo.findCompletedGoals(userId);
+		//Calculate BMI
+		double height =user.getHeight();
+		double weight = user.getWeight();
+		double bmiFloat = weight/(height*height/10000);
+		String bmi = String.format("%.1f",bmiFloat);
+		
 		mav.addObject("user", user);
+		mav.addObject("bmi", bmi);
 		mav.addObject("completedGoal", completedGoal);
 		return mav;
 	}

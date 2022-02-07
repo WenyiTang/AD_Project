@@ -48,7 +48,7 @@
 					<th><span th:text="#{fieldLabel.username}"></span></th>
 					<th><span th:text="#{fieldLabel.password}"></span></th>
 					<th><span th:text="#{fieldLabel.employeeId}"></span></th>
-					<th><span th:text="#{fieldLabel.BMI}"></span></th>
+					
 				</tr>
 			</thead>
 			<tbody>
@@ -57,12 +57,13 @@
 					<td th:text="${user.dateOfBirth}">Name</td>
 					<td th:text="${user.height}">Password</td>
 					<td th:text="${user.weight}">Employee</td>
-					<td th:text="19.5">BMI</td>
 				</tr>
 			</tbody>
 		</table>
 		
-		<div class = "button1">
+		<div class = "button1" th:object="${bmi}" method="get">
+		<span th:text="#{fieldLabel.BMI}"></span>
+		<p th:text="${bmi}">My BMI: </p>
 		<a th:href="@{/user/myProfile/}+${user.id}"> Edit Profile</a>
 	</div>
 	 </div>
