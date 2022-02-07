@@ -19,7 +19,7 @@
 	<div class = "container">
 	
 	<h3 style = "margin-top: 35px;" align="center">Current Goal OverView</h3>
-	<div class = "row">
+	<div class = "row" th:object="${goal}" method="get">
 	<div class="col-6">
 	
 
@@ -27,7 +27,7 @@
     				left:40%;
     				margin:-200px 0 0 -300px;">
 		<img class="img2" th:src="@{/images/cutweight.jpg}" width="300px" height= "200px" alt=""/>
-		<span style="position: absolute; top: 80px; left: 70px;font-size:32px;font-weight:bold;">Cut Weight</span>
+		<span style="position: absolute; top: 80px; left: 70px;font-size:32px;font-weight:bold;" th:text="${goal.goalDescription}">Current Goal</span>
 		
 		</div>
 
@@ -35,12 +35,14 @@
 	</div>
 	
 	<div class="col-6">
-	<h3 style = "font-weight:bold;font-size:40px;margin-left:15px;color: #355681; font-style:italic;" >Status: just started</h3>
-	<h4 style="text-align: center;">You are 70% on-path </h4>
-	<progress style="text-align: center;" value="70" max="100"></progress> 
+	<h3 style = "text-align: center;font-weight:bold;font-size:40px;margin-left:15px;color: #355681; font-style:italic;" th:text="'Status: ' + ${goal.status}">Status</h3>
+	
+	<h4 style="text-align: center;" th:text="'You are ' + ${percentCount} + '% on path!'"></h4>
+
+	<progress style="text-align: center; font-size:50px;" th:value="${percentCount}" max="100"></progress> 
 	<div>
-	 <div style="float:left; margin-right:20px;" >
-		<table>
+	 <div style="float:left; margin-left:110px;" >
+		<table class="currentGtable">
 			<thead>
 				<tr>
 					<th><span th:text="#{fieldLabel.NumMealsOnpath}"></span></th>
@@ -49,10 +51,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr >
-					<td th:text="7">NumMealsOnpath</td>
-					<td th:text="3">NumMealsOffpath</td>
-					<td th:text="10">TotalNumMeals</td>
+				<tr>
+					<td th:text="${onTrack}">NumMealsOnpath</td>
+					<td th:text="${offTrack}">NumMealsOffpath</td>
+					<td th:text="${totalMeals}">TotalNumMeals</td>
 					
 				</tr>
 			</tbody>
@@ -80,17 +82,6 @@
 </div>
 </div>
 	</div>
-<div class = "button2">
-		<a th:href="@{/Goal1}" th:text= "${goals.}" > Cut Weight</a>
-	</div>
-			<div class = "button3">
-		<a th:href="@{/Goal2}"> Eating More Veggies</a>
-	</div>
-	<div class = "button2">
-		<a th:href="@{/Goal1}"> Cut Weight</a>
-	</div>
-	<div class = "button3">
-		<a th:href="@{/Goal2}"> Eating More Veggies</a>
-	</div>
+
 </body>
 </html>

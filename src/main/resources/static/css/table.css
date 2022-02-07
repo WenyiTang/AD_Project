@@ -164,10 +164,12 @@ margin-right: 30px;
 	
 			background:red;
            	color:white;
-           		float: left;
-           		 border-radius:30px;
+           	float: left;
+           	border-radius:30px;
            	text-align: center;
-           		font-size:30px;
+           	font-size:30px;
+           	margin-left: 100px;
+    		margin-top: 25px;
            	
 }
 .AchieveTable table {
@@ -202,4 +204,14 @@ margin-right: 30px;
 .button1 {
 	margin-top: 15px;
     display: block;
+}
+
+ /* progressbar */
+progress {
+    font-size: 50px;
+    margin-left: 40px;
+    }
+    
+.currentGtable{
+	
 }

@@ -37,6 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.adproject.model.Goal;
 import com.example.adproject.model.User;
 import com.example.adproject.repo.GoalRepo;
+import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
 
 
@@ -61,7 +62,8 @@ public class userController {
 	@Autowired
     GoalRepo grepo;
 
-	
+	@Autowired
+	MealEntryRepo mRepo;
 
 
 	
@@ -160,7 +162,26 @@ public class userController {
 		return mav;
 	}
 	@RequestMapping(value = "/goals")
-	public String goals() {
+	public String goals(Model model, Principal principal) {
+		
+		Integer userId = uService.findUserByUsername(principal.getName()).getId();
+		Goal currentgoal = grepo.findCurrentGoal(userId);
+		long countOnT = mRepo.findEntryByAuthor(userId).stream()
+				.filter(x->x.getTrackScore()==1)
+				.count();
+		long countOffT = mRepo.findEntryByAuthor(userId).stream()
+				.filter(x->x.getTrackScore() == 0)
+				.count();
+		
+		long totalmeals = countOnT + countOffT;
+		double percentCount = (countOnT*100/totalmeals) ;
+		String percentCount1 = String.format("%.1f",percentCount);
+		
+		model.addAttribute("onTrack", countOnT);
+		model.addAttribute("offTrack", countOffT);
+		model.addAttribute("totalMeals", totalmeals);
+		model.addAttribute("percentCount", percentCount1);
+		model.addAttribute("goal", currentgoal);
 		return "goal-progress";
 	}
 	
