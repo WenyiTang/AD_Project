@@ -12,7 +12,9 @@ public class LogicalDimensionValidator implements ConstraintValidator<LogicalDim
 
 	@Override
 	public boolean isValid(Double dimension, ConstraintValidatorContext context) {
-		
+		if (dimension == null) {
+			return true; 
+		}
 		return (dimension > 0) ? true : false; 
 	} 
 }

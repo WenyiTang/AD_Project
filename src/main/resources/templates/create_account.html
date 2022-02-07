@@ -17,7 +17,7 @@
 
 		<div th:if="${message != null}">
 			<p class="text-success" th:text="${message}">Account creation successful. Please login.</p>
-			<a th:href="@{/login}">>>Login with new credentials<<< /a>
+			<a th:href="@{/login}">>>Login with new credentials<<</a>
 		</div>
 		<div th:if="${message_error != null}">
 			<p class="text-danger" th:text="${message_error}">Account creation failed. Please try again.</p>

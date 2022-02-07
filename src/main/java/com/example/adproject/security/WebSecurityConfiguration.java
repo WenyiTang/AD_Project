@@ -48,6 +48,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/images/default-profile-picture.jpeg").permitAll()
 			.antMatchers("/login/**").permitAll()
 			.antMatchers("/create-account/**").permitAll()
+			.antMatchers("/create-account-admin/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()

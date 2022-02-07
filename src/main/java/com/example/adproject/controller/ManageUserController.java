@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.adproject.model.Role;
 import com.example.adproject.model.User;
+import com.example.adproject.repo.RoleRepo;
 import com.example.adproject.repo.UserRepo;
 import com.example.adproject.service.UserService;
 
@@ -36,6 +35,9 @@ public class ManageUserController {
 	
 	@Autowired 
 	private UserRepo uRepo; 
+	
+	@Autowired
+	private RoleRepo rRepo; 
 
 	@GetMapping("/create-account")
 	public ModelAndView loadCreateAccountForm() {
@@ -67,7 +69,7 @@ public class ManageUserController {
 		
 		user.setEnabled(true); 
 		
-		Role role = new Role("USER"); 
+		Role role = rRepo.findByType("USER"); 
 		user.getRoles().add(role); 
 		
 		User newUser = uService.save(user); 
@@ -94,6 +96,45 @@ public class ManageUserController {
 		String message = "Account creation successful. Please login.";
 		mav.addObject("message", message);
 		mav.setViewName("create_account");
+		return mav; 
+	}
+	
+	@GetMapping("/create-account-admin") 
+	public ModelAndView loadCreateAdminForm() {
+		ModelAndView mav = new ModelAndView("create_account_admin", "user", new User() {}); 
+		return mav; 
+	}
+	
+	@PostMapping("/create-account-admin")
+	public ModelAndView createNewAccount(@Valid @ModelAttribute("user") User user, BindingResult result) {
+		
+		if (result.hasErrors()) {
+			ModelAndView mav_error = new ModelAndView(); 
+			String message_error = "Account creation failed. Please try again."; 
+			mav_error.addObject("message_error", message_error); 
+			mav_error.setViewName("create_account_admin"); 
+			return mav_error; 
+		}
+		
+		// User's password
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); 
+		String encoderPassword = encoder.encode(user.getPassword()); 
+		user.setPassword(encoderPassword); 
+		
+		user.setEnabled(true); 
+		
+		user.setHeight(1.0);
+		user.setWeight(1.0);
+		
+		Role role = rRepo.findByType("ADMIN");
+		user.getRoles().add(role); 
+		
+		User newUser = uService.save(user); 
+				
+		ModelAndView mav = new ModelAndView("create_account_admin", "user", new User() {}); 
+		String message = "Account creation successful. Please login.";
+		mav.addObject("message", message);
+		mav.setViewName("create_account_admin");
 		return mav; 
 	}
 	

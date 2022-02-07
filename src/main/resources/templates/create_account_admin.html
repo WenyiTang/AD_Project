@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+	<title>Create New Account</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="container-fluid text-center">
+		<h2>Create New Admin Account</h2>
+
+		<div th:if="${message != null}">
+			<p class="text-success" th:text="${message}">Account creation successful. Please login.</p>
+			<a th:href="@{/login}">>>Login with new credentials<<</a>
+		</div>
+		<div th:if="${message_error != null}">
+			<p class="text-danger" th:text="${message_error}">Account creation failed. Please try again.</p>
+		</div>
+	</div>
+
+	<div class="container-fluid text-left">
+		<form th:action="@{/create-account-admin}" th:object="${user}" method="post" style="max-width: 500px; margin: 0 auto;"
+			enctype="multipart/form-data">
+			<div class="border border-secondary p-3 rounded">
+				<p>
+					<label for="username">Username:</label>
+					<input type="text" th:field="*{username}" class="form-control" id="Username" required autofocus />
+				<p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+				</p>
+				<p>
+					<label for="password">Password:</label>
+					<input type="password" th:field="*{password}" class="form-control" id="password" required
+						autofocus />
+				<p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+				</p>
+				<p>
+					<label for="email">Email:</label>
+					<input type="text" th:field="*{email}" class="form-control" id="email" required autofocus />
+				<p class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+				</p>
+					<input type="hidden" th:field="*{height}" value="1"/>
+					<input type="hidden" th:field="*{weight}" value="1"/>
+				<p>
+					<input type="submit" value="Submit" class="btn btn-primary btn-block" />
+				</p>
+			</div>
+		</form>
+	</div>
+	</div>
+</body>
+</html>
