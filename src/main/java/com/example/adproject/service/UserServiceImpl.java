@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.adproject.model.FriendRequest;
 import com.example.adproject.model.User;
@@ -70,5 +71,12 @@ public class UserServiceImpl implements UserService {
 		user.setResetPasswordToken(null);
 		uRepo.save(user); 
 	}
+	
+	@Override
+	@Transactional
+	public User findUser(int userId) {
+		return uRepo.findById(userId).orElse(null);
+	}
+
 
 }

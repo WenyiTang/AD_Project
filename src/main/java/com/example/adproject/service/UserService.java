@@ -19,4 +19,5 @@ public interface UserService {
     
     void updatePassword(User user, String newPassword); 
    
+    User findUser(int id); 
 }
