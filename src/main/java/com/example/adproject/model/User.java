@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.validation.constraints.Past;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -51,6 +52,7 @@ public class User {
 	
 	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL })
 	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonBackReference
 	private List<MealEntry> entries;
 	
 	@ManyToMany(mappedBy = "likers")
