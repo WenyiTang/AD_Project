@@ -1,16 +1,25 @@
 package com.example.adproject.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.http.HttpRequest;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.adproject.helper.FeelingEnum;
 import com.example.adproject.model.MealEntry;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -87,11 +96,59 @@ public class MealEntryController {
 			//newMealEntry.setGoal();
 			meRepo.saveAndFlush(newMealEntry);
 
+			List<Integer> testTrackScore = new ArrayList<>();
+			testTrackScore.add(1);
+			testTrackScore.add(1);
+			testTrackScore.add(1);
+			sendDataToFlaskWMA(3, testTrackScore);
 			return true;
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	private void sendDataToFlaskWMA(int targetCount, List<Integer> trackScore) {
+		try {
+			URL flaskUrl = new URL("http://127.0.0.1.5000/suggestnextmeal");
+			HttpURLConnection httpURLConnection = (HttpURLConnection) flaskUrl.openConnection();
+			httpURLConnection.setConnectTimeout(10000);
+			httpURLConnection.setReadTimeout(10000);
+			httpURLConnection.setRequestMethod("POST");
+			httpURLConnection.setRequestProperty("Content-Type", "application/json: utf-8");
+			httpURLConnection.setRequestProperty("Accept", "application/json");
+			httpURLConnection.setDoOutput(true);
+
+			ObjectMapper jsonMapper = new ObjectMapper();
+			ObjectNode jsonData = jsonMapper.createObjectNode();
+			jsonData.put("targetCount", 3);
+			jsonData.put("trackScore", jsonMapper.writeValueAsString(trackScore));
+
+			String jsonString = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonData);
+			System.out.println(jsonString);
+
+			OutputStream ops = httpURLConnection.getOutputStream();
+			ops.write(jsonString.getBytes(StandardCharsets.UTF_8));
+			ops.close();
+
+			InputStream ips = new BufferedInputStream(httpURLConnection.getInputStream());
+			BufferedReader reader = new BufferedReader(new InputStreamReader(ips));
+			StringBuilder response= new StringBuilder();
+			String responseLine = null;
+			while ((responseLine = reader.readLine()) != null) {
+				response.append(responseLine);
+			}
+			System.out.println(response.toString());
+
+		}
+		catch (MalformedURLException e1) {
+			e1.printStackTrace();
+			System.err.println("Malformed URL Exception: check URL");
+		}
+		catch (IOException e2) {
+			e2.printStackTrace();
+			System.err.println("Post Error: Host Exception");
 		}
 	}
 
