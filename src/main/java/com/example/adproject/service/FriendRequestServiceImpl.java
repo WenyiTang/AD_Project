@@ -55,5 +55,14 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         fRepo.delete(request);
         
     }
-    
+
+    @Override
+    public FriendRequest findAcceptedRequestsByUsers(User firstUser, User secondUser) {
+        return fRepo.findAcceptedRequestByUsers(firstUser, secondUser);
+    }
+
+    @Override
+    public void deleteRequest(FriendRequest request) {
+        fRepo.delete(request);
+    }
 }

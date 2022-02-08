@@ -189,6 +189,14 @@ public class FriendRequestTest {
     	User u = uService.findUserByUsername(username);
     	List<User> friends = uService.findFriendsOf(u);
     	
-    	assertEquals(3, friends.size()); 
+    	assertEquals(5, friends.size());
     }
+
+	@Test
+	@Order(2)
+	void testUsernameContains() {
+		String username = "a";
+		List<User> u = uRepo.findUserWithUsernameLike(username);
+		assertEquals(6,u.size());
+	}
 }

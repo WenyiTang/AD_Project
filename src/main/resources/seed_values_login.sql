@@ -12,12 +12,14 @@ values
 insert into adproject.user
 (date_of_birth, email, enabled, gender, height, name, password, profile_pic, username, weight)
 values
-(str_to_date('2022-01-01', '%Y-%m-%d'), 'james@gmail.com', true,'', 160, 'James', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '','james', 50),
-(str_to_date('2022-01-01', '%Y-%m-%d'), 'jill@gmail.com', true,'', 160, 'Jill', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jill', 50),
-(str_to_date('2022-01-01', '%Y-%m-%d'), 'jake@gmail.com', true,'', 160, 'Jake', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jake', 50),
-(str_to_date('2022-01-01', '%Y-%m-%d'), 'jane@gmail.com', true,'', 160, 'Jane', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jane', 50),
-(str_to_date('2022-01-01', '%Y-%m-%d'), 'appfooddiary@gmail.com', true,'', 160, 'CY', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'cy', 50),
-(null, 'admin@gmail.com', true,'', 0, 'admin', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '','admin', 0);
+    (str_to_date('2022-01-01', '%Y-%m-%d'), 'james@gmail.com', true,'', 160, 'James', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '','james', 50),
+    (str_to_date('2022-01-01', '%Y-%m-%d'), 'bondjames@gmail.com', true,'', 160, 'James Bond', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '','bond_james', 50),
+    (str_to_date('2022-01-01', '%Y-%m-%d'), 'jill@gmail.com', true,'', 160, 'Jill', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jill', 50),
+    (str_to_date('2022-01-01', '%Y-%m-%d'), 'jake@gmail.com', true,'', 160, 'Jake', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jake', 50),
+    (str_to_date('2022-01-01', '%Y-%m-%d'), 'jane@gmail.com', true,'', 160, 'Jane', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jane', 50),
+    (str_to_date('2022-01-01', '%Y-%m-%d'), 'jane123@gmail.com', true,'', 160, 'Jane Tan', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jane123', 50),
+    (str_to_date('2022-01-01', '%Y-%m-%d'), 'appfooddiary@gmail.com', true,'', 160, 'CY', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'cy', 50),
+    (null, 'admin@gmail.com', true,'', 0, 'admin', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '','admin', 0);
 
 
 insert into adproject.users_roles
@@ -28,7 +30,9 @@ values
 (3,1),
 (4,1),
 (5,1),
-(6,2);
+(6,1),
+(7,1),
+(8,2);
 
 
 INSERT INTO adproject.goal 
@@ -50,12 +54,9 @@ VALUES
 INSERT INTO adproject.friend_request
 (sender_user_id, recipient_user_id, status)
 VALUES
-    (2, 1, 'ACCEPTED'),
-    (2, 3, 'ACCEPTED'),
-    (2, 4, 'ACCEPTED'),
-    (2, 5, 'PENDING');
+    (3, 1, 'ACCEPTED'),
+    (3, 2, 'ACCEPTED'),
+    (3, 5, 'ACCEPTED'),
+    (3, 6, 'ACCEPTED'),
+    (3, 7, 'PENDING');
 
-INSERT INTO adproject.friend_request
-(sender_user_id, recipient_user_id, status)
-VALUES
-    (2, 7, 'ACCEPTED');

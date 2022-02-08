@@ -25,25 +25,31 @@
 				<a th:href="@{/socials/friend_requests}" class="btn btn-primary">Friend Requests</a>
 			</div>
 		</div>
+		<br>
+		<div th:if="${message != null}">
+			<p class="text-success" th:text="${message}"></p>
+		</div>
 		&nbsp;
 		<div class="row">
 			<div>
 				<p>Find Friend: </p>
 			</div>
-			<br />
-			<div class="col-10">
-				<input type="text" class="form-control" placerholder="Enter username" />
+		</div>
+		<form class="form-inline">
+			<div class="form-group">
+				<div class="col-sm-9">
+					<input type="text" class="form-control" placeholder="Enter username" id="query"/>
+				</div>
+				<input type="submit" th:value="Search" class="btn btn-primary" id="search">
 			</div>
-			<div class="col-2">
-				<a th:href="@{/socials/friend_requests}" class="btn btn-primary">Search</a>
-			</div>
-		</div >
+		</form>
 		<br/>
 		<div class="row">
 			<table border="1 pt" class="table">
 				<thead class="thead-light">
 					<tr>
 						<th>Profile Pic</th>
+						<th>Username</th>
 						<th>Name</th>
 						<th>Action</th>
 					</tr>

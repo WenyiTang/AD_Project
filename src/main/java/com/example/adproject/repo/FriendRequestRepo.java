@@ -29,5 +29,7 @@ public interface FriendRequestRepo extends JpaRepository<FriendRequest,Integer> 
 
     @Query("SELECT f FROM FriendRequest f WHERE (f.sender = :firstUser AND f.recipient = :secondUser) OR (f.sender = :secondUser AND f.recipient = :firstUser)")
     List<FriendRequest> findExistingRequests(@Param("firstUser") User firstUser,@Param("secondUser") User secondUser);
-    
+
+    @Query("SELECT f FROM FriendRequest f WHERE f.status = 'ACCEPTED' AND (f.sender = :firstUser AND f.recipient = :secondUser) OR (f.sender = :secondUser AND f.recipient = :firstUser)")
+    FriendRequest findAcceptedRequestByUsers(@Param("firstUser") User firstUser, @Param("secondUser") User secondUser);
 }

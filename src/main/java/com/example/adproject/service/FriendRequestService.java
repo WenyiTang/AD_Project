@@ -13,4 +13,8 @@ public interface FriendRequestService {
     public void acceptRequest(Integer id);
 
     public void rejectRequest(FriendRequest request);
+
+    public FriendRequest findAcceptedRequestsByUsers(User firstUser, User secondUser);
+
+    public void deleteRequest(FriendRequest request);
 }

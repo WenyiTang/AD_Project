@@ -15,40 +15,12 @@
 	&nbsp;
 	<div class="container">
 		<div>
-			<p>>Username: <span th:text="${friend.username}"></span ></p>
-		</div>
-		&nbsp;
-		<div>
 			<p>Name: <span th:text="${friend.name}"></span ></p>
 		</div>
-		&nbsp;
-		<div class="row">
-			<div>
-				<p>Mutual Friends: </p>
-			</div>
-			<br />
-			<div class="col-10">
-				<input type="text" class="form-control" placerholder="Enter username" />
-			</div>
-			<div class="col-2">
-				<a th:href="@{/socials/friend_requests}" class="btn btn-primary">Search</a>
-			</div>
-		</div >
-		<br/>
-		<div class="row">
-			<table border="1 pt" class="table">
-				<thead class="thead-light">
-					<tr>
-						<th>Profile Pic</th>
-						<th>Name</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody id="friendsTbl">
-				</tbody>
-			</table>
+		<div>
+			<p>Username: <span th:text="${friend.username}"></span ></p>
 		</div>
-	</div>
+		&nbsp
 	<div class="container">
 		<div class="row">
 			<div class="col-6">
@@ -58,12 +30,14 @@
 		<br/>
 		<div class="row">
 			<div class="col-3">
-				<a th:href="@{/socials/friend_requests}" class="btn btn-danger btn-block">Delete Friend</a>
+				<a th:href="@{/socials/friend/delete/} + ${friend.username}" class="btn btn-danger btn-block">Delete Friend</a>
 			</div>
 			<div class="col-3">
 				<a th:href="@{/socials/manage}" class="btn btn-secondary btn-block">Back</a>
 			</div>
-		</div >
+		</div>
+		<br>
+<!--		Yet to implement confirm delete modal pop-up-->
 	</div>
 </body>
 <!--<script th:src="@{/js/manage_socials/manage_socials.js}"></script> -->
