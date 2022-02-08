@@ -39,6 +39,8 @@ import com.example.adproject.model.User;
 import com.example.adproject.repo.GoalRepo;
 import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
+import com.example.adproject.service.GoalService;
+
 
 
 
@@ -55,9 +57,13 @@ public class userController {
 	@Autowired
 	private com.example.adproject.service.UserService uService;
 	
+	@Autowired
+    private GoalService gService;
+	
 
 	@Autowired
     UserRepo urepo;
+
 
 	@Autowired
     GoalRepo grepo;
@@ -124,23 +130,7 @@ public class userController {
 		return mav;
 	}
 	
-//	@RequestMapping(value = "/myProfile/{id}", method = RequestMethod.POST)
-//	public ModelAndView editProfile(Principal principal,@RequestParam String name,@RequestParam String dateOfBirth, 
-//			@RequestParam double height, @RequestParam double weight )  {
-//		ModelAndView mav = new ModelAndView();
-//		
-//		String message = "User was successfully updated.";
-//		System.out.println(message);
-//		Integer userId = uService.findUserByUsername(principal.getName()).getId();
-//		User updateUser = urepo.findById(userId).get();
-//		updateUser.setName(name);
-//		updateUser.setDateOfBirth(dateOfBirth);
-//		updateUser.setHeight(height);
-//		updateUser.setWeight(weight);
-//		urepo.saveAndFlush(updateUser);
-//		mav.setViewName("forward:/user/myProfile/");
-//		return mav;
-//	}
+
 	
 	@RequestMapping(value = "/myProfile", method = RequestMethod.GET)
 	public ModelAndView ViewMyProfile(@ModelAttribute User user,
@@ -150,6 +140,7 @@ public class userController {
 		ModelAndView mav = new ModelAndView("staff-course-myProfile");
 		user = uService.findUser(userId);
 		List<Goal> completedGoal = grepo.findCompletedGoals(userId);
+		
 		//Calculate BMI
 		double height =user.getHeight();
 		double weight = user.getWeight();
@@ -161,6 +152,7 @@ public class userController {
 		mav.addObject("completedGoal", completedGoal);
 		return mav;
 	}
+	//View current goal progress
 	@RequestMapping(value = "/goals")
 	public String goals(Model model, Principal principal) {
 		
@@ -184,15 +176,19 @@ public class userController {
 		model.addAttribute("goal", currentgoal);
 		return "goal-progress";
 	}
-	
-//	@RequestMapping(value = "/goals")
-//	public String goals(Model model, Principal principal) {
-//		
-//		model.addAttribute("goals", goals);
-//	
-//		return "goal-progress";
-//	}
 
 
+	//Save&Continue end of a goal
+	@RequestMapping(value = "/goals/continue")
+	public String Continue(Principal principal, Model model) {
+		Integer userId = uService.findUserByUsername(principal.getName()).getId();
+		Goal goaltoEnd = grepo.findCurrentGoal(userId);
+		gService.cancelGoal(goaltoEnd);
+		String msg = "Leave was successfully cancelled.";
+		System.out.println(msg);	
+		return "index";
+		
+		
+	}
 	
 }

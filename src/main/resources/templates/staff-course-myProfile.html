@@ -1,104 +1,86 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-
-<head th:replace="fragments/layout.html :: html_head" >
-<meta charset="ISO-8859-1" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-
-<!-- Optional theme -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
-<link th:rel="stylesheet" th:href="@{/css/bootstrap.css}">
-	<link rel="stylesheet" th:href="@{/css/simple.css}" />
-	<link rel="stylesheet" th:href="@{/css/table.css}" />
-</head>
-
-<body>
-	<div th:replace="fragments/layout.html :: menu" />
-	
-
-	<div class = "container">
-	
-	<h3 style = "margin-top: 35px;" align="center">Account OverView</h3>
-	<div class = "row">
-	<div class="col-6">
-	<div class = "avatar-intro">
-	<p style="text-align:center">My Profile photo</p>
-	</div>
-	<div class = "avatar">
-	
-	<img
-			th:src="@{'/images/' + ${user.profilePic}}" width="150px" height= "150px" />
-	</div>
-	<div class ="editPhoto">
-	<img 
-			th:src="@{/images/R.png}" width="20px" height= "20px" onclick='window.open("http://www.google.com")' />
-	</div>		
-	</div>
-	
-	<div class="col-6">
-	<h4 style = "font-weight:bold;font-size:40px;margin-left:15px;color: #355681; font-style:italic;">Profile</h4>
-	<div>
-	 <div style="float:left; margin-right:20px;" >
-		<table>
-			<thead>
-				<tr>
-					<th><span th:text="#{fieldLabel.userId}"></span></th>
-					<th><span th:text="#{fieldLabel.username}"></span></th>
-					<th><span th:text="#{fieldLabel.password}"></span></th>
-					<th><span th:text="#{fieldLabel.employeeId}"></span></th>
-					
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:object="${user}" method="get">
-					<td th:text="${user.name}">Id</td>
-					<td th:text="${user.dateOfBirth}">Name</td>
-					<td th:text="${user.height}">Password</td>
-					<td th:text="${user.weight}">Employee</td>
-				</tr>
-			</tbody>
-		</table>
-		
-		<div class = "button1" th:object="${bmi}" method="get">
-		<span th:text="#{fieldLabel.BMI}"></span>
-		<p th:text="${bmi}">My BMI: </p>
-		<a th:href="@{/user/myProfile/}+${user.id}"> Edit Profile</a>
-	</div>
-	 </div>
-		
-	</div>
-	
-
-		
-</div>
-</div>
-<div>
-<h3 style = "margin-top: 25px;" align="center">Archievements</h3>
-<div class="AchieveTable" th:unless="${#lists.isEmpty(completedGoal)}">
-		<table >
-		<thead>
-		<tr class="listHeading">
-				<th><span>Achievement</span></th>
-				<th><span>Start Date</span></th>
-				<th><span>End Date</span></th>
-			
-			</tr>
-			</thead>
-			<tbody>
-			<tr th:each="achievement : ${completedGoal}" class="listRecord">
-				<td align="left" th:text="${achievement?.goalDescription}">Name</td>
-				<td align="left" th:text="${#temporals.format(achievement?.startDate, 'dd/MMM/yyyy')}">Start Date</td>
-				<td align="left" th:text="${#temporals.format(achievement?.endDate, 'dd/MMM/yyyy')}">End Date</td>
-			</tr>
-			</tbody>
-		</table>
-		
-		
-</div>
-</div>
-</div>
-	
-</body>
+   <head th:replace="fragments/layout.html :: html_head" >
+      <meta charset="ISO-8859-1" />
+      <link rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+      <!-- Optional theme -->
+      <link rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+      <link th:rel="stylesheet" th:href="@{/css/bootstrap.css}">
+      <link rel="stylesheet" th:href="@{/css/simple.css}" />
+      <link rel="stylesheet" th:href="@{/css/table.css}" />
+   </head>
+   <body>
+      <div th:replace="fragments/layout.html :: menu" />
+      <div class = "container">
+         <h3 style = "margin-top: 35px;" align="center">Account OverView</h3>
+         <div class = "row">
+            <div class="col-6">
+               <div class = "avatar-intro">
+                  <p style="text-align:center">My Profile photo</p>
+               </div>
+               <div class = "avatar">
+                  <img
+                     th:src="@{'/images/' + ${user.profilePic}}" width="150px" height= "150px" />
+               </div>
+               <div class ="editPhoto">
+                  <img 
+                     th:src="@{/images/R.png}" width="20px" height= "20px" onclick='window.open("http://www.google.com")' />
+               </div>
+            </div>
+            <div class="col-6">
+               <h4 style = "font-weight:bold;font-size:40px;margin-left:15px;color: #355681; font-style:italic;">Profile</h4>
+               <div>
+                  <div style="float:left; margin-right:20px;" >
+                     <table>
+                        <thead>
+                           <tr>
+                              <th><span th:text="#{fieldLabel.userId}"></span></th>
+                              <th><span th:text="#{fieldLabel.username}"></span></th>
+                              <th><span th:text="#{fieldLabel.password}"></span></th>
+                              <th><span th:text="#{fieldLabel.employeeId}"></span></th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr th:object="${user}" method="get">
+                              <td th:text="${user.name}">Id</td>
+                              <td th:text="${user.dateOfBirth}">Name</td>
+                              <td th:text="${user.height}">Password</td>
+                              <td th:text="${user.weight}">Employee</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                     <div class = "button1" th:object="${bmi}" method="get">
+                        <span th:text="#{fieldLabel.BMI}"></span>
+                        <p th:text="${bmi}">My BMI: </p>
+                        <a th:href="@{/user/myProfile/}+${user.id}"> Edit Profile</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div>
+            <h3 style = "margin-top: 25px;" align="center">Archievements</h3>
+            <div class="AchieveTable" th:unless="${#lists.isEmpty(completedGoal)}">
+               <table >
+                  <thead>
+                     <tr class="listHeading">
+                        <th><span>Achievement</span></th>
+                        <th><span>Start Date</span></th>
+                        <th><span>End Date</span></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr th:each="achievement : ${completedGoal}" class="listRecord">
+                        <td align="left" th:text="${achievement?.goalDescription}">Name</td>
+                        <td align="left" th:text="${#temporals.format(achievement?.startDate, 'dd/MMM/yyyy')}">Start Date</td>
+                        <td align="left" th:text="${#temporals.format(achievement?.endDate, 'dd/MMM/yyyy')}">End Date</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+   </body>
 </html>
