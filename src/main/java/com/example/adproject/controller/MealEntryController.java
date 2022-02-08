@@ -22,7 +22,7 @@ import com.example.adproject.repo.UserRepo;
 @RequestMapping("/api")
 public class MealEntryController {
 	
-	@Value("$(upload.file.path)")
+	@Value("${upload.file.path}")
 	private String uploadPathStr;
 	
 	@Autowired
@@ -30,6 +30,11 @@ public class MealEntryController {
 	
 	@Autowired
 	MealEntryRepo meRepo;
+	
+	@PostMapping("/test")
+	public String testmethod(@RequestParam String arg) {
+		return "test method success";
+	}
 	
 	
 	@PostMapping("/uploadMealEntry")
@@ -40,6 +45,8 @@ public class MealEntryController {
 								   @RequestParam String feeling,
 								   @RequestParam String trackScore,
 								   @RequestParam String timeStamp) {
+		
+		System.out.println("test");
 		if (multipartFile == null || multipartFile.isEmpty()) {
 			return false;
 		}
