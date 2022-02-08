@@ -6,7 +6,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+import com.example.adproject.helper.FeelingEnum;
+import com.example.adproject.model.MealEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,8 +49,8 @@ public class MealEntryController {
 								   @RequestParam String feeling,
 								   @RequestParam String trackScore,
 								   @RequestParam String timeStamp) {
-		
-		System.out.println("test");
+
+		//STILL NEED USER DETAILS
 		if (multipartFile == null || multipartFile.isEmpty()) {
 			return false;
 		}
@@ -64,12 +68,48 @@ public class MealEntryController {
 			System.out.println(feeling);
 			System.out.println(trackScore);
 			System.out.println(timeStamp);
-			
+
+			FeelingEnum feeling_ = getFeelingEnumVal(feeling);
+			int trackScore_ = Integer.parseInt(trackScore);
+			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+			LocalDateTime timeStamp_ = LocalDateTime.parse(timeStamp, format);
+
+			//get user
+			//get goal
+			MealEntry newMealEntry = new MealEntry();
+			newMealEntry.setImageURL(imageURL);
+			newMealEntry.setFilename(imageFileName);
+			newMealEntry.setTitle(mealTitle);
+			newMealEntry.setFeeling(feeling_);
+			newMealEntry.setTrackScore(trackScore_);
+			newMealEntry.setTimeStamp(timeStamp_);
+			//newMealEntry.setAuthor();
+			//newMealEntry.setGoal();
+			meRepo.saveAndFlush(newMealEntry);
+
 			return true;
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	private FeelingEnum getFeelingEnumVal(String feeling) {
+		if (feeling.equalsIgnoreCase("crying")) {
+			return FeelingEnum.CRYING;
+		}
+		if (feeling.equalsIgnoreCase("pensive")) {
+			return FeelingEnum.PENSIVE;
+		}
+		if (feeling.equalsIgnoreCase("happy")) {
+			return FeelingEnum.HAPPY;
+		}
+		if (feeling.equalsIgnoreCase("joyful")) {
+			return FeelingEnum.JOYFUL;
+		}
+		else {
+			return null;
 		}
 	}
 }
