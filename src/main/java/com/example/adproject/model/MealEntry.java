@@ -18,11 +18,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.example.adproject.helper.FeelingEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.example.adproject.helper.FeelingEnum;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,20 +49,24 @@ public class MealEntry {
 	// @DateTimeFormat(pattern ="dd-MM-yyyy")
 	// @DateTimeFormat(pattern ="h:mm a, d MMM yyyy")
 	private LocalDateTime timeStamp;
-	
+
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Goal goal;
-	
+
+	@JsonIgnore
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "meal_entry_likers", 
 	  joinColumns = @JoinColumn(name = "meal_entry_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> likers;
-	
+
+	@JsonIgnore
 	@ManyToOne
 	private User author;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "mealEntry", cascade = { CascadeType.ALL })
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Comment> comments;

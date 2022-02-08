@@ -1,19 +1,16 @@
 package com.example.adproject.model;
 
-import java.util.Objects;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @NoArgsConstructor
@@ -27,8 +24,11 @@ public class Comment {
 	private String caption;
 	// Added CascadeType.REMOVE to remove comment from associated MealEntry and author User
 	// Without CascadeType.REMOVE, I couldn't delete comments
+	
 	@ManyToOne
 	private User author;
+
+	
 	@ManyToOne
 	private MealEntry mealEntry;
 	

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,13 +19,15 @@ public class SocialFeedAPI {
     @Autowired
     private MealEntryService mService;
 
-    @GetMapping("/page/{userId}")
-    public List<MealEntry> getPage(@PathVariable Integer userId) {
-        List<MealEntry> mealEntries = null;
+    @GetMapping("/page")
+    public List<MealEntry> getPage(@RequestParam Integer userId,
+                                   @RequestParam Integer pageNo,
+                                   @RequestParam Integer pageLength ) {
 
 
 
-        return null;
+
+        return mService.getMealEntryForFeedByPage(userId, pageNo, pageLength);
     }
 
     
