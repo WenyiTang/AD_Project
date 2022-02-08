@@ -29,6 +29,12 @@ public interface MealEntryService {
 
     public Boolean hasUserFlaggedThis(Integer userId, Integer mealEntryId);
 
+    public List<MealEntry> getAllVisibleFriendEntries(Integer userId);
+
+    public List<MealEntry> getVisibleMealEntryByUserId(Integer userId);
+
+    public List<MealEntry> getMealEntryForFeedByPage(Integer userId, Integer pageNo, Integer pageLength);
+
  
 
 

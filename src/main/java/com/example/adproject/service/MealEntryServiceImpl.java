@@ -1,6 +1,9 @@
 package com.example.adproject.service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.Report;
@@ -21,6 +24,9 @@ public class MealEntryServiceImpl implements MealEntryService{
 
     @Autowired
     ReportService rService;
+
+    @Autowired
+    UserService uService;
 
     @Override
     public void likeEntryByObject(User user, MealEntry mealEntry) {
@@ -145,6 +151,75 @@ public class MealEntryServiceImpl implements MealEntryService{
         }
         return false;
     }
+
+
+    @Override
+    public List<MealEntry>  getAllVisibleFriendEntries(Integer userId) {
+        // Probably not efficient as I need to query for all entries of all friends
+        // might be good to search by day instead?
+        User user = uRepo.findById(userId).get();
+        if (user == null) {
+            return null;
+        }
+
+        List<User> friends = uService.findFriendsOf(user);
+        if(friends == null) {
+            return null;
+        }
+
+        ArrayList<MealEntry> mealEntries = new ArrayList<MealEntry>();
+
+        for(User friend : friends) {
+            List<MealEntry> friendEntries = mRepo.findVisibleMealEntryByAuthor(friend);
+
+            if(friendEntries != null) {
+                mealEntries.addAll(friendEntries);
+            }
+
+        }
+
+
+        return mealEntries;
+    }
+
+
+    @Override
+    public List<MealEntry> getVisibleMealEntryByUserId(Integer userId) {
+        User author = uRepo.findById(userId).get();
+
+        if(author == null) {
+            return null;
+        }
+
+
+
+        return mRepo.findVisibleMealEntryByAuthor(author);
+    }
+
+
+    @Override
+    public List<MealEntry> getMealEntryForFeedByPage(Integer userId, Integer pageNo, Integer pageLength) {
+        
+        List<MealEntry> visibleFriendMealEntries = getAllVisibleFriendEntries(userId);
+
+        if(visibleFriendMealEntries == null) {
+            return null;
+        }
+
+        return visibleFriendMealEntries .stream()
+                                        .sorted(Comparator.comparing(MealEntry::getTimeStamp).reversed())
+                                        .skip(pageLength * pageNo)
+                                        .limit(pageLength)
+                                        .collect(Collectors.toList());
+                              
+
+
+        
+
+
+    }
+
+    
 
 
   

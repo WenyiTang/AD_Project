@@ -100,5 +100,22 @@ public class MealEntry {
 	}
 
 
+	@Override
+	public String toString() {
+		return "{" +
+			" id='" + getId() + "'" +
+			", imageURL='" + getImageURL() + "'" +
+			", visibility='" + isVisibility() + "'" +
+			", title='" + getTitle() + "'" +
+			", description='" + getDescription() + "'" +
+			", flagged='" + isFlagged() + "'" +
+			", feeling='" + getFeeling() + "'" +
+			", trackScore='" + getTrackScore() + "'" +
+			", timeStamp='" + getTimeStamp() + "'" +
+			"}";
+	}
+
+
+
 
 }
