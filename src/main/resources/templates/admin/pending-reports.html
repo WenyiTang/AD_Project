@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+	<div th:replace="fragments/layout.html::menu"/>
+	<div th:if ="${#lists.isEmpty(pendingReports)}">
+		<h1>No Pending Reports</h1>
+	</div>
+	<div th:if ="${not #lists.isEmpty(pendingReports)}">
+		<h1>Pending Reports</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Report ID</th>
+					<th>Post ID</th>
+					<th>Poster ID</th>
+					<th>Reason</th>
+					<th>Reporter ID</th>
+					<th>Date of Report</th>
+					<th>Status</th>
+					<th>To Resolve</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="report : ${pendingReports}">
+					<td th:text="${report.id}">Report ID</td>
+					<td th:text="${report.mealEntry.id}">Post ID</td>
+					<td th:text="${report.mealEntry.author.id}">Poster ID</td>
+					<td th:text="${report.reason}">Reason</td>
+					<td th:text="${report.reporter.id}">Reporter ID</td>
+					<td th:text="${report.dateReported}">Date of Report</td>
+					<td th:text="${report.status}">Status</td>
+					<td><a
+							th:href="@{/admin/resolvereport/} + ${report.id}"><button type="button">Resolve</button></a></td>
+				</tr>
+			</tbody>	
+		</table>
+	</div>
+</body>
+</html>

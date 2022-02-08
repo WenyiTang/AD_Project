@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  
+<head>
+	<div th:replace="fragments/layout.html :: html_head"></div>
+	<link rel="stylesheet" href="/admin/css/resolve-report.css">
+	<script src="/admin/js/resolve-report.js"></script>
+	<title>Report Details</title>
+</head>
+<body th:onload="showTextBox()">
+	<div th:replace="fragments/layout.html::menu"/>
+	<h1>Report Details</h1>
+	<div id="topError">
+		<p th:if="${#fields.hasErrors('${outcome.comments}')}" style="color: crimson; font-weight: bold;">Please enter comments.</p >
+	</div >
+	<div class="container" >
+		<table class="table ">
+			<tr>
+				<th>Report ID:</th>
+				<td th:text="${report.id}">Report ID</td>
+				<th>Reporter ID:</th >
+				<td th:text="${report.reporter.id}">Reporter ID</td>
+			</tr>
+			<tr>
+				<th>Post ID:</th>
+				<td th:text="${report.mealEntry.id}">Post ID</td>
+				<th>Date of Report:</th>
+				<td th:text="${report.dateReported}">Date of Report</td>
+			</tr>
+			<tr>
+				<th>Poster ID:</th>
+				<td th:text="${report.mealEntry.author.id}">Poster ID</td>
+				<th>Reason:</th>
+				<td th:text="${report.reason}">Reason</td>
+			</tr>
+		</table>
+		<h5>Post:</h5>
+		<table style="width:100%" class="post">
+			<div class = "post-content">
+			<tr class="blank_row">
+    			<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td style="width:50%" align="center">
+					<img class = "pic" th:src="@{${report.mealEntry.imageURL}}" alt="">
+				</td  >
+				<td style="width:50%; vertical-align:top">
+					<h2 class = "title" th:text = "${report.mealEntry.title}" ></h2>
+		            <p class = "date" th:text = "${#temporals.format(report.mealEntry.timeStamp, 'dd/MMM/yyyy')}"></p>
+		            <p class = "description" th:text = "${report.mealEntry.description}"></p>
+				</td >
+			</tr>
+			<tr class="blank_row">
+    			<td colspan="2"></td>
+			</tr>
+		</table >
+		</br>
+		<form action="#" th:action="@{/admin/submitresolvedecision/} + ${report.id}"
+			th:object="${outcome}" method="POST">
+		<table style="width: 90%;">
+			<tr><th>Admin's Decision:</th></tr>
+			<tr>
+			<td>
+				<input class="form-check-input" type="radio" name="noIssues" id="noIssues"
+							th:field="${outcome.inappropriate}" th:value="false" required onclick="showTextBox()">
+						<label class="form-check-label" for="noIssues">
+							No issues
+						</label>
+				&emsp;
+				<input class="form-check-input" type="radio" name="inappropriate" id="inappropriate"
+							th:field="${outcome.inappropriate}" th:value="true" onclick="showTextBox()">
+						<label class="form-check-label" for="inappropriate">
+							Inappropriate
+						</label>
+			</td>
+			</tr >
+			<tr class="blank_row">
+    			<td colspan="2"></td>
+			</tr>
+			<tr th:if="${#fields.hasErrors('${outcome.comments}')}" style="color: crimson; font-weight: bold;"> 
+				<td id="textBoxError">Please enter comments.</td >
+			</tr >
+			<tr >
+				<td colspan="2" id="textBox" style="display: none">
+					<textarea id="textArea" rows="4" cols="90" placeholder="(Required) Additional Comments" th:field="${outcome.comments}"></textarea>
+				</td >
+				<td align="right" style="vertical-align: bottom;">
+					<input th:type="submit" th:value="Resolve">
+				</td >
+			</tr >
+		</table >
+		</form>
+	</div   >
+	</br></br></br>
+</body >
+</html>

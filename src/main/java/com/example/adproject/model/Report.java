@@ -36,7 +36,7 @@ public class Report {
 	private String comments;
 	
 	@OneToOne
-	private Admin resolvedBy;
+	private User resolvedBy;
 	
 	@ManyToOne
 	private MealEntry mealEntry;
