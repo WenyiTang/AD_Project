@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+<meta charset="ISO-8859-1" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div th:replace="fragments/layout.html::menu" />
+	</div>
+	&nbsp;
+	<div>
+		<input type="hidden" th:value="${user.username}" id="username"/>
+	</div>
+	<div class="container">
+		<div sec:authorize="isAuthenticated()" class="row">
+			<div class="col-2">
+				<a th:href="@{/socials/add}" class="btn btn-primary">Add Friend</a>
+			</div>
+			<div class="col-10">
+				<a th:href="@{/socials/friend_requests}" class="btn btn-primary">Friend Requests</a>
+			</div>
+		</div>
+		&nbsp;
+		<div class="row">
+			<div>
+				<p>Find Friend: </p>
+			</div>
+			<br />
+			<div class="col-10">
+				<input type="text" class="form-control" placerholder="Enter username" />
+			</div>
+			<div class="col-2">
+				<a th:href="@{/socials/friend_requests}" class="btn btn-primary">Search</a>
+			</div>
+		</div >
+		<br/>
+		<div class="row">
+			<table border="1 pt" class="table">
+				<thead class="thead-light">
+					<tr>
+						<th>Profile Pic</th>
+						<th>Name</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody id="friendsTbl">
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+<script th:src="@{/js/manage_socials/manage_socials.js}"></script> 
+</html>
