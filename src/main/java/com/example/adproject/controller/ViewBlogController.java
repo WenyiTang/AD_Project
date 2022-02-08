@@ -116,5 +116,21 @@ public class ViewBlogController {
 
         return "./blog/flag_entry";
     }
+
+    @GetMapping("/feed")
+    public String viewUserFeed(HttpSession session, Model model){
+        String activeUsername = session.getAttribute("username").toString();
+        User activeUser = uRepo.findByUsername(activeUsername);
+        if(activeUser == null) {
+            return null;
+        }
+
+        model.addAttribute("user", activeUser);
+
+
+
+        return "./blog/social_feed";
+        
+    }
     
 }

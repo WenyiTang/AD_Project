@@ -9,10 +9,13 @@ import java.util.List;
 
 import com.example.adproject.AdProjectApplication;
 import com.example.adproject.helper.FeelingEnum;
+import com.example.adproject.model.FriendRequest;
 import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.User;
+import com.example.adproject.repo.FriendRequestRepo;
 import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
+import com.example.adproject.service.FriendRequestService;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -35,6 +38,12 @@ public class SocialFeedTest {
 
     @Autowired
     private MealEntryRepo mRepo;
+
+    @Autowired
+    private FriendRequestService fService;
+
+    @Autowired
+    private FriendRequestRepo fRepo;
     
     private String mealImageDir = "/blog/images/";
     private String[] mealImageFilenames = {"salad.png", "shakeshack.jpeg","kookeemian.jpeg","wantan_mee.jpeg","banmian.jpeg"};
@@ -49,10 +58,10 @@ public class SocialFeedTest {
     private String[] usernames = {"monica","phoebe","rachel","ross","chandler","joey"};
     private ArrayList<User> users = new ArrayList<User>();
 
-    @Test
-    @Order(1)
+    //@Test
+    //@Order(1)
     void testInsertTenVisibleEntriesPerUser() {
-        mRepo.deleteAll();
+ 
         for(String username : usernames) {
             User user = uRepo.findByUsername(username);
             if(user == null) {
@@ -84,12 +93,14 @@ public class SocialFeedTest {
 
     }
 
-    @Test
-    void testDeleteAllMealEntries() {
-        mRepo.deleteAll();
-        List<MealEntry> entries = mRepo.findAll();
-        assertEquals(0, entries.size());
-        
+    //@Test
+    //@Order(2)
+    void acceptRachelPendingRequest() {
+        String username = "rachel";
+        User user = uRepo.findByUsername(username);
+        List<FriendRequest> pendingRequests = fRepo.findPendingRequestsByRecipient(user);
+        fService.acceptRequest(pendingRequests.get(0).getId());
+
     }
     
 }

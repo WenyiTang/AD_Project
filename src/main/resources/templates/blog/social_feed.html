@@ -1,23 +1,17 @@
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meal Entry</title>
-    <link rel="stylesheet" href="/blog/styles/meal_entry.css">
+    <title>Food Blog</title>
+    <link rel="stylesheet" href="/blog/styles/social_feed.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        .friends-list{
-            display:flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
 </head>
 <body>
+    
+
     <div class = "navbar">
 
         <div id = "upper-half">
@@ -33,20 +27,13 @@
         </div>
 
         <div>
-            <h1 class= "page-title" th:text = "${#strings.capitalize(user.username)} + '\'s Friends'"></h1>
+            <h1 class = "page-title" th:text = "${#strings.capitalize(user.username)} + '\'s Feed'"></h1>
+            <a th:href="@{'/friends'}">back</a>
         </div>
     </div>
 
-    <div class ="friends-list">
+    <h1>Social Feed</h1>
 
-            <h1>Friends List</h1>
-
-            <a  style = "display: block;" 
-                th:each = "friend:${friends}" 
-                th:text = "${friend.username}" 
-                th:href = "@{'blog/view/' + ${friend.id}}"></a>
-
-            <a  style = "display: block;" 
-                th:href = "@{'blog/feed'}">Feed</a>
+    
         
-    </div>
+</body>
