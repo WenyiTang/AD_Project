@@ -46,7 +46,8 @@ public class MealEntry {
 	@Enumerated(EnumType.STRING)
 	private FeelingEnum feeling;
 	private int trackScore;
-	@DateTimeFormat(pattern ="dd-MM-yyyy")
+	// @DateTimeFormat(pattern ="dd-MM-yyyy")
+	// @DateTimeFormat(pattern ="h:mm a, d MMM yyyy")
 	private LocalDateTime timeStamp;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

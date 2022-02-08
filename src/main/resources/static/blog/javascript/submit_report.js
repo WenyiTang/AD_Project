@@ -56,7 +56,7 @@ function submitReport() {
             window.location.href = "http://localhost:8080/blog/view/entry/" + mealEntryId;
 
             // to view Report persisted to database, uncomment line below
-            console.log(report.json());
+            // console.log(report.json());
         }
     );
 

@@ -41,7 +41,7 @@
                 <img class = "pic" th:src="@{${entry.imageURL}}" alt="">
             </a>
             <h2 class = "title" th:text = "${entry.title}" ></h2>
-            <p class = "date" th:text = ${{entry.timeStamp}}></p>
+            <p class = "date" th:text = "${#temporals.format(entry.timeStamp,'h:mm a, d MMM yyyy')}"></p>
             <p class = "inappropriate-text" th:if = "${mService.hasUserFlaggedThis(activeUser.id,entry.id)}">
                 You have flagged this post as inappropriate
             </p>
