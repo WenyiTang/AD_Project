@@ -26,7 +26,7 @@ public class BlogEntryAPI {
     private UserRepo uRepo;
 
     @GetMapping("/page")
-    public List<BlogEntry> getPage(@RequestParam Integer activeUserId,
+    public List<BlogEntry> getFeedPage(@RequestParam Integer activeUserId,
                                    @RequestParam Integer pageNo,
                                    @RequestParam Integer pageLength ) {
 
