@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MealDetailActivity">
+
+    <ImageView
+        android:id="@+id/mealdetailimage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintDimensionRatio="1:1"
+        />
+
+
+    <ImageButton
+        android:id="@+id/editNoteBtn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:layout_constraintTop_toBottomOf="@id/mealdetailimage"
+        app:layout_constraintRight_toRightOf="@id/mealdetailimage"
+        android:layout_marginTop="10dp"
+        />
+
+    <ImageButton
+        android:id="@+id/editTimeBtn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:layout_constraintTop_toTopOf="@id/editNoteBtn"
+        app:layout_constraintRight_toLeftOf="@id/editNoteBtn"
+        android:layout_marginRight="5dp"
+        />
+
+    <ImageButton
+        android:id="@+id/deleteMealBtn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:layout_constraintTop_toTopOf="@id/editNoteBtn"
+        app:layout_constraintRight_toLeftOf="@id/editTimeBtn"
+        android:layout_marginRight="5dp"
+        />
+
+    <TextView
+        android:id="@+id/detailMealtitle"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:text="Fried Chicken"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/mealdetailimage"
+        app:layout_constraintTop_toTopOf="@id/editNoteBtn"
+        app:layout_constraintRight_toLeftOf="@id/deleteMealBtn"
+        android:layout_marginRight="15dp"
+        />
+
+
+    <EditText
+        android:id="@+id/mealDetailDes"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="10dp"
+        android:enabled="false"
+        android:text="meal detail"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintLeft_toLeftOf="@id/mealdetailimage"
+        app:layout_constraintTop_toBottomOf="@id/detailMealtitle"
+        app:layout_constraintRight_toRightOf="@id/mealdetailimage"
+         />
+
+
+    <ImageButton
+        android:id="@+id/facebookBtn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintTop_toBottomOf="@id/mealDetailDes"
+        app:layout_constraintLeft_toLeftOf="@id/mealDetailDes"
+        android:layout_marginTop="10dp"
+        />
+
+
+
+    <ImageButton
+        android:id="@+id/instagramBtn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintTop_toTopOf="@id/facebookBtn"
+        app:layout_constraintLeft_toRightOf="@id/facebookBtn"
+        android:layout_marginLeft="15dp"
+        />
+
+    <Switch
+        android:id="@+id/publicStates"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:text="Public"
+        app:layout_constraintTop_toBottomOf="@id/mealDetailDes"
+        app:layout_constraintRight_toRightOf="@id/mealDetailDes"
+        android:layout_marginTop="10dp"
+         />
+
+
+</android.support.constraint.ConstraintLayout>

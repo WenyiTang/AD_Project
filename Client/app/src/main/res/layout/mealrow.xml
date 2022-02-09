@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/mealImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+         />
+
+    <TextView
+        android:id="@+id/mealtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Fried Chicken"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/mealImage"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:id="@+id/mealtime"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="2022-2-14"
+        app:layout_constraintTop_toBottomOf="@id/mealtitle"
+        app:layout_constraintLeft_toLeftOf="@id/mealtitle"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/mealscore"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Score: 8/10"
+        app:layout_constraintTop_toBottomOf="@id/mealtime"
+        app:layout_constraintLeft_toLeftOf="@id/mealtime"
+        android:layout_marginTop="10dp"
+        />
+
+
+</android.support.constraint.ConstraintLayout>
