@@ -40,8 +40,8 @@ function buildTable_sent(data) {
 
     for (var i = 0; i < data.length; i++) {
         var row = `<tr>
-						<td><img id="thumbnail" class="img-fluid rounded mx-auto- d-block w-25 
-								src="/AD_Project/${data[i].profilePicPath}"/></td>
+						<td><img id="thumbnail" style="width: 100px" 
+								src="/images/${data[i].userId}/${data[i].profilePic}"/></td>
 						<td>${data[i].username}</td>
 						<td>${data[i].name}</td>
 						<td id="action_space">
@@ -76,8 +76,8 @@ function buildTable_received(data) {
 
     for (var i = 0; i < data.length; i++) {
         var row = `<tr>
-						<td><img id="thumbnail" class="img-fluid rounded mx-auto- d-block w-25 
-								src="/AD_Project/${data[i].profilePicPath}"/></td>
+						<td><img id="thumbnail" style="width: 100px" 
+								src="/images/${data[i].userId}/${data[i].profilePic}"/></td>
 						<td id="sender_username">${data[i].username}</td>
 						<td>${data[i].name}</td>
 						<td>

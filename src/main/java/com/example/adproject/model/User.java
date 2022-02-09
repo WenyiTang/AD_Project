@@ -33,6 +33,7 @@ import com.example.adproject.validator.UniqueUsername;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -139,8 +140,6 @@ public class User {
 		if (profilePic == null || id == null) {
 			return null; 
 		}
-		return "/user-profilePic/" + id + "/" + profilePic; 
+		return "/user-profilePic." + id + "/" + profilePic;
 	}
-	
-
 }

@@ -16,15 +16,18 @@
 		<input type="hidden" th:value="${user.username}" id="username"/>
 	</div>
 	<div class="container">
+		<div class="row">
+			<h2>Add Friend</h2>
+		</div>
+		<br>
 		<div sec:authorize="isAuthenticated()">
+			<div th:if="${message !=null}">
+				<p class="text-success" th:text="${message}"></p>
+			</div>
 			<div class="row">
 				<div>
 					<p>Find User: </p>
 				</div>
-			</div>
-			<br>
-			<div th:if="${message !=null}">
-				<p class="text-success" th:text="${message}"></p>
 			</div>
 			<form class="form-inline">
 				<div class="form-group">

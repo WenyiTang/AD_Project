@@ -15,10 +15,13 @@
 	&nbsp;
 	<div class="container">
 		<div>
-			<p>Name: <span th:text="${friend.name}"></span ></p>
+			<img th:src="@{'/images/' + ${friend.getId()} + '/' + ${friend.getProfilePic()}}" style="width: 100px"/>
 		</div>
 		<div>
-			<p>Username: <span th:text="${friend.username}"></span ></p>
+			<h3>Name: <span th:text="${friend.name}"></span ></h3>
+		</div>
+		<div>
+			<h3>Username: <span th:text="${friend.username}"></span ></h3>
 		</div>
 		&nbsp
 	<div class="container">

@@ -10,13 +10,13 @@ public class UserSummary {
 	private Integer userId; 
 	private String username; 
 	private String name; 
-	private String profilePicPath; 
+	private String profilePic;
 	
-	public UserSummary(Integer userId, String username, String name, String profilePicPath) {
+	public UserSummary(Integer userId, String username, String name, String profilePic) {
 		super(); 
 		this.userId = userId; 
 		this.username = username; 
 		this.name = name; 
-		this.profilePicPath = profilePicPath; 
+		this.profilePic = profilePic;
 	}
 }

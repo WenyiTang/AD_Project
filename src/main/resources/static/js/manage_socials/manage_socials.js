@@ -54,12 +54,14 @@ function buildTable(data) {
 
 	for (var i = 0; i < data.length; i++) {
 		var row = `<tr>
-						<td><img id="thumbnail" class="img-fluid rounded mx-auto- d-block w-25 
-								src="/AD_Project/${data[i].profilePicPath}"/></td>
+						<td>
+							<img id="thumbnail" style="width: 100px"  
+							src="/images/${data[i].userId}/${data[i].profilePic}"/>
+						</td>
 						<td>${data[i].username}</td>
 						<td>${data[i].name}</td>
 						<td>
-							<a id="manage" href="/socials/friend/${data[i].username}" class="btn btn-primary">Manage</a>
+							<a id="manage" href="/socials/friend/${data[i].username}" class="btn btn-secondary">Manage</a>
 						</td>
 					</tr>`
 		table.innerHTML += row

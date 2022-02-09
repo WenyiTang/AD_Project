@@ -40,7 +40,7 @@ public class FriendsAPI {
 	private List<UserSummary> convertUserToUserSummary(List<User> users) {
 		List<UserSummary> friends = new ArrayList<>();
 		for (User u : users) {
-			UserSummary friend = new UserSummary(u.getId(), u.getUsername(), u.getName(), u.getImagePath());
+			UserSummary friend = new UserSummary(u.getId(), u.getUsername(), u.getName(), u.getProfilePic());
 			friends.add(friend);
 		}
 		return friends;

@@ -1,5 +1,7 @@
 package com.example.adproject.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -46,57 +48,111 @@ public class ManageUserController {
 		return mav;
 	}
 	
+//	@PostMapping("/create-account")
+//	public ModelAndView createNewAccount(@Valid @ModelAttribute("user") User user, BindingResult result, @RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
+//
+//		if (result.hasErrors()) {
+//			ModelAndView mav_error = new ModelAndView();
+//			String message_error = "Account creation failed. Please try again.";
+//			mav_error.addObject("message_error", message_error);
+//			mav_error.setViewName("create_account");
+//			return mav_error;
+//		}
+//
+//
+//		// User's profilepic
+//		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+//		user.setProfilePic(fileName);
+//
+//		// User's password
+//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//		String encoderPassword = encoder.encode(user.getPassword());
+//		user.setPassword(encoderPassword);
+//
+//		user.setEnabled(true);
+//
+//		Role role = rRepo.findByType("USER");
+//		user.getRoles().add(role);
+//
+//		User newUser = uService.save(user);
+//
+//		String uploadDir = "./images/" + newUser.getId();
+//
+//		Path uploadPath = Paths.get(uploadDir);
+//
+//		// Saving user's profile pic into directory
+//		if (!Files.exists(uploadPath)) {
+//			Files.createDirectories(uploadPath);
+//		}
+//
+//		try {
+//			InputStream inputStream = multipartFile.getInputStream();
+//			Path filePath = uploadPath.resolve(fileName);
+//			Files.copy(inputStream, filePath ,StandardCopyOption.REPLACE_EXISTING);
+//		} catch (IOException e) {
+//			throw new IOException("Could not save uploaded file: " + fileName);
+//		}
+//
+//
+//		ModelAndView mav = new ModelAndView("create_account", "user", new User() {});
+//		String message = "Account creation successful. Please login.";
+//		mav.addObject("message", message);
+//		mav.setViewName("create_account");
+//		return mav;
+//	}
+
 	@PostMapping("/create-account")
 	public ModelAndView createNewAccount(@Valid @ModelAttribute("user") User user, BindingResult result, @RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
-		
+
 		if (result.hasErrors()) {
-			ModelAndView mav_error = new ModelAndView(); 
-			String message_error = "Account creation failed. Please try again."; 
-			mav_error.addObject("message_error", message_error); 
-			mav_error.setViewName("create_account"); 
-			return mav_error; 
+			ModelAndView mav_error = new ModelAndView();
+			String message_error = "Account creation failed. Please try again.";
+			mav_error.addObject("message_error", message_error);
+			mav_error.setViewName("create_account");
+			return mav_error;
 		}
-		
-		
+
 		// User's profilepic
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename()); 
-		user.setProfilePic(fileName); 
-		
+		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		user.setProfilePic(fileName);
+
 		// User's password
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); 
-		String encoderPassword = encoder.encode(user.getPassword()); 
-		user.setPassword(encoderPassword); 
-		
-		user.setEnabled(true); 
-		
-		Role role = rRepo.findByType("USER"); 
-		user.getRoles().add(role); 
-		
-		User newUser = uService.save(user); 
-		
-		String uploadDir = "./user-profilePic/" + newUser.getId();
-		
-		Path uploadPath = Paths.get(uploadDir); 
-		
-		// Saving user's profile pic into directory 
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encoderPassword = encoder.encode(user.getPassword());
+		user.setPassword(encoderPassword);
+
+		user.setEnabled(true);
+
+		Role role = rRepo.findByType("USER");
+		user.getRoles().add(role);
+
+		User newUser = uService.save(user);
+
+		String uploadDir = "./images/" + newUser.getId();
+
+		Path uploadPath = Paths.get(uploadDir);
+
+		// Saving user's profile pic into directory
 		if (!Files.exists(uploadPath)) {
-			Files.createDirectories(uploadPath); 
+			Files.createDirectories(uploadPath);
 		}
-		
+
 		try {
-			InputStream inputStream = multipartFile.getInputStream(); 
-			Path filePath = uploadPath.resolve(fileName); 
-			Files.copy(inputStream, filePath ,StandardCopyOption.REPLACE_EXISTING); 
+			File profileImg = new File("images/" + newUser.getId() + "/" + fileName);
+			profileImg.createNewFile();
+			FileOutputStream fout = new FileOutputStream(profileImg);
+			fout.write(multipartFile.getBytes());
+			fout.close();
 		} catch (IOException e) {
-			throw new IOException("Could not save uploaded file: " + fileName); 
+			throw new IOException("Could not save uploaded file: " + fileName);
 		}
-				
-		
-		ModelAndView mav = new ModelAndView("create_account", "user", new User() {}); 
+
+
+		ModelAndView mav = new ModelAndView("create_account", "user", new User() {});
 		String message = "Account creation successful. Please login.";
 		mav.addObject("message", message);
 		mav.setViewName("create_account");
-		return mav; 
+		return mav;
 	}
 	
 	@GetMapping("/create-account-admin") 
