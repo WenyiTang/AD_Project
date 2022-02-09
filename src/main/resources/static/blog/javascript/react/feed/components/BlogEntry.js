@@ -13,6 +13,13 @@ class BlogEntry extends React.Component {
     let flaggedByActiveUser = this.props.blogEntry.flaggedByActiveUser;
 
     let id = this.props.blogEntry.id;
+
+    let dateTime = new Date(this.props.blogEntry.timeStamp);
+
+    let dateTimeString = dateTime.toLocaleString('en-GB', { hour: 'numeric', minute: 'numeric', hour12: true, year: 'numeric', month: 'short', day: 'numeric' });
+
+
+
  
   
     
@@ -25,7 +32,7 @@ class BlogEntry extends React.Component {
               <h2 >{this.props.blogEntry.title}</h2>
               <p >{'by ' + this.props.blogEntry.authorUsername}</p>
             </div>
-            <p className = "date">{this.props.blogEntry.timeStamp}</p>
+            <p className = "date">{dateTimeString}</p>
             <p className = "description">{this.props.blogEntry.description}</p>
             <p className = "likes">
               Liked by

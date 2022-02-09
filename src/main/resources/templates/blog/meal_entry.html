@@ -34,7 +34,7 @@
         <div class = "details">
             <img class = "pic" th:src="@{${entry.imageURL}}" alt="">
             <h2 class = "title" th:text = "${entry.title}" ></h2>
-            <p class = "date" th:text = "${#temporals.format(entry.timeStamp,'h:mm a, d MMM yyyy')}"></p>
+            <p class = "date" th:text = "${#temporals.format(entry.timeStamp,'d MMM yyyy, h:mm a')}"></p>
             <p class = "description" th:text = "${entry.description}"></p>
         </div>
         <div class = "socials">

@@ -1,16 +1,16 @@
 class Feed extends React.Component {
     state = {
         blogEntries: [],
-        pageLength: 10,
-        pageNo: 0,
-        activeUserId: this.props.userid,
+        pageLength: 10, //number of entries per "page"
+        pageNo: 0, // start at zero, increment when "View more" button is pressed
+        activeUserId: this.props.userid, 
 
     };
     // Method below kind of "initializes the component",
     // i.e. it runs when the page is first loaded I think
     componentDidMount() {
         fetch (
-            "http://localhost:8080/api/feed/page?" +
+            "http://localhost:8080/api/blogentry/page?" +
             new URLSearchParams({
                 activeUserId: this.state.activeUserId,
                 pageNo: this.state.pageNo,
@@ -36,7 +36,7 @@ class Feed extends React.Component {
         );
 
         fetch (
-            "http://localhost:8080/api/feed/page?" +
+            "http://localhost:8080/api/blogentry/page?" +
             new URLSearchParams({
                 activeUserId: this.state.activeUserId,
                 pageNo: this.state.pageNo,
@@ -49,6 +49,7 @@ class Feed extends React.Component {
             })
             .then( res => res.json() )
             .then (data => this.setState ({
+                //Append new Blog Entries to existing list of Blog Entries
                 blogEntries: [...this.state.blogEntries,...data]
             }));
         }
