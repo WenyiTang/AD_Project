@@ -32,7 +32,7 @@ class Feed extends React.Component {
     render() {
     return <>
         <div>Active user id = {this.state.activeUserId}. This is your feed</div>
-        <BlogEntry/>
+        <BlogEntries blogEntries = {this.state.blogEntries} />
         </>;
     }
 }

@@ -59,3 +59,60 @@ body {
     color:black;
     font-weight:500;
 }
+
+.list-view {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.list-item {
+    display:grid;
+    margin:2em;
+    padding: 1em;
+    border-bottom: 1px solid black;
+
+    grid-template-areas: 
+    "pic title likes"
+    "pic date like-flag"
+    "pic description inappropriate-text"    
+    
+    ;
+}
+.pic-anchor{
+    grid-area: pic;
+    margin-right:1em;
+
+}
+
+.pic {
+    
+    object-fit:cover;
+    height: 200px;
+    width: 200px;
+    
+}
+.title {
+    grid-area: title;
+
+}
+.date {
+    grid-area: date;
+}
+.description {
+    grid-area: description;
+}
+.inappropriate-text {
+    grid-area:inappropriate-text;
+    color:red;
+
+    /* This width seems to keep things aligned */
+    width:100px;
+}
+
+.likes {
+    grid-area: likes;
+}
+.like-flag {
+    grid-area:like-flag;
+}
+
