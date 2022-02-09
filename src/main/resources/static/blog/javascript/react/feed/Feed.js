@@ -31,8 +31,10 @@ class Feed extends React.Component {
 
     render() {
     return <>
-        <div>Active user id = {this.state.activeUserId}. This is your feed</div>
-        <BlogEntries blogEntries = {this.state.blogEntries} />
+        
+        <div className = "list-view">
+            <BlogEntries blogEntries = {this.state.blogEntries} />
+        </div>
         </>;
     }
 }

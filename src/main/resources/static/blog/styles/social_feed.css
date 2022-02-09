@@ -95,6 +95,9 @@ body {
     grid-area: title;
 
 }
+.title > p {
+    font-weight:200;
+}
 .date {
     grid-area: date;
 }
