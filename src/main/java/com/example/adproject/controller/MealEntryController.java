@@ -54,7 +54,7 @@ public class MealEntryController {
 	
 	
 	@PostMapping("/uploadMealEntry")
-	public boolean uploadMealEntry(@RequestParam MultipartFile multipartFile,
+	public String uploadMealEntry(@RequestParam MultipartFile multipartFile,
 								   @RequestParam String imageFileName,
 								   @RequestParam String imageURL,
 								   @RequestParam String mealTitle,
@@ -64,7 +64,7 @@ public class MealEntryController {
 
 		//STILL NEED USER DETAILS
 		if (multipartFile == null || multipartFile.isEmpty()) {
-			return false;
+			return "MultipartFileFailure";
 		}
 		
 		try {
@@ -102,18 +102,19 @@ public class MealEntryController {
 			List<Integer> testTrackScore = new ArrayList<>();
 			testTrackScore.add(1);
 			testTrackScore.add(1);
-			testTrackScore.add(1);
+			testTrackScore.add(0);
 			//testsenddata(3, testTrackScore);
-			sendDataToFlaskWMA(3, testTrackScore);
-			return true;
+			String responseString = sendDataToFlaskWMA(3, testTrackScore);
+			return responseString;
 		}
 		catch (IOException e) {
 			e.printStackTrace();
-			return false;
+			return "IOException";
 		}
 	}
 
-	private void sendDataToFlaskWMA(int targetCount, List<Integer> trackScore) {
+	private String sendDataToFlaskWMA(int targetCount, List<Integer> trackScore) {
+		String responseString = null;
 		try {
 			URL flaskUrl = new URL("http://127.0.0.1:5000/suggestnextmeal");
 			HttpURLConnection httpURLConnection = (HttpURLConnection) flaskUrl.openConnection();
@@ -147,8 +148,8 @@ public class MealEntryController {
 			while ((responseLine = reader.readLine()) != null) {
 				response.append(responseLine);
 			}
-			System.out.println(response.toString());
-
+			responseString = response.toString();
+			System.out.println(responseString);
 		}
 		catch (MalformedURLException e1) {
 			e1.printStackTrace();
@@ -158,6 +159,7 @@ public class MealEntryController {
 			e2.printStackTrace();
 			System.err.println("Post Error: Host Exception");
 		}
+		return responseString;
 	}
 
 	/*
