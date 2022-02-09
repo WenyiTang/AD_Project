@@ -103,8 +103,8 @@ public class MealEntryController {
 			testTrackScore.add(1);
 			testTrackScore.add(1);
 			testTrackScore.add(1);
-			testsenddata(3, testTrackScore);
-			//sendDataToFlaskWMA(3, testTrackScore);
+			//testsenddata(3, testTrackScore);
+			sendDataToFlaskWMA(3, testTrackScore);
 			return true;
 		}
 		catch (IOException e) {
@@ -113,6 +113,54 @@ public class MealEntryController {
 		}
 	}
 
+	private void sendDataToFlaskWMA(int targetCount, List<Integer> trackScore) {
+		try {
+			URL flaskUrl = new URL("http://127.0.0.1:5000/suggestnextmeal");
+			HttpURLConnection httpURLConnection = (HttpURLConnection) flaskUrl.openConnection();
+			httpURLConnection.setConnectTimeout(10000);
+			httpURLConnection.setReadTimeout(10000);
+			httpURLConnection.setRequestMethod("POST");
+			httpURLConnection.setRequestProperty("Content-Type", "application/json: charset=UTF-8");
+			httpURLConnection.setRequestProperty("Accept", "application/json");
+			httpURLConnection.setDoOutput(true);
+
+			InputStream status = httpURLConnection.getErrorStream();
+			System.out.println(status);
+
+			ObjectMapper jsonMapper = new ObjectMapper();
+			ObjectNode jsonData = jsonMapper.createObjectNode();
+
+			jsonData.put("targetCount", jsonMapper.writeValueAsString(targetCount));
+			jsonData.put("trackScore", jsonMapper.writeValueAsString(trackScore));
+
+			String jsonString = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonData);
+			System.out.println(jsonString);
+
+			OutputStream ops = httpURLConnection.getOutputStream();
+			ops.write(jsonString.getBytes(StandardCharsets.UTF_8));
+			ops.close();
+
+			InputStream ips = new BufferedInputStream(httpURLConnection.getInputStream());
+			BufferedReader reader = new BufferedReader(new InputStreamReader(ips));
+			StringBuilder response= new StringBuilder();
+			String responseLine = null;
+			while ((responseLine = reader.readLine()) != null) {
+				response.append(responseLine);
+			}
+			System.out.println(response.toString());
+
+		}
+		catch (MalformedURLException e1) {
+			e1.printStackTrace();
+			System.err.println("Malformed URL Exception: check URL");
+		}
+		catch (IOException e2) {
+			e2.printStackTrace();
+			System.err.println("Post Error: Host Exception");
+		}
+	}
+
+	/*
 	private void testsenddata(int targetCount, List<Integer> trackScore) {
 		try {
 			//step 1: test connection (Passed)
@@ -124,7 +172,6 @@ public class MealEntryController {
 			httpURLConnection.setRequestProperty("Content-Type", "application/json: charset=UTF-8");
 			httpURLConnection.setRequestProperty("Accept", "application/json");
 			httpURLConnection.setDoOutput(true);
-
 			InputStream status = httpURLConnection.getErrorStream();
 			System.out.println(status);
 
@@ -135,7 +182,6 @@ public class MealEntryController {
 			System.out.println(trackScoreString);
 			String jsonString = "{\"targetCount\":"+"\""+targetCountString+"\","+"\"trackScore\":"+"\""+trackScoreString+"\"}";
 			System.out.println(jsonString);
-
 			OutputStream ops = httpURLConnection.getOutputStream();
 			ops.write(jsonString.getBytes(StandardCharsets.UTF_8));
 			ops.close();
@@ -160,55 +206,7 @@ public class MealEntryController {
 		}
 
 	}
-
-	private void sendDataToFlaskWMA(int targetCount, List<Integer> trackScore) {
-		try {
-			URL flaskUrl = new URL("http://127.0.0.1:5000/suggestnextmeal");
-			HttpURLConnection httpURLConnection = (HttpURLConnection) flaskUrl.openConnection();
-			httpURLConnection.setConnectTimeout(10000);
-			httpURLConnection.setReadTimeout(10000);
-			httpURLConnection.setRequestMethod("POST");
-			httpURLConnection.setRequestProperty("Content-Type", "application/json: charset=UTF-8");
-			httpURLConnection.setRequestProperty("Accept", "application/json");
-			httpURLConnection.setDoOutput(true);
-
-			InputStream status = httpURLConnection.getErrorStream();
-			System.out.println(status);
-
-			//JSON not being received by Flask
-			ObjectMapper jsonMapper = new ObjectMapper();
-			ObjectNode jsonData = jsonMapper.createObjectNode();
-
-			jsonData.put("targetCount", jsonMapper.writeValueAsString(targetCount));
-			jsonData.put("trackScore", jsonMapper.writeValueAsString(trackScore));
-
-			String jsonString = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonData);
-			System.out.println(jsonString);
-
-			OutputStream ops = httpURLConnection.getOutputStream();
-			ops.write(jsonString.getBytes(StandardCharsets.UTF_8));
-			ops.close();
-			//----------
-
-			InputStream ips = new BufferedInputStream(httpURLConnection.getInputStream());
-			BufferedReader reader = new BufferedReader(new InputStreamReader(ips));
-			StringBuilder response= new StringBuilder();
-			String responseLine = null;
-			while ((responseLine = reader.readLine()) != null) {
-				response.append(responseLine);
-			}
-			System.out.println(response.toString());
-
-		}
-		catch (MalformedURLException e1) {
-			e1.printStackTrace();
-			System.err.println("Malformed URL Exception: check URL");
-		}
-		catch (IOException e2) {
-			e2.printStackTrace();
-			System.err.println("Post Error: Host Exception");
-		}
-	}
+	 */
 
 	private FeelingEnum getFeelingEnumVal(String feeling) {
 		if (feeling.equalsIgnoreCase("crying")) {
