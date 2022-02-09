@@ -41,7 +41,10 @@ class BlogEntry extends React.Component {
                           likeEntry = {this.props.likeEntry}
                           id = {id}
               />
-              <FlagLogo flagged = {flaggedByActiveUser}/>
+              <FlagLogo   flagged = {flaggedByActiveUser}
+                          id = {id}
+              
+              />
             </div>
             <WarningText flagged = {flaggedByActiveUser}/>
             
