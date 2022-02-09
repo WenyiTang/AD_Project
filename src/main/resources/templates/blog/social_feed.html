@@ -34,7 +34,7 @@
 
     <!-- ... other HTML ... -->
     <!-- <div id="like_button_container"></div> -->
-    <div class = "feed"></div>
+    <div th:attr="data-userId = ${user.id}"  class = "feed"></div>
 
     <!-- Load React. -->
     <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
@@ -53,7 +53,8 @@
 
     <!-- Render react component -->
     <script type = "text/babel" >
-        ReactDOM.render(<Feed/>, document.querySelector('.feed'));
+        let feed = document.querySelector('.feed');
+        ReactDOM.render(<Feed {...(feed.dataset)}/>, feed);
     </script>
 
 
