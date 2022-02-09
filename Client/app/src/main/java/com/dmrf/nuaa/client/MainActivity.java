@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         int id = v.getId();
         if(id == R.id.get){
-
             Intent intent = new Intent();
-            intent.setClass(this, SetGoalActivity.class);
+            intent.setClass(this, PastMealsActivity.class);
             startActivity(intent);
+
 
         }
 
