@@ -1,12 +1,17 @@
 package com.example.adproject.viewBlog;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.adproject.AdProjectApplication;
+import com.example.adproject.helper.BlogEntry;
 import com.example.adproject.model.MealEntry;
+import com.example.adproject.model.User;
 import com.example.adproject.repo.MealEntryRepo;
+import com.example.adproject.repo.UserRepo;
 import com.example.adproject.service.MealEntryService;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -30,6 +35,9 @@ public class SocialFeedGeneratorTest {
 
     @Autowired
     MealEntryRepo mRepo;
+
+    @Autowired
+    UserRepo uRepo;
 
     @Test
     @Order(1)
@@ -60,6 +68,36 @@ public class SocialFeedGeneratorTest {
 
         
 
+    }
+
+    @Test
+    @Order(3)
+    void testMealEntryWrapper() {
+        Integer userId = 5; // chandler
+        List<MealEntry> mealEntries = mService.getVisibleMealEntryByUserId(userId);
+
+        ArrayList<BlogEntry> wrappedEntries = new ArrayList<BlogEntry>();
+
+        Integer activeUserId = 1; // monica
+
+        User activeUser = uRepo.findById(activeUserId).get();
+
+        if(activeUser == null) {
+            fail();
+        }
+        
+
+
+        for(MealEntry mealEntry : mealEntries) {
+            boolean likedByActiveUser = mService.hasUserLikedThis(activeUserId, mealEntry.getId());
+            boolean flaggedByActiveUser = mService.hasUserFlaggedThis(activeUserId, mealEntry.getId());
+            int numberOfLikes = mService.getTotalNumberOfLikesById(mealEntry.getId());
+            wrappedEntries.add(new BlogEntry(mealEntry, likedByActiveUser, flaggedByActiveUser, numberOfLikes));
+        }
+
+        for(BlogEntry wrappedEntry : wrappedEntries) {
+            System.out.println(wrappedEntry);
+        }
     }
     
 }

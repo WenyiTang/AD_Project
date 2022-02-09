@@ -19,7 +19,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.example.adproject.helper.FeelingEnum;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -38,9 +40,11 @@ public class MealEntry {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String imageURL;
+
 	private boolean visibility;
 	private String title;
 	private String description;
+
 	private boolean flagged;
 	@Column(columnDefinition = "ENUM('CRYING', 'PENSIVE', 'HAPPY', 'JOYFUL')")
 	@Enumerated(EnumType.STRING)
@@ -62,7 +66,7 @@ public class MealEntry {
 	  inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> likers;
 
-	@JsonIgnore
+	
 	@ManyToOne
 	private User author;
 	
