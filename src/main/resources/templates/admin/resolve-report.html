@@ -18,8 +18,8 @@
 			<tr>
 				<th>Report ID:</th>
 				<td th:text="${report.id}">Report ID</td>
-				<th>Reporter ID:</th >
-				<td th:text="${report.reporter.id}">Reporter ID</td>
+				<th>Reporter Username:</th >
+				<td th:text="${report.reporter.username}">Reporter ID</td>
 			</tr>
 			<tr>
 				<th>Post ID:</th>
@@ -28,8 +28,8 @@
 				<td th:text="${report.dateReported}">Date of Report</td>
 			</tr>
 			<tr>
-				<th>Poster ID:</th>
-				<td th:text="${report.mealEntry.author.id}">Poster ID</td>
+				<th>Poster Username:</th>
+				<td th:text="${report.mealEntry.author.username}">Poster Username</td>
 				<th>Reason:</th>
 				<td th:text="${report.reason}">Reason</td>
 			</tr>
@@ -46,7 +46,7 @@
 				</td  >
 				<td style="width:50%; vertical-align:top">
 					<h2 class = "title" th:text = "${report.mealEntry.title}" ></h2>
-		            <p class = "date" th:text = "${#temporals.format(report.mealEntry.timeStamp, 'dd/MMM/yyyy')}"></p>
+		            <p class = "date" th:text = "${#temporals.format(report.mealEntry.timeStamp, 'hh:mm a, dd-MMM-yyyy')}"></p>
 		            <p class = "description" th:text = "${report.mealEntry.description}"></p>
 				</td >
 			</tr>
@@ -85,7 +85,11 @@
 					<textarea id="textArea" rows="4" cols="90" placeholder="(Required) Additional Comments" th:field="${outcome.comments}"></textarea>
 				</td >
 				<td align="right" style="vertical-align: bottom;">
-					<input th:type="submit" th:value="Resolve">
+					<a
+							th:href="@{/admin/cancelresolve/} + ${report.id}"><button type="button">Cancel</button></a>
+				</td >
+				<td align="right" style="vertical-align: bottom;">
+					<button th:type="submit">Submit</button>
 				</td >
 			</tr >
 		</table >

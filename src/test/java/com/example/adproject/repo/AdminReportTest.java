@@ -1,7 +1,8 @@
 package com.example.adproject.repo;
 
 import java.time.LocalDate;
-
+import java.util.Comparator;
+import java.util.List;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -24,6 +25,20 @@ import com.example.adproject.model.User;
 @TestMethodOrder(OrderAnnotation.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class AdminReportTest {
+	
+	@Autowired
+	private ReportRepo rrepo;
+	
+//	@Test
+//	@Order(1)
+//	public void test() {
+//		List<Report> reports = rrepo.findPendingNProgressReports();
+//		reports.sort(Comparator.comparing(Report::getStatus)
+//				.thenComparing(Report::getDateReported));
+//		for (Report r : reports) {
+//			System.out.println(r.getStatus() + " " + r.getDateReported());
+//		}
+//	}
 	
 //	@Autowired
 //	private AdminRepo arepo;

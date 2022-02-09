@@ -9,27 +9,33 @@
 	</div>
 	<div th:if ="${not #lists.isEmpty(pendingReports)}">
 		<h1>Pending Reports</h1>
-		<table class="table">
+		<table class="table" style="width:80%; margin-left: auto; margin-right:auto">
 			<thead>
 				<tr>
-					<th>Report ID</th>
+					<!--<th>Report ID</th>
 					<th>Post ID</th>
-					<th>Poster ID</th>
+					<th>Poster Username</th>
 					<th>Reason</th>
-					<th>Reporter ID</th>
+					<th>Reporter Username</th>
 					<th>Date of Report</th>
+					<th>Status</th>
+					<th>To Resolve</th>-->
+
+					<th>Date of Report</th>
+					<th>Reason</th>
 					<th>Status</th>
 					<th>To Resolve</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="report : ${pendingReports}">
-					<td th:text="${report.id}">Report ID</td>
+					<!--<td th:text="${report.id}">Report ID</td>
 					<td th:text="${report.mealEntry.id}">Post ID</td>
-					<td th:text="${report.mealEntry.author.id}">Poster ID</td>
+					<td th:text="${report.mealEntry.author.username}">Poster Username</td>
 					<td th:text="${report.reason}">Reason</td>
-					<td th:text="${report.reporter.id}">Reporter ID</td>
-					<td th:text="${report.dateReported}">Date of Report</td>
+					<td th:text="${report.reporter.username}">Reporter Username</td>-->
+					<td th:text = "${#temporals.format(report.dateReported, 'dd-MMM-yyyy')}">Date of Report</td>
+					<td th:text="${report.reason}">Reason</td>
 					<td th:text="${report.status}">Status</td>
 					<td><a
 							th:href="@{/admin/resolvereport/} + ${report.id}"><button type="button">Resolve</button></a></td>

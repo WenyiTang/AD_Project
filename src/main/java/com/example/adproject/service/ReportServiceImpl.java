@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.adproject.helper.ReportEnum;
 import com.example.adproject.model.Report;
+import com.example.adproject.model.User;
 import com.example.adproject.repo.ReportRepo;
 
 @Service
@@ -31,5 +32,13 @@ public class ReportServiceImpl implements ReportService {
 	
 	public List<Report> findReportsByStatusIdReason(ReportEnum status, Integer id, String reason){
 		return rrepo.findReportsByStatusIdReason(status, id, reason);
+	}
+	
+	public List<Report> findPendingNProgressReports(User admin){
+		return rrepo.findPendingNProgressReports(admin);
+	}
+	
+	public List<Report> findPendingNProgressReportsIdReason(Integer id, String reason){
+		return rrepo.findPendingNProgressReportsIdReason(id, reason);
 	}
 }
