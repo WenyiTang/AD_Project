@@ -7,10 +7,7 @@ import com.example.adproject.repo.FriendRequestRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.adproject.model.User;
@@ -23,6 +20,9 @@ public class ManageSocialsController {
 
 	@Autowired 
 	FriendRequestService fService;
+
+	@Autowired
+	FriendRequestRepo fRepo;
 	
 	@Autowired
 	UserService uService; 
@@ -71,5 +71,19 @@ public class ManageSocialsController {
 		String message = "You are no longer friends with " + friend.getName();
 		model.addAttribute("message", message);
 		return "manage_socials";
+	}
+
+	@RequestMapping("/friend/add/{username}")
+	public String addFriend(@PathVariable String username, Model model, Principal principal) {
+		User user = uService.findUserByUsername(principal.getName());
+		User friend = uService.findUserByUsername(username);
+
+		FriendRequest request = new FriendRequest(user, friend);
+		fRepo.saveAndFlush(request);
+
+		model.addAttribute("user", user);
+		String message = "Friend request sent to " + friend.getName() + ".";
+		model.addAttribute("message", message);
+		return "add_friend";
 	}
 }

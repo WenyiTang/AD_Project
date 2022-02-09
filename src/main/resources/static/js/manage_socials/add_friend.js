@@ -27,7 +27,7 @@ function buildTable(data) {
 						<td>${data[i].username}</td>
 						<td>${data[i].name}</td>
 						<td>
-							<a id="manage" href="/socials/friend/${data[i].username}" class="btn btn-primary">Add Friend</a>
+							<a id="manage" href="/socials/friend/add/${data[i].username}" class="btn btn-primary">Add Friend</a>
 						</td>
 					</tr>`
         table.innerHTML += row

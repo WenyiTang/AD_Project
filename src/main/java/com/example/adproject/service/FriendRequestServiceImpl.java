@@ -1,5 +1,6 @@
 package com.example.adproject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.adproject.helper.RequestEnum;
@@ -64,5 +65,24 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     @Override
     public void deleteRequest(FriendRequest request) {
         fRepo.delete(request);
+    }
+
+    @Override
+    public List<User> findPendingUsersByUser(User user) {
+        List<FriendRequest> pendingRequests = fRepo.findAllPendingRequestsByUser(user);
+        List<User> pendingUsers = new ArrayList<>();
+        for (FriendRequest request : pendingRequests) {
+            if (request.getSender().getUsername().equals(user.getUsername())) {
+                pendingUsers.add(request.getRecipient());
+            } else if (request.getRecipient().getUsername().equals(user.getUsername())) {
+                pendingUsers.add(request.getSender());
+            }
+        }
+        return pendingUsers;
+    }
+
+    @Override
+    public FriendRequest findRequest(User sender, User recipient) {
+        return fRepo.findRequest(sender, recipient);
     }
 }

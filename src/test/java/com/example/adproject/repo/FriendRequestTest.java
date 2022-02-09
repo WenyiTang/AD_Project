@@ -199,4 +199,21 @@ public class FriendRequestTest {
 		List<User> u = uRepo.findUserWithUsernameLike(username);
 		assertEquals(6,u.size());
 	}
+
+	@Test
+	@Order(3)
+	void testFindPendingUsersByUser() {
+		User u = uRepo.findByUsername("jill");
+		List<User> users = fService.findPendingUsersByUser(u);
+		assertEquals(1, users.size());
+	}
+
+	@Test
+	@Order(4)
+	void testFindRequest() {
+		User sender = uRepo.findByUsername("peter");
+		User recipient = uRepo.findByUsername("jill");
+		FriendRequest fr = fService.findRequest(sender, recipient);
+		assertEquals(7, fr.getId());
+	}
 }

@@ -15,11 +15,17 @@ public interface FriendRequestRepo extends JpaRepository<FriendRequest,Integer> 
     @Query ("SELECT f FROM FriendRequest f WHERE f.status = 'PENDING'")
     List<FriendRequest> findPendingRequests();
 
+    @Query ("SELECT f FROM FriendRequest f WHERE f.sender = :sender AND f.recipient = :recipient")
+    FriendRequest findRequest(@Param("sender") User sender, @Param("recipient") User recipient);
+
     @Query ("SELECT f FROM FriendRequest f WHERE f.status = 'PENDING' AND f.sender = :sender")
     List<FriendRequest> findPendingRequestsBySender(@Param("sender") User sender );
 
     @Query ("SELECT f FROM FriendRequest f WHERE f.status = 'PENDING' AND f.recipient = :recipient")
     List<FriendRequest> findPendingRequestsByRecipient(@Param("recipient") User recipient );
+
+    @Query ("SELECT f FROM FriendRequest f WHERE f.status = 'PENDING' AND (f.recipient = :user OR f.sender = :user)")
+    List<FriendRequest> findAllPendingRequestsByUser(@Param("user") User user);
 
     @Query("SELECT f FROM FriendRequest f WHERE f.status = 'ACCEPTED' AND (f.recipient = :user OR f.sender = :user)" )
     List<FriendRequest> findAcceptedRequestsByUser(@Param("user") User user);

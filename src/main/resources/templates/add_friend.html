@@ -22,6 +22,10 @@
 					<p>Find User: </p>
 				</div>
 			</div>
+			<br>
+			<div th:if="${message !=null}">
+				<p class="text-success" th:text="${message}"></p>
+			</div>
 			<form class="form-inline">
 				<div class="form-group">
 					<div class="col-sm-9">

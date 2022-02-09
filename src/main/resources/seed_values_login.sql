@@ -1,7 +1,3 @@
-drop schema if exists adproject;
-create database adproject;
-
-delete from adproject.user;
 
 insert into adproject.role
 (type)
@@ -16,8 +12,9 @@ values
     (str_to_date('2022-01-01', '%Y-%m-%d'), 'bondjames@gmail.com', true,'', 160, 'James Bond', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '','bond_james', 50),
     (str_to_date('2022-01-01', '%Y-%m-%d'), 'jill@gmail.com', true,'', 160, 'Jill', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jill', 50),
     (str_to_date('2022-01-01', '%Y-%m-%d'), 'jake@gmail.com', true,'', 160, 'Jake', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jake', 50),
+    (str_to_date('2022-01-01', '%Y-%m-%d'), 'jay@gmail.com', true,'', 160, 'Jay', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jay', 50),
     (str_to_date('2022-01-01', '%Y-%m-%d'), 'jane@gmail.com', true,'', 160, 'Jane', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jane', 50),
-    (str_to_date('2022-01-01', '%Y-%m-%d'), 'jane123@gmail.com', true,'', 160, 'Jane Tan', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jane123', 50),
+    (str_to_date('2022-01-01', '%Y-%m-%d'), 'jane123@gmail.com', true,'', 160, 'Jane Porter', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'jane123', 50),
     (str_to_date('2022-01-01', '%Y-%m-%d'), 'appfooddiary@gmail.com', true,'', 160, 'CY', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '', 'cy', 50),
     (null, 'admin@gmail.com', true,'', 0, 'admin', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '','admin', 0);
 
@@ -56,7 +53,7 @@ INSERT INTO adproject.friend_request
 VALUES
     (3, 1, 'ACCEPTED'),
     (3, 2, 'ACCEPTED'),
-    (3, 5, 'ACCEPTED'),
     (3, 6, 'ACCEPTED'),
-    (3, 7, 'PENDING');
+    (3, 7, 'PENDING'),
+    (5, 3, 'PENDING');
 
