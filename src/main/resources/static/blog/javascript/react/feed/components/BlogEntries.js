@@ -4,6 +4,7 @@ class BlogEntries extends React.Component {
         <BlogEntry 
             key = {blogEntry.id}
             blogEntry = {blogEntry}
+            likeEntry = {this.props.likeEntry}
         />));
     }
   }

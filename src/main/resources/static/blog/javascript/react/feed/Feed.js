@@ -27,13 +27,71 @@ class Feed extends React.Component {
     
 
     }
+
+    likeEntry = (id,liked) => {
+        if(liked) {
+            fetch(
+                "http://localhost:8080/api/likes/unlike?" +
+                  new URLSearchParams({
+                      userId: this.state.activeUserId,
+                      mealEntryId: id,
+                  }),
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+            ).then(
+                this.setState ( {
+                    blogEntries: this.state.blogEntries.map ((blogEntry) =>{
+                        if(blogEntry.id === id) {
+                            blogEntry.likedByActiveUser = false;
+                            blogEntry.numberOfLikes--; 
+                        }
+                        return blogEntry;
+                    })
+                })
+            );
+        }
+        else {
+            fetch(
+                "http://localhost:8080/api/likes/like?" +
+                  new URLSearchParams({
+                    userId: this.state.activeUserId,
+                    mealEntryId: id,
+                  }),
+          
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              ).then(
+                  this.setState ( {
+                      blogEntries: this.state.blogEntries.map((blogEntry) => {
+                          if(blogEntry.id === id) {
+                              blogEntry.likedByActiveUser = true;
+                              blogEntry.numberOfLikes++;
+                          }
+                          return blogEntry;
+                      })
+                  })
+              );
+
+        }
+
+    }
     
 
     render() {
     return <>
         
         <div className = "list-view">
-            <BlogEntries blogEntries = {this.state.blogEntries} />
+            <BlogEntries    blogEntries = {this.state.blogEntries}
+                            likeEntry = {this.likeEntry}
+            />
         </div>
         </>;
     }
