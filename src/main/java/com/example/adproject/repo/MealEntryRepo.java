@@ -10,11 +10,18 @@ import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.User;
 
 
+
 public interface MealEntryRepo extends JpaRepository<MealEntry, Integer>{
 
-	@Query("Select me from MealEntry me where me.author.id = :userid")
+    @Query("SELECT m FROM MealEntry m where m.visibility = true AND m.author = :author")
+    List<MealEntry> findVisibleMealEntryByAuthor(@Param("author") User author);
+
+    @Query("SELECT m FROM MealEntry m where m.visibility = true")
+    List<MealEntry> findAllVisibleMealEntries();
+
+    @Query("Select me from MealEntry me where me.author.id = :userid")
 	public List<MealEntry> findEntryByAuthor(@Param("userid") Integer userId);
 
-
+  
 
 }

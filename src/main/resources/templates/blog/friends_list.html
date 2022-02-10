@@ -1,0 +1,52 @@
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Entry</title>
+    <link rel="stylesheet" href="/blog/styles/meal_entry.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        .friends-list{
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class = "navbar">
+
+        <div id = "upper-half">
+            <div id = "logo">
+                <img src="/blog/images/app_logo.svg" alt="Salad">
+                <h1 id = "app-title">Food Diary</h1>
+            </div>
+
+            <div id = "account-avatar">
+                <img id = "avatar" src="/blog/images/avatar.png" alt="User avatar">
+                <span id = "account">Account</span>
+            </div>
+        </div>
+
+        <div>
+            <h1 class= "page-title" th:text = "${#strings.capitalize(user.username)} + '\'s Friends'"></h1>
+        </div>
+    </div>
+
+    <div class ="friends-list">
+
+            <h1>Friends List</h1>
+
+            <a  style = "display: block;" 
+                th:each = "friend:${friends}" 
+                th:text = "${friend.username}" 
+                th:href = "@{'blog/view/' + ${friend.id}}"></a>
+
+            <a  style = "display: block;" 
+                th:href = "@{'blog/feed'}">Feed</a>
+        
+    </div>

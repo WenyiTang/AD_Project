@@ -3,7 +3,11 @@ package com.example.adproject.model;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+
 import java.util.Set;
+
+import java.util.Objects;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +25,9 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -63,13 +70,15 @@ public class User {
 	private Double weight;
 	@Column(nullable=true, length=64)
 	private String profilePic;
+
 	private boolean enabled; 
 	@Column(name = "reset_password_token")
 	private String resetPasswordToken; 
-
-	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL })
-	@LazyCollection(LazyCollectionOption.FALSE)
+	
+	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL }, orphanRemoval=true)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Comment> comments;
+	
 
 	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL })
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -133,6 +142,24 @@ public class User {
 		this.email = email; 
 		this.enabled = enabled; 
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		if (!(o instanceof User)) {
+			return false;
+		}
+		User user = (User) o;
+		return Objects.equals(id, user.id) && Objects.equals(username, user.username);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, username);
+	}
+
+
 	
 	// For displaying profile pic
 	@Transient

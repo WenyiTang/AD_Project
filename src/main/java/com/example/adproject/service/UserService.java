@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface UserService {
+    
 
     List<User> findFriendsOf(User user);
     

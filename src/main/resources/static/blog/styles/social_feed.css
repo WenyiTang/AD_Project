@@ -1,0 +1,121 @@
+* {
+    /* Browser automatically gives all block elements margin and padding.
+    This resets margin and padding to 0.  */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.page-title {
+    color:white;
+    font-weight: 300;
+}
+
+
+.navbar {
+    display:flex;
+    flex-direction:column;
+    background-color: rgb(52, 109, 216);
+    padding: 1.5em;
+}
+#upper-half {
+    margin-bottom:1.5em;
+}
+
+#logo{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    float:left;
+}
+
+#account-avatar {
+    float: right;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+   
+   
+}
+
+#avatar {
+    width: 70px;
+    height: auto;
+    margin-right:1em;
+}
+
+#account {
+    font-weight:400;
+    font-size: larger;
+}
+
+
+
+#app-title {
+    color:black;
+    font-weight:500;
+}
+
+.list-view {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.list-item {
+    display:grid;
+    margin:2em;
+    padding: 1em;
+    border-bottom: 1px solid black;
+
+    grid-template-areas: 
+    "pic title likes"
+    "pic date like-flag"
+    "pic description inappropriate-text"    
+    
+    ;
+}
+.pic-anchor{
+    grid-area: pic;
+    margin-right:1em;
+
+}
+
+.pic {
+    
+    object-fit:cover;
+    height: 200px;
+    width: 200px;
+    
+}
+.title {
+    grid-area: title;
+
+}
+.title > p {
+    font-weight:200;
+}
+.date {
+    grid-area: date;
+}
+.description {
+    grid-area: description;
+}
+.inappropriate-text {
+    grid-area:inappropriate-text;
+    color:red;
+
+    /* This width seems to keep things aligned */
+    width:100px;
+}
+
+.likes {
+    grid-area: likes;
+}
+.like-flag {
+    grid-area:like-flag;
+}
+
