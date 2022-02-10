@@ -14,6 +14,8 @@ public interface GoalRepo extends JpaRepository<Goal, Integer> {
 	@Query("Select g from Goal g where g.author.id = :userid AND g.status ='COMPLETED'")
 	public List<Goal> findCompletedGoals(@Param("userid") Integer userId);
 	
+	//figuring out how to query by joining tables, not sure of the table names
+	//@Query("Select g from Goal g left join userGoals ug on g.id = ug.goals.id where ug.user.id = :userid AND g.status ='IN_PROGRESS'")
 	@Query("Select g from Goal g where g.author.id = :userid AND g.status ='IN_PROGRESS'")
 	public Goal findCurrentGoal(@Param("userid") Integer userId);
 
