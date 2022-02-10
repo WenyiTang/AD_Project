@@ -10,6 +10,11 @@
 		integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
 		crossorigin="anonymous"></script>
 	<link th:rel="stylesheet" th:href="@{/css/bootstrap.css}">
+	<link rel="stylesheet" th:href="@{/css/simple.css}" />
+	<link rel="stylesheet" th:href="@{/css/table.css}" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/photo.js"></script>
 </head>
 
 <body>
@@ -37,7 +42,7 @@
 							<a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown" type="button">
 								Goals </a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" th:href="@{/staff/addot}"> View Current Goal</a></li>
+								<li><a class="dropdown-item" th:href="@{/user/goals}"> View Current Goal</a></li>
 								<li><a class="dropdown-item" th:href="@{/staff/listot}"> View Past Goals</a></li>
 							</ul>
 						</li>
@@ -53,7 +58,7 @@
 							<a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown" type="button">
 								Account </a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" th:href="@{/staff/addot}"> Edit Profile </a></li>
+								<li><a class="dropdown-item" th:href="@{/user/myProfile}"> Edit Profile </a></li>
 								<li><a class="dropdown-item" th:href="@{/logout}"> Logout </a></li>								
 							</ul>
 						</li>
@@ -65,7 +70,7 @@
 						</li>
 						<li class="nav-item">
 						<!--<a class="nav-link" th:href="@{/logout}"> Logout </a>-->
-						<form th:action="@{/logout}" method="POST"><input type="submit" value="Logout"/></form>
+						<li class="nav-item"><a class="nav-link" th:href="@{/logout}"> Logout </a>
 						</li>
 					</ul>
 				</div>
