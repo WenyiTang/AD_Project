@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -63,6 +62,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.permitAll()
 			.and()
 			.exceptionHandling().accessDeniedPage("/403");
+			
+		//Disable csrf token requirement for MVP
+		// this allows for POST, PUT, DELETE requests to be sent from ajax/fetch API to 
+		// REST controllers
+		http.csrf().disable();
 	}
 	
 }
