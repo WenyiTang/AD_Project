@@ -1,9 +1,8 @@
 package com.example.adproject.controller;
 
+import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import com.example.adproject.model.Comment;
 import com.example.adproject.model.MealEntry;
@@ -40,8 +39,8 @@ public class ViewBlogController {
 
 
     @GetMapping("/view/{id}")
-    public String viewUserBlog(HttpSession session, Model model, @PathVariable Integer id) {
-        String activeUsername = session.getAttribute("username").toString();
+    public String viewUserBlog(Principal principal, Model model, @PathVariable Integer id) {
+        String activeUsername = principal.getName();
         User activeUser = uRepo.findByUsername(activeUsername);
         User user = uRepo.findById(id).get();
         if(user == null) {
@@ -58,10 +57,10 @@ public class ViewBlogController {
     } 
 
     @GetMapping("/view/entry/{id}")
-    public String viewMealEntry(HttpSession session, Model model, @PathVariable Integer id) {
+    public String viewMealEntry(Principal principal, Model model, @PathVariable Integer id) {
         MealEntry entry = mRepo.findById(id).get();
         
-        String activeUsername = session.getAttribute("username").toString();
+        String activeUsername = principal.getName();
         User activeUser = uRepo.findByUsername(activeUsername);
         if(entry == null) {
             return null;
@@ -85,10 +84,10 @@ public class ViewBlogController {
     }
 
     @PostMapping("/comment/{id}")
-    public String addComment(HttpSession session, Model model, @PathVariable Integer id, @RequestParam String caption) {
+    public String addComment(Principal principal, Model model, @PathVariable Integer id, @RequestParam String caption) {
         MealEntry entry = mRepo.findById(id).get();
 
-        String activeUsername = session.getAttribute("username").toString();
+        String activeUsername = principal.getName();
         User activeUser = uRepo.findByUsername(activeUsername);
 
         Comment comment = new Comment(caption,activeUser,entry);
@@ -99,11 +98,11 @@ public class ViewBlogController {
     }
 
     @GetMapping("/report/entry/{id}")
-    public String flagEntry(HttpSession session, Model model, @PathVariable Integer id) {
+    public String flagEntry(Principal principal, Model model, @PathVariable Integer id) {
 
         MealEntry entry = mRepo.findById(id).get();
         
-        String activeUsername = session.getAttribute("username").toString();
+        String activeUsername = principal.getName();
         User activeUser = uRepo.findByUsername(activeUsername);
         if(entry == null) {
             return null;
@@ -118,8 +117,8 @@ public class ViewBlogController {
     }
 
     @GetMapping("/feed")
-    public String viewUserFeed(HttpSession session, Model model){
-        String activeUsername = session.getAttribute("username").toString();
+    public String viewUserFeed(Principal principal, Model model){
+        String activeUsername = principal.getName();
         User activeUser = uRepo.findByUsername(activeUsername);
         if(activeUser == null) {
             return null;

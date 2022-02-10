@@ -1,5 +1,6 @@
 package com.example.adproject.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class LoginController {
+public class MakeshiftLoginController {
     @Autowired
     UserRepo uRepo;
 
@@ -32,7 +33,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
-                        HttpSession session,
+                        HttpSession principal,
                         Model model) 
     {
         User user = uRepo.findByUsername(username);
@@ -41,8 +42,8 @@ public class LoginController {
         }
 
         if(password.equals(user.getPassword())){
-            session.setAttribute("username", username);
-            session.setAttribute("id", user.getId());
+            principal.setAttribute("username", username);
+            principal.setAttribute("id", user.getId());
             return "redirect:/friends";
             
         }
@@ -52,8 +53,8 @@ public class LoginController {
     }
 
     @GetMapping("/friends")
-    public String friendsList(HttpSession session, Model model) {
-        String username = session.getAttribute("username").toString();
+    public String friendsList(Principal principal, Model model) {
+        String username = principal.getName();
 
         User user = uRepo.findByUsername(username);
 
