@@ -1,6 +1,7 @@
 package com.example.adproject.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -84,7 +85,7 @@ public class userController {
 	
 	@RequestMapping(value = "/myProfile/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView editProfile(@ModelAttribute @Validated User user, @RequestParam("fileImage") MultipartFile multipartFile, 
+	public ModelAndView editProfile(@ModelAttribute @Validated User user,BindingResult result, @RequestParam("fileImage") MultipartFile multipartFile, 
 			Principal principal) throws IOException  {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("user", user);
@@ -102,9 +103,9 @@ public class userController {
 		updateUser.setWeight(user.getWeight());
 		updateUser.setProfilePic(fileName);
 		urepo.saveAndFlush(updateUser);
-		String uploadDir = "src/main/resources/static/images/";
+		String uploadDir = "./images/" + updateUser.getId();
 //		String archiveDir= "src/main/resources/static/images/";
-		Path uploadPath = Paths.get(uploadDir); 
+		Path uploadPath = Paths.get(uploadDir);
 //		Path photoPath = Paths.get(archiveDir);
 		// Saving user's profile pic into directory 
 				if (!Files.exists(uploadPath)) {
@@ -112,15 +113,13 @@ public class userController {
 				}
 				
 				try {
-					InputStream inputStream = multipartFile.getInputStream(); 
-					Path filePath = uploadPath.resolve(fileName); 
-//					Path photoPath1 = photoPath.resolve(fileName); 
-//					Files.copy(inputStream, photoPath1, StandardCopyOption.REPLACE_EXISTING);
-					Files.copy(inputStream, filePath ,StandardCopyOption.REPLACE_EXISTING);
-//					Files.copy(filePath, photoPath1, StandardCopyOption.REPLACE_EXISTING);
-					
+					File profileImg = new File("images/" + updateUser.getId() + "/" + fileName);
+					profileImg.createNewFile();
+					FileOutputStream fout = new FileOutputStream(profileImg);
+					fout.write(multipartFile.getBytes());
+					fout.close();
 				} catch (IOException e) {
-					throw new IOException("Could not save uploaded file: " + fileName); 
+					throw new IOException("Could not save uploaded file: " + fileName);
 				}
 		
 		String message = "User was successfully updated.";

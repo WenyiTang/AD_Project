@@ -57,8 +57,7 @@ h3 {
 	text-shadow: 0 -1px 1px rgba(0,0,0,0.4);
 	font-size: 15px;
 	line-height: 40px;
-	color: #355681;
-	text-transform: uppercase;
+	color:black;
 	border-bottom: 1px solid rgba(53,86,129, 0.3);
 }
 
@@ -75,38 +74,7 @@ h4 {
 
 
 
-frame	{
-	margin : 0px 0px 0px 0px;
-	border : none;
-	border-width : 0px 0px 0px 0px;
-	padding : 0px 0px 0px 0px;
-}
-
-ul {
-    margin: 0; 
-    padding: 0;
-    width:185px;
-    list-style-type: none;
-}
-
-ul li a {
-    text-decoration: none;
-    color: white; 
-    padding: 10.5px 11px;
-    background-color: #002b55;
-    display:block;
-}
- 
-ul li a:visited {
-    color: white;
-}
- 
- ul li a:hover, ul li  {
-    color: white;
-    background-color: #675FD3      ;
-}
-
-table
+.container table
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size: 12px;
@@ -114,7 +82,7 @@ table
 	border-collapse: collapse;
 	
 }
-th
+.container th
 {
 	font-size: 14px;
 
@@ -122,7 +90,7 @@ th
     padding: 10px 8px 0px 0px;
     margin-right: 12px;
 }
-td
+.container td
 {
 	
 	font-weight: normal;
@@ -130,7 +98,7 @@ td
 	
 	
 }
-tbody tr:hover td
+.container tbody tr:hover td
 {
 	color: #009;
 }
@@ -286,62 +254,3 @@ hr {
     border-style: inset;
     border-width: 1px;
 }
-
-.navbar {
-  overflow: hidden;
-  background-color: #333; 
-}
-
-.navbar a {
-  float: left;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-.subnav {
-  float: left;
-  overflow: hidden;
-}
-
-.subnav .subnavbtn {
-  font-size: 16px;  
-  border: none;
-  outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-}
-
-.navbar a:hover, .subnav:hover .subnavbtn {
-  background-color: #338;
-}
-
-.subnav-content {
-  display: none;
-  position: absolute;
-  left: 0;
-  background-color: #333;
-  width: 100%;
-  z-index: 1;
-}
-
-.subnav-content a {
-  float: left;
-  color: white;
-  text-decoration: none;
-}
-
-.subnav-content a:hover {
-  background-color: #338;
-  color: white;
-}
-
-.subnav:hover .subnav-content {
-  display: block;
-}
-

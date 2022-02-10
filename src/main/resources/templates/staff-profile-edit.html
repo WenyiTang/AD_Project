@@ -31,13 +31,11 @@
                         th:object="${user}" method="POST" enctype="multipart/form-data">
                         <label for="fileImage">Profile Picture:</label>
                         <div class = "avatar">
-                           <img
-                              th:src="@{'/images/' + ${user.profilePic}}" width="150px" height= "150px" />
+                            <img id="thumbnail" class="img-fluid rounded mx-auto d-block w-25"
+						th:src="@{'/images/' + ${user.getId()} + '/' + ${user.getProfilePic()}}" alt="Profile Pic Preview" width="150px" height= "150px" />
+							<input type="file" id="fileImage" name="fileImage" accept="image/png, image/jpeg" />
                         </div>
-                        <p></p>
-                        <input type="file" id="fileImage" name="fileImage" accept="image/png, image/jpeg" />
-                        <label for="fileImage">Uploaded picture:</label>
-                        <img id="thumbnail" class="img-fluid rounded mx-auto d-block w-25" alt="Profile Pic Preview" />
+                        
                         <table>
                            <tbody>
                               <tr>
@@ -46,7 +44,7 @@
                               </tr>
                               <tr>
                                  <td><span th:text="#{fieldLabel.DateOfBirth}"></span></td>
-                                 <td><input type="text" th:field="${user.dateOfBirth}" size="40" /></td>
+                                 <td><input type="date" th:field="${user.dateOfBirth}" size="40" /></td>
                               </tr>
                               <tr>
                                  <td><span th:text="#{fieldLabel.Height}"></span></td>
@@ -73,23 +71,25 @@
          </div>
       </div>
    </body>
-   <script> type = "text/javascript" >
-      $(document).ready(function () {
-      	$('#fileImage').change(function () {
-      		showImageThumbnail(this);
-      	});
-      });
-      
-      function showImageThumbnail(fileInput) {
-      file = fileInput.files[0];
-      reader = new FileReader();
-      
-      reader.onload = function (e) {
-      	$('#thumbnail').attr('src', e.target.result);
-      };
-      
-      reader.readAsDataURL(file);
-      }
-      
-   </script>
+<script> type = "text/javascript" >
+		$(document).ready(function () {
+			$('#fileImage').change(function () {
+				showImageThumbnail(this);
+			});
+		});
+
+	function showImageThumbnail(fileInput) {
+		file = fileInput.files[0];
+		reader = new FileReader();
+
+		reader.onload = function (e) {
+			$('#thumbnail').attr('src', e.target.result);
+		};
+
+		reader.readAsDataURL(file);
+	}
+
+</script>
+   
+   
 </html>

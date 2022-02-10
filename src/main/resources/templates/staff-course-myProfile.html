@@ -22,7 +22,8 @@
                </div>
                <div class = "avatar">
                   <img
-                     th:src="@{'/images/' + ${user.profilePic}}" width="150px" height= "150px" />
+                     th:src="@{'/images/' + ${user.getId()} + '/' + ${user.getProfilePic()}}" width="150px" height= "150px" />
+                     
                </div>
                <div class ="editPhoto">
                   <img 
