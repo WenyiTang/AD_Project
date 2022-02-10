@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+<meta charset="ISO-8859-1" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div th:replace="fragments/layout.html::menu" />
+	</div>
+	&nbsp;
+	<div class="container">
+		<div>
+			<img th:src="@{'/images/' + ${friend.getId()} + '/' + ${friend.getProfilePic()}}" style="width: 100px"/>
+		</div>
+		<div>
+			<h3>Name: <span th:text="${friend.name}"></span ></h3>
+		</div>
+		<div>
+			<h3>Username: <span th:text="${friend.username}"></span ></h3>
+		</div>
+		&nbsp
+	<div class="container">
+		<div class="row">
+			<div class="col-6">
+				<a th:href="@{/socials/add}" class="btn btn-success btn-block">View Food Blog</a>
+			</div >
+		</div >
+		<br/>
+		<div class="row">
+			<div class="col-3">
+				<a th:href="@{/socials/friend/delete/} + ${friend.username}" class="btn btn-danger btn-block">Delete Friend</a>
+			</div>
+			<div class="col-3">
+				<a th:href="@{/socials/manage}" class="btn btn-secondary btn-block">Back</a>
+			</div>
+		</div>
+		<br>
+<!--		Yet to implement confirm delete modal pop-up-->
+	</div>
+</body>
+<!--<script th:src="@{/js/manage_socials/manage_socials.js}"></script> -->
+</html>

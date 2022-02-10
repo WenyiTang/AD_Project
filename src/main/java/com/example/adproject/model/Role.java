@@ -17,8 +17,12 @@ public class Role {
 	@Id
 	@Column(name = "role_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id; 
-	
-	private String type; 
-	
+	private Integer id;
+
+	private String type;
+
+	public Role(String type) {
+		this.type = type;
+	}
+
 }
