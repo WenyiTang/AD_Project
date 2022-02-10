@@ -33,15 +33,31 @@
 		<br/>
 		<div class="row">
 			<div class="col-3">
-				<a th:href="@{/socials/friend/delete/} + ${friend.username}" class="btn btn-danger btn-block">Delete Friend</a>
+				<!-- Button trigger modal -->
+				<a class="btn btn-danger btn-block" data-toggle="modal" data-target="#confirmModal">Delete Friend</a>
 			</div>
 			<div class="col-3">
 				<a th:href="@{/socials/manage}" class="btn btn-secondary btn-block">Back</a>
 			</div>
 		</div>
 		<br>
-<!--		Yet to implement confirm delete modal pop-up-->
+
+		<!-- Modal -->
+		<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Confirm Delete?</h5>
+						<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body"><p class="text-danger"><b>Warning this cannot be undone!</b></p></div>
+					<div class="modal-footer">
+						<a th:href="@{/socials/friend/delete/} + ${friend.username}" class="btn btn-danger">Yes</a>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
-<!--<script th:src="@{/js/manage_socials/manage_socials.js}"></script> -->
 </html>
