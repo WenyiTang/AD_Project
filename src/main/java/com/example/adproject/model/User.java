@@ -79,7 +79,7 @@ public class User {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<MealEntry> likedEntries;
 
-	@OneToMany(targetEntity = Goal.class, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(targetEntity = Goal.class, cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OrderColumn
 	private List<Goal> goals;
@@ -132,6 +132,13 @@ public class User {
 		this.password = password;
 		this.email = email; 
 		this.enabled = enabled; 
+	}
+	public User(String name, @Past LocalDate dateOfBirth, double height, double weight) {
+		super();
+		this.name = name;
+		this.dateOfBirth = dateOfBirth;
+		this.height = height;
+		this.weight = weight;
 	}
 	
 	// For displaying profile pic
