@@ -1,5 +1,7 @@
 <html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!-- use fragment in separate div to prevent it from deleting other stuff -->
+    <div  th:replace="fragments/layout.html :: html_head"></div>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,25 +13,7 @@
 </head>
 
 <body>
-    <div class = "navbar">
-
-        <div id = "upper-half">
-            <div id = "logo">
-                <img src="/blog/images/app_logo.svg" alt="Salad">
-                <h1 id = "app-title">Food Diary</h1>
-            </div>
-
-            <div id = "account-avatar">
-                <img id = "avatar" src="/blog/images/avatar.png" alt="User avatar">
-                <span id = "account">Account</span>
-            </div>
-        </div>
-
-        <div>
-            <h1 class = "page-title" th:text = "${#strings.capitalize(user.username)} + '\'s Entry'"></h1>
-            <a th:href="@{'/blog/view/entry/' + ${entry.id}}">back</a>
-        </div>
-    </div>
+    <div th:replace="fragments/layout.html::menu" />
 
 
     <div class = "content-area">

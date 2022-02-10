@@ -11,8 +11,12 @@ body {
 }
 
 .page-title {
-    color:white;
+    color:black;
     font-weight: 300;
+}
+
+.page-title-div{
+    margin: 1em;
 }
 
 

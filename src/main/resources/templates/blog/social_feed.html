@@ -1,49 +1,39 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!-- use fragment in separate div to prevent it from deleting other stuff -->
+    <div  th:replace="fragments/layout.html :: html_head"></div>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Blog</title>
-    <link rel="stylesheet" href="/blog/styles/social_feed.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/blog/styles/social_feed.css">
 </head>
 <body>
     
-
-    <div class = "navbar">
-
-        <div id = "upper-half">
-            <div id = "logo">
-                <img src="/blog/images/app_logo.svg" alt="Salad">
-                <h1 id = "app-title">Food Diary</h1>
-            </div>
-
-            <div id = "account-avatar">
-                <img id = "avatar" src="/blog/images/avatar.png" alt="User avatar">
-                <span id = "account">Account</span>
-            </div>
-        </div>
-
-        <div>
-            <h1 class = "page-title" th:text = "${#strings.capitalize(user.username)} + '\'s Feed'"></h1>
-            <a th:href="@{'/friends'}">back</a>
-        </div>
+    <div th:replace="fragments/layout.html::menu" />
+	</div>
+    
+    <div class = "page-title-div">
+        <h1 class = "page-title" th:text = "${user.username} + '\'s feed'"></h1>
     </div>
-
     
     <!-- React components will be rendered in the div below -->
     <div th:attr="data-userId = ${user.id}"  class = "feed"></div>
 
     <!-- Load React. -->
     <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <!-- <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script> -->
 
     <!-- For production -->
-    <!-- <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script> -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
 
     <!-- Load Babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
