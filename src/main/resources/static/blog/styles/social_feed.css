@@ -81,6 +81,8 @@ body {
     
     ;
 }
+
+
 .pic-anchor{
     grid-area: pic;
     margin-right:1em;
@@ -100,6 +102,12 @@ body {
 }
 .title > p {
     font-weight:200;
+
+}
+
+.title > h2{
+    margin: 0;
+    margin-right:1em;
 }
 .date {
     grid-area: date;
@@ -117,6 +125,7 @@ body {
 
 .likes {
     grid-area: likes;
+    margin: 0;
 }
 .like-flag {
     grid-area:like-flag;
