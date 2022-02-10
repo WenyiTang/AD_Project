@@ -12,7 +12,7 @@
 <body>
 	<div align="center">
 		<img class="img-fluid" th:src="@{/images/logo.png}" />
-	</div >
+	</div>
 	<div class="container-fluid text-center">
 		<form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
 
@@ -36,17 +36,22 @@
 					<input type="submit" value="Login" class="btn btn-primary btn-block" />
 				</p>
 				<p>
-					<a th:href="@{/forgot_password}">Forgot password?</a>
-				</p>
-				&nbsp;
-				<p>
-					Not an existing user?
-				</p>
-				<p>
-					<input type="submit" value="Create New Account" class="btn btn-secondary btn-block" />
+					<a th:href="@{/forgot_password}">Forgotten password?</a>
 				</p>
 			</div>
 		</form>
+		<div style="max-width: 350px; margin: 0 auto;">
+			<br />
+			<p>
+				Not an existing user?
+			</p>
+			<p>
+				<a th:href="@{/create-account}">
+					<input type="button" th:href="@{/create-account}" value="Create New Account"
+						class="btn btn-secondary btn-block" />
+				</a>
+			</p>
+		</div>
 	</div>
 </body>
 

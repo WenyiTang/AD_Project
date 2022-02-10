@@ -2,6 +2,7 @@ package com.example.adproject.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,6 +48,11 @@ public class UserServiceImpl implements UserService {
 		return uRepo.findByUsername(username); 
 	}
 	
+	@Override 
+	public User findUserByEmail(String email) {
+		return uRepo.findByEmail(email); 
+	}
+	
 	@Override
 	public void updateResetPasswordToken(String token, String email) throws UserNotFoundException {
 		User user = uRepo.findByEmail(email); 
@@ -78,5 +84,10 @@ public class UserServiceImpl implements UserService {
 		return uRepo.findById(userId).orElse(null);
 	}
 
-
+  @Override
+	public User save(User user) {
+		uRepo.save(user); 
+		
+		return uRepo.findByUsername(user.getUsername()); 
+	}
 }

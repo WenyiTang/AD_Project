@@ -19,16 +19,15 @@
 	<div sec:authorize="isAuthenticated()">
 		Welcome <b><span sec:authentication="principal.username">Username</span></b>
 		&nbsp;
-		<i><span sec:authentication="principal.authorities">Roles</span></i>
+		<!--<i><span sec:authentication="principal.authorities">Roles</span></i>-->
 		
 	</div>
-		
-	<div>
+	<div sec:authorize="hasAnyAuthority('USER')">
 		<tr class="goal">
 			<th><span><b>Current goal:</b></span></th>
 			<th th:text="${currentGoal?.goalDescription}?: 'no goal set yet'">Description</th >
 		</tr>
-	</div>
+	</div >
 		
 	<div id="container"
 			style="width: 350px; height: 300px; margin: 0 auto" th:unless="${#lists.isEmpty(allEntries)}"></div>

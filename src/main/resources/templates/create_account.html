@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+	<title>Create New Account</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="container-fluid text-center">
+		<h2>Create New Account</h2>
+
+		<div th:if="${message != null}">
+			<p class="text-success" th:text="${message}">Account creation successful. Please login.</p>
+			<a th:href="@{/login}">>>Login with new credentials<<</a>
+		</div>
+		<div th:if="${message_error != null}">
+			<p class="text-danger" th:text="${message_error}">Account creation failed. Please try again.</p>
+		</div>
+	</div>
+
+	<div class="container-fluid text-left">
+		<form th:action="@{/create-account}" th:object="${user}" method="post" style="max-width: 500px; margin: 0 auto;"
+			enctype="multipart/form-data">
+			<div class="border border-secondary p-3 rounded">
+				<div>
+					<label for="fileImage">Profile Picture:</label>
+					<img id="thumbnail" class="img-fluid rounded mx-auto d-block w-25"
+						th:src="@{/images/default-profile-picture.jpeg}" alt="Profile Pic Preview" />
+					<input type="file" id="fileImage" name="fileImage" accept="image/png, image/jpeg" />
+				</div>
+				<p>
+					<label for="username">Username:</label>
+					<input type="text" th:field="*{username}" class="form-control" id="Username" required autofocus />
+				<p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+				</p>
+				<p>
+					<label for="password">Password:</label>
+					<input type="password" th:field="*{password}" class="form-control" id="password" required
+						autofocus />
+				<p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+				</p>
+				<p>
+					<label for="email">Email:</label>
+					<input type="text" th:field="*{email}" class="form-control" id="email" required autofocus />
+				<p class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+				</p>
+				<p>
+					<label for="dateOfBirth">Date of birth:</label>
+					<input type="date" th:field="*{dateOfBirth}" class="form-control" id="dateOfBirth" required
+						autofocus />
+				<p class="text-danger" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></p>
+				</p>
+				<label for="gender">Gender:</label>
+				<select id="gender" class="form-select form-select-lg mb-3" aria-label=".form-select-lg"
+					th:field="*{gender}" required>
+					<option selected th:value=null>Gender</option>
+					<option th:value="M">Male</option>
+					<option th:value="F">Female</option>
+					<option th:value="O">Others</option>
+				</select>
+				<p>
+					<label for="username">Name:</label>
+					<input type="text" th:field="*{name}" class="form-control" id="Name" required autofocus />
+				<p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+				<p>
+					<label for="dateOfBirth">Height(/m):</label>
+					<input type="text" th:field="*{height}" class="form-control" placeholder="Height" required
+						autofocus />
+				<p class="text-danger" th:if="${#fields.hasErrors('height')}" th:errors="*{height}"></p>
+				</p>
+				<p>
+					<label for="dateOfBirth">Weight(/kg):</label>
+					<input type="text" th:field="*{weight}" class="form-control" placeholder="Weight" required
+						autofocus />
+				<p class="text-danger" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></p>
+				</p>
+				<p>
+					<input type="submit" value="Submit" class="btn btn-primary btn-block" />
+				</p>
+			</div>
+		</form>
+	</div>
+	</div>
+</body>
+<script> type = "text/javascript" >
+		$(document).ready(function () {
+			$('#fileImage').change(function () {
+				showImageThumbnail(this);
+			});
+		});
+
+	function showImageThumbnail(fileInput) {
+		file = fileInput.files[0];
+		reader = new FileReader();
+
+		reader.onload = function (e) {
+			$('#thumbnail').attr('src', e.target.result);
+		};
+
+		reader.readAsDataURL(file);
+	}
+
+</script>
+
+</html>

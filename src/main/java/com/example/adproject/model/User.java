@@ -17,21 +17,27 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
+import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.example.adproject.validator.LogicalDimension;
+import com.example.adproject.validator.UniqueEmail;
+import com.example.adproject.validator.UniqueUsername;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
 @NoArgsConstructor
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(name="user_type", discriminatorType = DiscriminatorType.STRING)
 @Entity
 public class User {
 
@@ -39,17 +45,23 @@ public class User {
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@UniqueUsername(message = "Username is already taken")
 	private String username;
+	@UniqueEmail(message = "Email address is already registered")
+	@Email(message = "Invalid email address")
 	private String email;
 	private String password;
 	private String name;
 	private String gender;
 
-	@Past
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@Past(message= "Must be a past date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
-	private double height;
-	private double weight;
+	@LogicalDimension(message= "Invalid height")
+	private Double height;
+	@LogicalDimension(message= "Invalid weight")
+	private Double weight;
+	@Column(nullable=true, length=64)
 	private String profilePic;
 	private boolean enabled; 
 	@Column(name = "reset_password_token")
@@ -121,7 +133,6 @@ public class User {
 		this.email = email; 
 		this.enabled = enabled; 
 	}
-
 	public User(String name, @Past LocalDate dateOfBirth, double height, double weight) {
 		super();
 		this.name = name;
@@ -129,6 +140,13 @@ public class User {
 		this.height = height;
 		this.weight = weight;
 	}
-
 	
+	// For displaying profile pic
+	@Transient
+	public String getImagePath() {
+		if (profilePic == null || id == null) {
+			return null; 
+		}
+		return "/user-profilePic." + id + "/" + profilePic;
+	}
 }
