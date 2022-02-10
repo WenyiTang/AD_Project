@@ -34,7 +34,7 @@ public class LoginController {
 			if (r.getType().equalsIgnoreCase("ADMIN")) {
 				Integer reportCount = rService.findPendingNProgressReports(loggedin).size();
 				model.addAttribute("reportCount", reportCount);
-				break;
+				return "redirect:/admin/pendingreports";
 			}
 		}
 		

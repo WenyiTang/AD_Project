@@ -58,6 +58,9 @@
 						<li id="reportcount" class="nav-item"><a class="nav-link" th:href="@{/admin/pendingreports}"
 							th:text="'Reports (' + ${reportCount} + ')'" >Reports (0)</a>
 						</li >
+						<li id="reportcount" class="nav-item"><a class="nav-link" 
+							th:href="@{/admin/create-account-admin}">Create Admin</a>
+						</li >
 						<li class="nav-item">
 						<!--<a class="nav-link" th:href="@{/logout}"> Logout </a>-->
 						<form th:action="@{/logout}" method="POST"><input type="submit" value="Logout"/></form>

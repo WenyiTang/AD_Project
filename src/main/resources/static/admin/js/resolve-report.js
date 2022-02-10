@@ -21,9 +21,3 @@ function showTextBox() {
     textBoxError.style.display = "none";
   }
 }
-
-/*function reportCount(){
-	//Get the report
-	var reportcount = document.getElementById("reportcount");
-	
-}*/

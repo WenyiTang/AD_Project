@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.adproject.helper.ReportEnum;
+import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.Report;
 import com.example.adproject.model.User;
 import com.example.adproject.repo.ReportRepo;
@@ -30,15 +31,15 @@ public class ReportServiceImpl implements ReportService {
 		rrepo.save(r);
 	}
 	
-	public List<Report> findReportsByStatusIdReason(ReportEnum status, Integer id, String reason){
-		return rrepo.findReportsByStatusIdReason(status, id, reason);
+	public List<Report> findReportsByStatusEntryReason(ReportEnum status, MealEntry entry, String reason){
+		return rrepo.findReportsByStatusEntryReason(status, entry, reason);
 	}
 	
 	public List<Report> findPendingNProgressReports(User admin){
 		return rrepo.findPendingNProgressReports(admin);
 	}
 	
-	public List<Report> findPendingNProgressReportsIdReason(Integer id, String reason){
-		return rrepo.findPendingNProgressReportsIdReason(id, reason);
+	public List<Report> findPendingNProgressReportsEntryReason(MealEntry entry, String reason){
+		return rrepo.findPendingNProgressReportsEntryReason(entry, reason);
 	}
 }

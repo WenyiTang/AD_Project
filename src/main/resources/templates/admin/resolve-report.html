@@ -61,13 +61,13 @@
 			<tr><th>Admin's Decision:</th></tr>
 			<tr>
 			<td>
-				<input class="form-check-input" type="radio" name="noIssues" id="noIssues"
-							th:field="${outcome.inappropriate}" th:value="false" required onclick="showTextBox()">
+				<input class="form-check-input" type="radio" name="decision" id="noIssues"
+							th:field="${outcome.inappropriate}" th:value="false" onclick="showTextBox()">
 						<label class="form-check-label" for="noIssues">
 							No issues
 						</label>
 				&emsp;
-				<input class="form-check-input" type="radio" name="inappropriate" id="inappropriate"
+				<input class="form-check-input" type="radio" name="decision" id="inappropriate"
 							th:field="${outcome.inappropriate}" th:value="true" onclick="showTextBox()">
 						<label class="form-check-label" for="inappropriate">
 							Inappropriate
@@ -84,11 +84,13 @@
 				<td colspan="2" id="textBox" style="display: none">
 					<textarea id="textArea" rows="4" cols="90" placeholder="(Required) Additional Comments" th:field="${outcome.comments}"></textarea>
 				</td >
+				<!--<td align="right" style="vertical-align: bottom;">
+					<a
+							th:href="@{/admin/cancelresolve/} + ${report.id}"><button type="button">Cancel</button></a>
+				</td >-->
 				<td align="right" style="vertical-align: bottom;">
 					<a
 							th:href="@{/admin/cancelresolve/} + ${report.id}"><button type="button">Cancel</button></a>
-				</td >
-				<td align="right" style="vertical-align: bottom;">
 					<button th:type="submit">Submit</button>
 				</td >
 			</tr >

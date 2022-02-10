@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
   
-<head th:replace="fragments/layout.html :: html_head"/>
+<head>
+	<div th:replace="fragments/layout.html :: html_head"></div>
+	<link rel="stylesheet" href="/admin/css/pending-reports.css">
+	<script src="/admin/js/pending-reports.js"></script>
+	<title>Report Details</title>
+</head>
+
 <body>
 	<div th:replace="fragments/layout.html::menu"/>
 	<div th:if ="${#lists.isEmpty(pendingReports)}">
@@ -20,9 +26,11 @@
 					<th>Date of Report</th>
 					<th>Status</th>
 					<th>To Resolve</th>-->
-
+					
 					<th>Date of Report</th>
 					<th>Reason</th>
+					<th>Report ID</th>
+					<th>Post ID</th>
 					<th>Status</th>
 					<th>To Resolve</th>
 				</tr>
@@ -34,14 +42,28 @@
 					<td th:text="${report.mealEntry.author.username}">Poster Username</td>
 					<td th:text="${report.reason}">Reason</td>
 					<td th:text="${report.reporter.username}">Reporter Username</td>-->
+					
 					<td th:text = "${#temporals.format(report.dateReported, 'dd-MMM-yyyy')}">Date of Report</td>
 					<td th:text="${report.reason}">Reason</td>
+					<td th:text="${report.id}">Report ID</td>
+					<td th:text="${report.mealEntry.id}">Post ID</td>
 					<td th:text="${report.status}">Status</td>
 					<td><a
-							th:href="@{/admin/resolvereport/} + ${report.id}"><button type="button">Resolve</button></a></td>
+							th:href="@{/admin/resolvereport/} + ${report.id}">
+							<button type="button" th:data-thing="${report.status}" onclick="checkAvail()">Resolve</button></a></td>
 				</tr>
 			</tbody>	
 		</table>
+		<div th:if="${reportTaken}">
+			<!--popup-->
+			<div id="myModal" class="modal">
+			  <!-- Modal content -->
+			  <div class="modal-content">
+			    <div class="close" onclick="closeX()">&times;</div>
+			    <p>This report has been taken care of.</p>
+			  </div>
+			</div>
+		</div >
 	</div>
 </body>
 </html>

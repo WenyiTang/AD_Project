@@ -40,11 +40,13 @@ public class AdminReportController {
 	
 	private Integer reportCount;
 	
-	@RequestMapping("/")
-	public String adminHome(Model model) {
-		model.addAttribute("reportCount", reportCount);
-		return "index";
-	}
+//	@RequestMapping("/")
+//	public String adminHome(Model model, Principal principal) {
+//		User admin = uService.findUserByUsername(principal.getName());
+//		reportCount = rService.findPendingNProgressReports(admin).size();
+//		model.addAttribute("reportCount", reportCount);
+//		return "index";
+//	}
 	
 	@RequestMapping("/pendingreports")
 	public String pendingReports(Model model, Principal principal) {
@@ -55,6 +57,7 @@ public class AdminReportController {
 		model.addAttribute("pendingReports", reports);
 		reportCount = rService.findPendingNProgressReports(admin).size();
 		model.addAttribute("reportCount", reportCount);
+		model.addAttribute("rService", rService);
 		return "./admin/pending-reports";
 	}
 	
@@ -62,14 +65,22 @@ public class AdminReportController {
 	public String resolveReport(@PathVariable("rid") Integer reportId, Model model, Principal principal) {
 		Report report = rService.findReportById(reportId);
 		User admin = uService.findUserByUsername(principal.getName());
+		
+		//if report has been taken by another admin
+		if (report.getStatus() == ReportEnum.IN_PROGRESS && report.getResolvedBy() != admin) {
+			model.addAttribute("reportTaken", true);
+			String str = pendingReports(model, principal);
+			return str;
+		}
+		
 		model.addAttribute("report", report);
 		ReportOutcome ro = new ReportOutcome();
 		model.addAttribute("outcome", ro);
 		reportCount = rService.findPendingNProgressReports(admin).size();
 		model.addAttribute("reportCount", reportCount);
-		Integer entryId = report.getMealEntry().getId();
+		MealEntry entry = report.getMealEntry();
 		String reason = report.getReason();
-		List<Report> reportsOfSameId = rService.findPendingNProgressReportsIdReason(entryId, reason);
+		List<Report> reportsOfSameId = rService.findPendingNProgressReportsEntryReason(entry, reason);
 		for (Report r : reportsOfSameId) {
 			r.setStatus(ReportEnum.IN_PROGRESS);
 			r.setResolvedBy(admin);
@@ -84,9 +95,9 @@ public class AdminReportController {
 		User admin = uService.findUserByUsername(principal.getName());
 		reportCount = rService.findPendingNProgressReports(admin).size();
 		model.addAttribute("reportCount", reportCount);
-		Integer entryId = report.getMealEntry().getId();
+		MealEntry entry = report.getMealEntry();
 		String reason = report.getReason();
-		List<Report> reportsOfSameId = rService.findPendingNProgressReportsIdReason(entryId, reason);
+		List<Report> reportsOfSameId = rService.findPendingNProgressReportsEntryReason(entry, reason);
 		for (Report r : reportsOfSameId) {
 			r.setStatus(ReportEnum.PENDING);
 			r.setResolvedBy(null);
@@ -117,15 +128,26 @@ public class AdminReportController {
 		rService.save(report);
 		
 		//resolve reports with same mealEntry id and reason
-		Integer entryId = report.getMealEntry().getId();
+		MealEntry entry = report.getMealEntry();
 		String reason = report.getReason();
-		List<Report> reportsOfSameId = rService.findPendingNProgressReportsIdReason(entryId, reason);
+		List<Report> reportsOfSameId = rService.findPendingNProgressReportsEntryReason(entry, reason);
 		for (Report r : reportsOfSameId) {
 			r.setDateResolved(LocalDate.now());
 			r.setStatus(ReportEnum.RESOLVED);
 			r.setResolvedBy(admin);
+			r.setComments(outcome.getComments());
 			rService.save(r);
 		}
 		return "redirect:/admin/pendingreports";
+	}
+	
+	
+	//create new admin
+	@RequestMapping(value = "/create-account-admin", method = {RequestMethod.GET, RequestMethod.POST})
+	public String createAdmin(Model model, Principal principal) {
+		User admin = uService.findUserByUsername(principal.getName());
+		reportCount = rService.findPendingNProgressReports(admin).size();
+		model.addAttribute("reportCount", reportCount);
+		return "./admin/create-account-admin";
 	}
 }

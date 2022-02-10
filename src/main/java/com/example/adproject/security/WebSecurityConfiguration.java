@@ -40,26 +40,33 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Override 
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/forgot_password/**").permitAll()
-			.antMatchers("/reset_password/**").permitAll()
-			.antMatchers("/images/logo.png").permitAll()
-			.antMatchers("/login/**").permitAll()
-			.antMatchers("/create-account/**").permitAll()
-			.anyRequest().authenticated()
-			.and()
-			.formLogin()
-				.loginPage("/login")
-				.usernameParameter("username")
-				.permitAll()
-			.and()
-			.logout()
-				.logoutUrl("/logout")
-				.logoutSuccessUrl("/login?logout")
-			.permitAll()
-			.and()
-			.exceptionHandling().accessDeniedPage("/403");
+	  protected void configure(HttpSecurity http) throws Exception {
+	    http.authorizeRequests()
+	      .antMatchers("/forgot_password/").permitAll()
+	      .antMatchers("/reset_password/").permitAll()
+	      .antMatchers("/images/logo.png").permitAll()
+	      .antMatchers("/images/default-profile-picture.jpeg").permitAll()
+	      .antMatchers("/login/").permitAll()
+	      .antMatchers("/create-account/").permitAll()
+	      .antMatchers("/create-account-admin/").permitAll()
+	      .antMatchers("/api/").permitAll()
+	      .anyRequest().authenticated()
+	      .and()
+	      .formLogin()
+	        .loginPage("/login")
+	        .usernameParameter("username")
+	        .permitAll()
+	      .and()
+	      .logout()
+	        .logoutUrl("/logout")
+	        .logoutSuccessUrl("/login?logout")
+	      .permitAll()
+	      .and()
+	      .exceptionHandling().accessDeniedPage("/403");
+	      
+	    //Disable csrf token requirement for MVP
+	    // this allows for POST, PUT, DELETE requests to be sent from ajax/fetch API to 
+	    // REST controllers
+	    http.csrf().disable();
 	}
-	
 }
