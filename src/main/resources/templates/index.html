@@ -30,7 +30,8 @@
 	</div >
 		
 	<div id="dashboard-container"
-			style="width: 800px; height: 300px; margin: 0 auto" th:unless="${#lists.isEmpty(allEntries)}"></div>
+			style="width: 800px; height: 300px; margin: 0 auto" th:unless="${#lists.isEmpty(allEntries)}"
+			sec:authorize="hasAnyAuthority('USER')"></div>
 	</div>
 	
 	
@@ -79,7 +80,7 @@
 </script>
 
 
-	<div class="dashboard-container" th:unless="${#lists.isEmpty(completedGoal)}">
+	<div class="dashboard-container" th:unless="${#lists.isEmpty(completedGoal)}" sec:authorize="hasAnyAuthority('USER')">
 		
 		<p> <b>Achieved goals: </p> </b>
 		<table class="table" id ="dashboard">
