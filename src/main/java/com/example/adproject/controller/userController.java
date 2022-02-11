@@ -251,4 +251,14 @@ public class userController {
 		
 	}
 	
+	//View Past Goal
+	@RequestMapping(value = "/pastgoals")
+	public String pastgoals(Model model, Principal principal) {
+		
+		Integer userId = uService.findUserByUsername(principal.getName()).getId();
+		List<Goal> pastgoal = grepo.findPastGoals(userId);
+		model.addAttribute("pastgoal", pastgoal);
+		return "goal-completed";
+	}
+	
 }
