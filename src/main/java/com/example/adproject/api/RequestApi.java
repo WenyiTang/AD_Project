@@ -4,6 +4,7 @@ import com.example.adproject.model.Goal;
 import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.User;
 import com.example.adproject.repo.GoalRepo;
+import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -35,6 +42,9 @@ public class RequestApi {
 
     @Autowired
     UserRepo uRepo;
+
+    @Autowired
+    MealEntryRepo mRepo;
 
     @RequestMapping(value = "/setGoal",method = RequestMethod.POST)
     public ResultJson generateUserGoal(@RequestParam String UserName, @RequestParam String goalDescription,
@@ -72,6 +82,63 @@ public class RequestApi {
             return ResultJson.error("User does not exist");
         }
     }
+
+
+    @RequestMapping(value = "/modifyMealInfo",method = RequestMethod.POST)
+    public ResultJson modifyMeals(@RequestParam String UserName,@RequestParam String mealTime,
+                                  @RequestParam String mealDes,@RequestParam String publicStates,
+                                  @RequestParam String mealId){
+        User user = uRepo.findByUsername(UserName);
+        if (user != null){
+            MealEntry editedMeal = mRepo.findMealEntryByMealId(Integer.valueOf(mealId));
+            if (editedMeal != null){
+                editedMeal.setDescription(mealDes);
+//                String timeStr = mealTime;
+//                DateTimeFormatter timeDtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//                LocalDateTime localDateTime = LocalDateTime.parse(timeStr, timeDtf);
+////                ZoneId zone = ZoneId.systemDefault();
+////                Instant instant = localDateTime.atZone(zone).toInstant();
+////                Date date = Date.from(instant);
+//                editedMeal.setTimeStamp(localDateTime);
+                if (publicStates.equals("1")){
+                    editedMeal.setVisibility(true);
+                }else if (publicStates.equals("0")){
+                    editedMeal.setVisibility(false);
+                }
+                mRepo.saveAndFlush(editedMeal);
+
+                return new ResultJson(200,"delete meal successfully");
+            }else {
+
+
+                return new ResultJson(300,"this meal does not exist");
+            }
+
+        }else {
+            return ResultJson.error("User does not exist");
+        }
+    }
+
+    @RequestMapping(value = "/deleteMeal",method = RequestMethod.POST)
+    public ResultJson deleteMeals(@RequestParam String UserName,@RequestParam String mealId){
+        User user = uRepo.findByUsername(UserName);
+        if (user != null){
+            MealEntry deleteMeal = mRepo.findMealEntryByMealId(Integer.valueOf(mealId));
+            if (deleteMeal != null){
+                mRepo.deleteMealById(Integer.valueOf(mealId));
+                return new ResultJson(200,"delete meal successfully");
+            }else {
+              return new ResultJson(300,"this meal does not exist");
+            }
+
+        }else {
+            return ResultJson.error("User does not exist");
+        }
+    }
+
+
+
+
 
 
     @PostMapping("/upload")
