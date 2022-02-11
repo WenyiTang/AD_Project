@@ -12,4 +12,5 @@ public interface GoalService {
 	public void completeGoal(Goal goal);
 	
 	public void cancelGoal(Goal goal);
+	
 }
