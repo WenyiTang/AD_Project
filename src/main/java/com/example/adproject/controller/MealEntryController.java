@@ -107,8 +107,7 @@ public class MealEntryController {
 			newMealEntry.setAuthor(user_);
 			newMealEntry.setGoal(goal_);
 			meRepo.saveAndFlush(newMealEntry);
-
-			int userTargetCount = gRepo.findGoalTargetCount(Integer.parseInt(goalId));
+			int userTargetCount = gRepo.findGoalIdTargetCount(Integer.parseInt(goalId));
 			List<Integer> userTrackScore = meRepo.findUserMealEntryTrackScore(Integer.parseInt(userId));
 			System.out.println(userTargetCount);
 			System.out.println(userTrackScore);
