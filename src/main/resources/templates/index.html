@@ -15,7 +15,7 @@
 <body>
 	<div th:replace="fragments/layout.html::menu" />
 	</div>
-	<div class="container">
+	<div class="dashboard-container">
 	<div sec:authorize="isAuthenticated()">
 		Welcome <b><span sec:authentication="principal.username">Username</span></b>
 		&nbsp;
@@ -29,8 +29,8 @@
 		</tr>
 	</div >
 		
-	<div id="container"
-			style="width: 350px; height: 300px; margin: 0 auto" th:unless="${#lists.isEmpty(allEntries)}"></div>
+	<div id="dashboard-container"
+			style="width: 800px; height: 300px; margin: 0 auto" th:unless="${#lists.isEmpty(allEntries)}"></div>
 	</div>
 	
 	
@@ -43,7 +43,7 @@
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	<script th:inline="javascript">
     $(function(){
-    Highcharts.chart('container', {
+    Highcharts.chart('dashboard-container', {
         chart: {
             type: 'pie',
 				options3d : {
@@ -79,17 +79,17 @@
 </script>
 
 
-	<div class="container" th:unless="${#lists.isEmpty(completedGoal)}">
+	<div class="dashboard-container" th:unless="${#lists.isEmpty(completedGoal)}">
 		
 		<p> <b>Achieved goals: </p> </b>
-		<table class="table">
-		<tr class="listHeading">
+		<table class="table" id ="dashboard">
+		<tr>
 				<th><span>Achievement</span></th>
 				<th><span>Start Date</span></th>
 				<th><span>End Date</span></th>
 			
 			</tr>
-			<tr th:each="achievement : ${completedGoal}" class="listRecord">
+			<tr th:each="achievement : ${completedGoal}">
 				<td align="left" th:text="${achievement?.goalDescription}">Name</td>
 				<td align="left" th:text="${#temporals.format(achievement?.startDate, 'dd/MMM/yyyy')}">Start Date</td>
 				<td align="left" th:text="${#temporals.format(achievement?.endDate, 'dd/MMM/yyyy')}">End Date</td>

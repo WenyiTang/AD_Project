@@ -39,7 +39,8 @@ public class LoginController {
 
 	@GetMapping("")
 	public String viewHomePage(Model model, Principal principal) {
-		Integer userId = uService.findUserByUsername(principal.getName()).getId();
+		//Integer userId = uService.findUserByUsername(principal.getName()).getId();
+		Integer userId = 3;
 		long countOnT = mRepo.findEntryByAuthor(userId).stream()
 						.filter(x->x.getTrackScore()==1)
 						.count();

@@ -19,8 +19,9 @@ public interface MealEntryRepo extends JpaRepository<MealEntry, Integer>{
     @Query("SELECT m FROM MealEntry m where m.visibility = true")
     List<MealEntry> findAllVisibleMealEntries();
 
-    @Query("Select me from MealEntry me where me.author.id = :userid")
-	public List<MealEntry> findEntryByAuthor(@Param("userid") Integer userId);
+    @Query("Select m from MealEntry m where m.author.id = :userid")
+	List<MealEntry> findEntryByAuthor(@Param("userid") Integer userId);
+
 
   
 

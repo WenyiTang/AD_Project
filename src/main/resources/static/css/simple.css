@@ -254,3 +254,33 @@ hr {
     border-style: inset;
     border-width: 1px;
 }
+
+/*dashboard container*/
+.dashboard-container{
+	padding: 20px;
+	margin-left: 100px;
+	margin-right: 100px;
+	font-size:medium;
+}
+
+.dashboard-container table
+{
+	font-size: medium;
+	background: #fff;
+	border-collapse: collapse;
+	
+}
+.dashboard-container th
+{
+	text-align:left;
+	font-size:medium;
+
+}
+.dashboard-container td
+{
+	
+	text-align:left;
+	font-size:medium;
+	
+	
+}
