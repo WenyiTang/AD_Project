@@ -11,4 +11,6 @@ public class SearchResult {
 	private Integer res2;
 	private Integer res3;
 	private Integer res4;
+	private Integer[] results;
+	private String goodResult;
 }

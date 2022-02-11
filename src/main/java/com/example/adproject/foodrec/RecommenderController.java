@@ -34,7 +34,7 @@ public class RecommenderController {
 	
 	SearchResult results = new SearchResult();
 	
-	String q = ""; 
+	Query query = new Query();
 	
 //	@GetMapping("/getStringData")
 //	public String getString() {
@@ -43,13 +43,16 @@ public class RecommenderController {
 	
 	
 	@RequestMapping(value = "/postStringData", method = RequestMethod.POST)
-	public String postString(@RequestParam String input, String track, String feeling) {
+	public Query postString(@RequestParam String input, String feeling, String track) {
 		System.out.println(input);
-		System.out.println(track);
 		System.out.println(feeling);
-		q = input + " " + track + " " + feeling;
+		System.out.println(track);
+		String q = input + " " + feeling + " " + track;
 		System.out.println(q);
-		return q;
+		query.setInput(q);
+		query.setFeeling(feeling);
+		query.setTrack(track);
+		return query;
 	}
 	
 //	@RequestMapping(value = "/postpostStringData", method = RequestMethod.POST)
@@ -59,8 +62,8 @@ public class RecommenderController {
 //	}
 	
 	@GetMapping("/enterquery1")
-	public String queryString() {
-		return q;
+	public Query queryString() {
+		return query;
 	}
 	
 	@RequestMapping(value = "/runSearch", method = RequestMethod.POST)
@@ -75,6 +78,10 @@ public class RecommenderController {
 		System.out.println(results.getRes2());
 		System.out.println(results.getRes3());
 		System.out.println(results.getRes4());
+		results.setResults(new Integer[] {
+				results.getRes0(), results.getRes1(), results.getRes2(), results.getRes3(), results.getRes4()
+				});
+		System.out.println(results.getGoodResult());
 		return results;
 	}
 	
@@ -115,16 +122,16 @@ public class RecommenderController {
 		System.out.println(results.getRes2());
 		System.out.println(results.getRes3());
 		System.out.println(results.getRes4());
-		titles[0] = mrepo.findById(results.getRes0()).get().getTitle();
-		titles[1] = mrepo.findById(results.getRes1()).get().getTitle();
-		titles[2] = mrepo.findById(results.getRes2()).get().getTitle();
-		titles[3] = mrepo.findById(results.getRes3()).get().getTitle();
-		titles[4] = mrepo.findById(results.getRes4()).get().getTitle();
+		Integer[] resultArray = results.getResults();
+		for (int x=0; x<resultArray.length; x++) {
+			titles[x] = mrepo.findById(resultArray[x]).get().getTitle();
+		}
 		System.out.println("In getResultJson");
 		for (String s : titles) {
 			System.out.println(s);
 		}
 		r.setTitles(titles);
+		r.setGoodResult(results.getGoodResult()); 
 		return r;
 	}
 	
@@ -133,6 +140,7 @@ public class RecommenderController {
 	public EntriesDataTable passDataToFlask() {
 		List<MealEntry> entries = mService.findMealEntryByUserId(1);
 		Integer size = entries.size();
+		System.out.println(size);
 		EntriesDataTable data = new EntriesDataTable();
 		List<Integer> ids = new ArrayList<Integer>();
 		List<String> titles = new ArrayList<String>();

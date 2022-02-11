@@ -5,8 +5,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ResultJson {
-
-	private String[] titles = new String[5];
-	private String goodResult = "";
+public class Query {
+	private String input;
+	private String feeling;
+	private String track;
 }
