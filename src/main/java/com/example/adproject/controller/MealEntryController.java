@@ -18,7 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.adproject.helper.FeelingEnum;
+import com.example.adproject.model.Goal;
 import com.example.adproject.model.MealEntry;
+import com.example.adproject.model.User;
+import com.example.adproject.repo.GoalRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -43,6 +46,9 @@ public class MealEntryController {
 	
 	@Autowired
 	UserRepo uRepo;
+
+	@Autowired
+	GoalRepo gRepo;
 	
 	@Autowired
 	MealEntryRepo meRepo;
@@ -60,7 +66,9 @@ public class MealEntryController {
 								   @RequestParam String mealTitle,
 								   @RequestParam String feeling,
 								   @RequestParam String trackScore,
-								   @RequestParam String timeStamp) {
+								   @RequestParam String timeStamp,
+								   @RequestParam String userId,
+								   @RequestParam String goalId) {
 
 		//STILL NEED USER DETAILS
 		if (multipartFile == null || multipartFile.isEmpty()) {
@@ -86,8 +94,9 @@ public class MealEntryController {
 			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 			LocalDateTime timeStamp_ = LocalDateTime.parse(timeStamp, format);
 
-			//get user
-			//get goal
+			User user_ = uRepo.findById(Integer.parseInt(userId)).get();
+			Goal goal_ = gRepo.findById(Integer.parseInt(goalId)).get();
+
 			MealEntry newMealEntry = new MealEntry();
 			newMealEntry.setImageURL(imageURL);
 			newMealEntry.setFilename(imageFileName);
@@ -95,16 +104,15 @@ public class MealEntryController {
 			newMealEntry.setFeeling(feeling_);
 			newMealEntry.setTrackScore(trackScore_);
 			newMealEntry.setTimeStamp(timeStamp_);
-			//newMealEntry.setAuthor();
-			//newMealEntry.setGoal();
+			newMealEntry.setAuthor(user_);
+			newMealEntry.setGoal(goal_);
 			meRepo.saveAndFlush(newMealEntry);
 
-			List<Integer> testTrackScore = new ArrayList<>();
-			testTrackScore.add(1);
-			testTrackScore.add(1);
-			testTrackScore.add(0);
-			//testsenddata(3, testTrackScore);
-			String responseString = sendDataToFlaskWMA(3, testTrackScore);
+			int userTargetCount = gRepo.findGoalTargetCount(Integer.parseInt(goalId));
+			List<Integer> userTrackScore = meRepo.findUserMealEntryTrackScore(Integer.parseInt(userId));
+			System.out.println(userTargetCount);
+			System.out.println(userTrackScore);
+			String responseString = sendDataToFlaskWMA(userTargetCount, userTrackScore);
 			return responseString;
 		}
 		catch (IOException e) {
