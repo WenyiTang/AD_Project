@@ -53,6 +53,29 @@ public class BlogEntryAPI {
         return blogEntries;
     }
 
+    @GetMapping("/blog")
+    public List<BlogEntry> getBlogPage(@RequestParam Integer activeUserId, @RequestParam Integer friendUserId) {
+
+        User activeUser = uRepo.findById(activeUserId).get();
+        User friendUser = uRepo.findById(friendUserId).get();
+        // User objects not used,
+        // but might be good to check if they exist before proceeding
+        if(activeUser == null || friendUser == null) {
+            return null;
+        }
+
+        ArrayList<BlogEntry> blogEntries = new ArrayList<BlogEntry>();
+        List<MealEntry> mealEntries = mService.getVisibleMealEntryByUserId(friendUserId);
+
+        for(MealEntry mealEntry : mealEntries) {
+            boolean likedByActiveUser = mService.hasUserLikedThis(activeUserId, mealEntry.getId());
+            boolean flaggedByActiveUser = mService.hasUserFlaggedThis(activeUserId, mealEntry.getId());
+            int numberOfLikes = mService.getTotalNumberOfLikesById(mealEntry.getId());
+            blogEntries.add(new BlogEntry(mealEntry, likedByActiveUser, flaggedByActiveUser, numberOfLikes));
+        }
+        return blogEntries;
+    }
+
     
     
 }
