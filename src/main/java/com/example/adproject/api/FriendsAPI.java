@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.example.adproject.helper.RequestEnum;
 import com.example.adproject.model.FriendRequest;
 import com.example.adproject.repo.FriendRequestRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.adproject.helper.UserSummary;
+import com.example.adproject.helper.UserHelper;
 import com.example.adproject.model.User;
 import com.example.adproject.repo.UserRepo;
 import com.example.adproject.service.FriendRequestService;
@@ -37,34 +36,34 @@ public class FriendsAPI {
 	@Autowired
 	FriendRequestRepo fRepo;
 
-	private List<UserSummary> convertUserToUserSummary(List<User> users) {
-		List<UserSummary> friends = new ArrayList<>();
+	private List<UserHelper> convertUserToUserSummary(List<User> users) {
+		List<UserHelper> friends = new ArrayList<>();
 		for (User u : users) {
-			UserSummary friend = new UserSummary(u.getId(), u.getUsername(), u.getName(), u.getProfilePic());
+			UserHelper friend = new UserHelper(u.getId().toString(), u.getUsername(), u.getName(), u.getProfilePic());
 			friends.add(friend);
 		}
 		return friends;
 	}
 	
 	@GetMapping("/all")
-	public List<UserSummary> findAllFriends(@RequestParam("username") String username) {
+	public List<UserHelper> findAllFriends(@RequestParam("username") String username) {
 		User user = uService.findUserByUsername(username); 
 		List<User> users = uService.findFriendsOf(user); 
 		return convertUserToUserSummary(users);
 	}
 	
 	@GetMapping("/find")
-	public List<UserSummary> searchFriendByUsername(@RequestParam("query") String query, @RequestParam("username") String username) {
+	public List<UserHelper> searchFriendByUsername(@RequestParam("query") String query, @RequestParam("username") String username) {
 		User user = uService.findUserByUsername(username);
 		List<User> users = uService.findFriendsOf(user);
-		List<UserSummary> result = new ArrayList<>();
+		List<UserHelper> result = new ArrayList<>();
 
 		List<User> list = users.stream().filter(x -> x.getUsername().contains(query)).collect(Collectors.toList());
 		return convertUserToUserSummary(list);
 	}
 
 	@GetMapping("/find_users")
-	public List<UserSummary> queryUsersByUsername(@RequestParam("query") String query, @RequestParam("username") String username) {
+	public List<UserHelper> queryUsersByUsername(@RequestParam("query") String query, @RequestParam("username") String username) {
 		User user = uService.findUserByUsername(username);
 		List<User> friends = uService.findFriendsOf(user);
 
@@ -81,9 +80,9 @@ public class FriendsAPI {
 	}
 
 	@GetMapping("/requests")
-	public List<UserSummary> findPendingFriendRequests(@RequestParam("username") String username, @RequestParam("sent") boolean sent) {
+	public List<UserHelper> findPendingFriendRequests(@RequestParam("username") String username, @RequestParam("sent") boolean sent) {
 		User user = uService.findUserByUsername(username);
-		List<UserSummary> pendingFriends = new ArrayList<>();
+		List<UserHelper> pendingFriends = new ArrayList<>();
 
 		if (sent) {
 			List<FriendRequest> sent_requests = fRepo.findPendingRequestsBySender(user);

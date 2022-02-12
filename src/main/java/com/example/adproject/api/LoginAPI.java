@@ -1,5 +1,7 @@
 package com.example.adproject.api;
 
+import com.example.adproject.helper.UserHelper;
+import com.example.adproject.model.User;
 import com.example.adproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +17,15 @@ public class LoginAPI {
     private UserService uService;
 
     @PostMapping("/auth")
-    public String authenticateLogin(@RequestParam String username, @RequestParam String password) {
+    public UserHelper authenticateLogin(@RequestParam String username, @RequestParam String password) {
         Boolean authenticated = uService.authenticateUser(username, password);
-        String response = "";
+
         if (authenticated) {
-            response = "VALID";
+            User user = uService.findUserByUsername(username);
+            UserHelper response = new UserHelper(user.getId().toString(), user.getUsername(), user.getName(), user.getProfilePic());
+            return response;
         } else {
-            response = "INVALID";
+            return null;
         }
-        return response;
     }
 }
