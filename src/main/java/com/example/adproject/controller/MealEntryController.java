@@ -218,8 +218,8 @@ public class MealEntryController {
 	 */
 
 	private FeelingEnum getFeelingEnumVal(String feeling) {
-		if (feeling.equalsIgnoreCase("crying")) {
-			return FeelingEnum.CRYING;
+		if (feeling.equalsIgnoreCase("cry")) {
+			return FeelingEnum.CRY;
 		}
 		if (feeling.equalsIgnoreCase("pensive")) {
 			return FeelingEnum.PENSIVE;
@@ -227,8 +227,8 @@ public class MealEntryController {
 		if (feeling.equalsIgnoreCase("happy")) {
 			return FeelingEnum.HAPPY;
 		}
-		if (feeling.equalsIgnoreCase("joyful")) {
-			return FeelingEnum.JOYFUL;
+		if (feeling.equalsIgnoreCase("joy")) {
+			return FeelingEnum.JOY;
 		}
 		else {
 			return null;
