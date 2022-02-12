@@ -24,8 +24,7 @@ public class ImageAPI {
 
     @GetMapping( value = "/get",produces = MediaType.IMAGE_JPEG_VALUE, params = {"imagePath"})
     public @ResponseBody byte[] getImageWithMediaType(@RequestParam String imagePath) throws IOException {
-        String folderPath = "/static";
-        imagePath = folderPath + imagePath;
+  
         InputStream in = getClass()
                         .getResourceAsStream(imagePath);
                         return IOUtils.toByteArray(in);
