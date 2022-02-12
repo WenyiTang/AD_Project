@@ -11,6 +11,7 @@ import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +42,9 @@ import com.example.adproject.repo.GoalRepo;
 import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
 import com.example.adproject.service.GoalService;
+import com.example.adproject.validator.ProfileValidator;
+
+
 
 
 
@@ -73,6 +77,13 @@ public class userController {
 	MealEntryRepo mRepo;
 
 
+	@Autowired
+	private ProfileValidator pValidator;
+
+	@InitBinder("user")
+	private void initRoleBinder(WebDataBinder binder) {
+		binder.addValidators(pValidator);
+	}
 	
 	@RequestMapping(value = "/myProfile/{id}", method = RequestMethod.GET)
 	public ModelAndView editUserPage(Principal principal) {
@@ -85,14 +96,22 @@ public class userController {
 	
 	@RequestMapping(value = "/myProfile/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView editProfile(@ModelAttribute @Validated User user,BindingResult result, @RequestParam("fileImage") MultipartFile multipartFile, 
+	public ModelAndView editProfile(@ModelAttribute @Validated User user,BindingResult result,
 			Principal principal) throws IOException  {
+		
+		if (result.hasErrors()) {
+			ModelAndView mav_error = new ModelAndView();
+			String message_error = "Profile edit failed. Please change the information.";
+			mav_error.addObject("message_error", message_error);
+			mav_error.setViewName("staff-profile-edit");
+			return mav_error;
+		}
+		
+		
+		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("user", user);
 		
-		// User's profilepic
-				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename()); 
-				user.setProfilePic(fileName); 
 		
 				
 		Integer userId = uService.findUserByUsername(principal.getName()).getId();
@@ -101,12 +120,53 @@ public class userController {
 		updateUser.setDateOfBirth(user.getDateOfBirth());
 		updateUser.setHeight(user.getHeight());
 		updateUser.setWeight(user.getWeight());
+		updateUser.setGender(user.getGender());
+		
+		urepo.saveAndFlush(updateUser);
+		
+		
+		String message = "User was successfully updated.";
+		System.out.println(message);
+		
+		mav.setViewName("redirect:/user/myProfile");
+		return mav;
+	}
+	
+	//change photo
+	@RequestMapping(value = "/myProfile/photo/{id}", method = RequestMethod.GET)
+	public ModelAndView editUserPhoto(Principal principal) {
+		ModelAndView mav = new ModelAndView("profile-avatar");
+		Integer userId = uService.findUserByUsername(principal.getName()).getId();
+		User user = uService.findUser(userId);
+		mav.addObject("user", user);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/myProfile/photo/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView editProfilePhoto(@ModelAttribute @Validated User user,BindingResult result, @RequestParam("fileImage") MultipartFile multipartFile, 
+			Principal principal) throws IOException  {
+		
+		
+		
+		
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("user", user);
+		
+		// User's profile photo
+				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename()); 
+				user.setProfilePic(fileName); 
+		
+				
+		Integer userId = uService.findUserByUsername(principal.getName()).getId();
+		User updateUser = urepo.findById(userId).get();
 		updateUser.setProfilePic(fileName);
 		urepo.saveAndFlush(updateUser);
 		String uploadDir = "./images/" + updateUser.getId();
-//		String archiveDir= "src/main/resources/static/images/";
+
 		Path uploadPath = Paths.get(uploadDir);
-//		Path photoPath = Paths.get(archiveDir);
+
 		// Saving user's profile pic into directory 
 				if (!Files.exists(uploadPath)) {
 					Files.createDirectories(uploadPath);
@@ -122,13 +182,12 @@ public class userController {
 					throw new IOException("Could not save uploaded file: " + fileName);
 				}
 		
-		String message = "User was successfully updated.";
+		String message = "User photo was successfully updated.";
 		System.out.println(message);
 		
 		mav.setViewName("redirect:/user/myProfile");
 		return mav;
 	}
-	
 
 	
 	@RequestMapping(value = "/myProfile", method = RequestMethod.GET)
@@ -136,7 +195,7 @@ public class userController {
 			Principal principal) {
 		Integer userId = uService.findUserByUsername(principal.getName()).getId();
 //		UserSession usession = (UserSession) session.getAttribute("usession");
-		ModelAndView mav = new ModelAndView("staff-course-myProfile");
+		ModelAndView mav = new ModelAndView("profile-view");
 		user = uService.findUser(userId);
 		List<Goal> completedGoal = grepo.findCompletedGoals(userId);
 		
@@ -151,6 +210,7 @@ public class userController {
 		mav.addObject("completedGoal", completedGoal);
 		return mav;
 	}
+	
 	//View current goal progress
 	@RequestMapping(value = "/goals")
 	public String goals(Model model, Principal principal) {
@@ -183,9 +243,10 @@ public class userController {
 		Integer userId = uService.findUserByUsername(principal.getName()).getId();
 		Goal goaltoEnd = grepo.findCurrentGoal(userId);
 		gService.cancelGoal(goaltoEnd);
+		
 		String msg = "Leave was successfully cancelled.";
 		System.out.println(msg);	
-		return "index";
+		return "goal-progress";
 		
 		
 	}

@@ -67,9 +67,9 @@ h4 {
 	font-family: 'Titillium Web', sans-serif;
 	position: relative;
 	font-size: 12px;
-	line-height: 20px;
-	color: #788699;
-	font-family: 'Muli', sans-serif;
+	line-height: 40px;
+	color:black;
+	border-bottom: 1px solid rgba(53,86,129, 0.3);
 }
 
 

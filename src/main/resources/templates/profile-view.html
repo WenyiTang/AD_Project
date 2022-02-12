@@ -13,7 +13,9 @@
    </head>
    <body>
       <div th:replace="fragments/layout.html :: menu" />
+      <div class="container-fluid text-left">
       <div class = "container">
+      <div class="border border-secondary p-3 rounded">
          <h3 style = "margin-top: 35px;" align="center">Account OverView</h3>
          <div class = "row">
             <div class="col-6">
@@ -26,29 +28,29 @@
                      
                </div>
                <div class ="editPhoto">
-                  <img 
-                     th:src="@{/images/R.png}" width="20px" height= "20px" onclick='window.open("http://www.google.com")' />
+                  <a th:href="@{/user/myProfile/photo/}+${user.id}"><img 
+                     th:src="@{/images/R.png}" width="20px" height= "20px"/></a>
                </div>
             </div>
             <div class="col-6">
-               <h4 style = "font-weight:bold;font-size:40px;margin-left:15px;color: #355681; font-style:italic;">Profile</h4>
+               <h4>Profile</h4>
                <div>
                   <div style="float:left; margin-right:20px;" >
                      <table>
                         <thead>
                            <tr>
-                              <th><span th:text="#{fieldLabel.userId}"></span></th>
-                              <th><span th:text="#{fieldLabel.username}"></span></th>
-                              <th><span th:text="#{fieldLabel.password}"></span></th>
-                              <th><span th:text="#{fieldLabel.employeeId}"></span></th>
+                              <th><span th:text="#{fieldLabel.name}"></span></th>
+                              <th><span th:text="#{fieldLabel.dateOfBirth}"></span></th>
+                              <th><span th:text="#{fieldLabel.height}"></span></th>
+                              <th><span th:text="#{fieldLabel.weight}"></span></th>
                            </tr>
                         </thead>
                         <tbody>
                            <tr th:object="${user}" method="get">
-                              <td th:text="${user.name}">Id</td>
-                              <td th:text="${user.dateOfBirth}">Name</td>
-                              <td th:text="${user.height}">Password</td>
-                              <td th:text="${user.weight}">Employee</td>
+                              <td th:text="${user.name}">Name</td>
+                              <td th:text="${user.dateOfBirth}">dateOfBirth</td>
+                              <td th:text="${user.height}">height</td>
+                              <td th:text="${user.weight}">weight</td>
                            </tr>
                         </tbody>
                      </table>
@@ -82,6 +84,8 @@
                </table>
             </div>
          </div>
+      </div>
+      </div>
       </div>
    </body>
 </html>
