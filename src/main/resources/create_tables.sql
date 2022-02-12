@@ -110,20 +110,20 @@ create table meal_entry_likers
 
 create table report
 (
-    id               int auto_increment
+    id                  int auto_increment
         primary key,
-    comments         varchar(255)                 null,
-    date_reported    date                         null,
-    date_resolved    date                         null,
-    reason           varchar(255)                 null,
-    status           enum ('PENDING', 'RESOLVED') null,
-    meal_entry_id    int                          null,
-    reporter_user_id int                          null,
-    resolved_by_id   int                          null,
+    comments            varchar(255)                                null,
+    date_reported       date                                        null,
+    date_resolved       date                                        null,
+    reason              varchar(255)                                null,
+    status              enum ('IN_PROGRESS', 'PENDING', 'RESOLVED') null,
+    meal_entry_id       int                                         null,
+    reporter_user_id    int                                         null,
+    resolved_by_user_id int                                         null,
     constraint FK4lbxnfqtsq3dex9wf809m1enq
         foreign key (meal_entry_id) references meal_entry (id),
-    constraint FKk4bjnc6w18m3jo33giqukaaml
-        foreign key (resolved_by_id) references admin (id),
+    constraint FKkbm1rmvmrtrrw1rk67qtigoqs
+        foreign key (resolved_by_user_id) references user (user_id),
     constraint FKn64sd5p2ql3abexm8ht1vhi80
         foreign key (reporter_user_id) references user (user_id)
 );
