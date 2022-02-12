@@ -8,6 +8,7 @@ import com.example.adproject.model.User;
 import com.example.adproject.repo.GoalRepo;
 import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
+import com.example.adproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,13 +33,13 @@ public class ViewPastMealsController {
     @Autowired
     GoalRepo GRepo;
 
+    @Autowired
+    UserService uService;
 
     @GetMapping("/pastmeals")
-    public String viewUserPastMeals(Model model) {
+    public String viewUserPastMeals(Model model,Principal principal) {
 
-        Integer id = 2;
-
-        User user = uRepo.findById(id).get();
+        User user = uRepo.findByUsername(principal.getName());
         if (user == null) {
             return null;
         }
@@ -46,7 +47,7 @@ public class ViewPastMealsController {
 
         String goalStr = "";
         if (user.getGoals().size() > 0){
-            Goal goal = GRepo.findCurrentGoal(id);
+            Goal goal = GRepo.findCurrentGoal(user.getId());
             if (goal!= null){
                 goalStr = goal.getGoalDescription();
             }
@@ -66,7 +67,6 @@ public class ViewPastMealsController {
         MealEntry entry = mRepo.findById(id).get();
 
         String activeUsername = principal.getName();
-        User activeUser = uRepo.findByUsername(activeUsername);
         if(entry == null) {
             return null;
         }

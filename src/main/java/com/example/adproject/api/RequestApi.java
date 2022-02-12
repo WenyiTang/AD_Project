@@ -1,4 +1,5 @@
 package com.example.adproject.api;
+import com.example.adproject.helper.StatusEnum;
 import com.example.adproject.model.Goal;
 import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.User;
@@ -54,6 +55,7 @@ public class RequestApi {
         goal.setGoalDescription(goalDescription);
         goal.setTotalMealCount(Integer.valueOf(totalMealCount));
         goal.setTargetCount(Integer.valueOf(targetCount));
+        goal.setStatus(StatusEnum.IN_PROGRESS);
 
         User user = uRepo.findByUsername(UserName);
         if (user != null){
