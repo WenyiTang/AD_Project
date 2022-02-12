@@ -1,0 +1,42 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- use fragment in separate div to prevent it from deleting other stuff -->
+    <div  th:replace="fragments/layout.html :: html_head"></div>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal List</title>
+    <link rel="stylesheet" href="/blog/styles/food_blog.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+<div th:replace="fragments/layout.html::menu" />
+
+<div>
+    <h1 class = "page-title" th:text = "'Current Goal:' + ${goal}"></h1>
+</div>
+
+
+<div class="list-view"  >
+
+    <div class = "list-item" th:each = "entry:${entries}">
+        <a class= "pic-anchor" th:href="@{'/meals/view/mealDetail/' + ${entry.id}}">
+            <img class = "pic" th:src="@{${entry.imageURL}}" alt="">
+        </a>
+        <h2 class = "title" th:text = "${entry.title}" ></h2>
+        <p class = "date" th:text = "${#temporals.format(entry.timeStamp,'d MMM yyyy, h:mm a')}"></p>
+
+        <p class = "description" th:text = "${entry.description}"></p>
+
+    </div>
+
+
+
+</div>
+
+</body>
+</html>
