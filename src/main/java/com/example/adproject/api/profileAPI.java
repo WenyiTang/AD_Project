@@ -108,5 +108,17 @@ public class profileAPI {
         return "end goal successfully";
     }
 	
+	
+	@RequestMapping(value = "/completedGoal",method = RequestMethod.POST)
+	public ResultJson viewCompletedGoal(@RequestParam String UserName){
+
+		User user =uRepo.findByUsername(UserName);
+    	List<Goal> completedGoals = gRepo.findCompletedGoals(user.getId());
+
+    	return new ResultJson(200,"get completedgoals successfully",completedGoals);
+    
+}
+	
+	
 }
 
