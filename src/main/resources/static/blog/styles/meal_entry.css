@@ -121,3 +121,10 @@ body {
 .inappropriate-text {
     color:red;
 }
+
+
+.mealdetails {
+    width: min(100%,500px);
+    margin: 1em;
+    justify-self: end;
+}
