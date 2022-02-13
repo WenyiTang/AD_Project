@@ -19,15 +19,56 @@
 </div>
 
 <div class = "content-area">
-    <div class = "details">
+    <div class = "mealdetails">
         <img class = "pic" th:src="@{${entry.imageURL}}" alt="">
         <h2 class = "title" th:text = "${entry.title}" ></h2>
-        <p class = "date" th:text = "${#temporals.format(entry.timeStamp,'d MMM yyyy, h:mm a')}"></p>
-        <p class = "description" th:text = "${entry.description}"></p>
+
+        <p contenteditable="false" class = "date" th:text = "${#temporals.format(entry.timeStamp,'d MMM yyyy, h:mm a')}"></p>
+
+        <div>
+            <a th:href="@{'/meals/editmeal/' + ${entry.id}}">Edit Entry</a>
+        </div>
+
+        <p contenteditable="false" class = "description" th:text = "${entry.description}"></p>
+
+<!--        <div class="switch">-->
+<!--            Public:-->
+<!--            <input calss="input" type="checkbox" />-->
+<!--            <div class="circle"></div>-->
+<!--        </div>-->
+
+<!--        <div class="form-box">-->
+<!--            Public:-->
+<!--            <div class="button-box">-->
+<!--                <div id="btn"></div>-->
+<!--                <button type="button" class="toggle-btn" onclick="leftClick()">On</button>-->
+<!--                <button type="button" class="toggle-btn" onclick="rightClick()">Off</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <script src="/js/setPublic.js"></script>-->
+
+        <div>
+            <a th:href="@{'/meals/deleteMeal/' + ${entry.id}}" class="btn btn-primary">delete Entry</a>
+            <a th:href="@{/socials/friend_requests}" class="btn btn-primary">Share to FaceBook</a>
+            <a th:href="@{/socials/friend_requests}" class="btn btn-primary">Share to Instagram</a>
+        </div>
+
+
+<!--        <tr>-->
+<!--            <td><label>user_type</label></td>-->
+<!--        <td><select th:field="*{entry.visibility}">-->
+<!--            <option th:each="selectOption : ${privateState}" th:value="${selectOption}"-->
+<!--                    th:text="${selectOption}">-->
+<!--                selectOption</option>-->
+<!--        </select></td>-->
+
+<!--        </tr>-->
+
+
+        </div>
+
+
     </div>
-
-
-
 
 </div>
 <script src = "/blog/javascript/toggle_like.js"></script>
