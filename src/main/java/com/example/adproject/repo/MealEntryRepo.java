@@ -25,8 +25,8 @@ public interface MealEntryRepo extends JpaRepository<MealEntry, Integer>{
 
     @Query("SELECT m FROM MealEntry m where m.id = :mealId")
     MealEntry findMealEntryByMealId(@Param("mealId") Integer mealId);
-
-
+    
+   
     @Transactional
     @Modifying
     @Query("DELETE FROM MealEntry m where m.id = :mealId")

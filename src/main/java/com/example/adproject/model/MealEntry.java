@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 
 import com.example.adproject.helper.FeelingEnum;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -43,6 +44,7 @@ public class MealEntry {
 
 	private boolean visibility;
 	private String title;
+	@Size(max = 500)
 	private String description;
 
 	private boolean flagged;
