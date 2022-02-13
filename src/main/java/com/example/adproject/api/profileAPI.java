@@ -1,10 +1,12 @@
 package com.example.adproject.api;
 
+import com.example.adproject.helper.StatusEnum;
 import com.example.adproject.model.Goal;
 import com.example.adproject.model.User;
 import com.example.adproject.repo.GoalRepo;
 import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
+import com.example.adproject.service.GoalService;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ public class profileAPI {
     @Autowired
     MealEntryRepo mRepo;
     
+    @Autowired
+    GoalService gService;
     
 	@RequestMapping(value = "/currentgoal",method = RequestMethod.POST)
     public Goal viewcurrentgoal(@RequestParam String UserName){
@@ -76,6 +80,33 @@ public class profileAPI {
 		strList.add(percentCount1);
 		return strList;
 	}
+	
+	@RequestMapping(value = "/saveProfile",method = RequestMethod.POST)
+    public String saveProfile(@RequestParam String UserName,@RequestParam String Name, @RequestParam String dateOfBirth,
+                                       @RequestParam String Height, @RequestParam String Weight) {
+        System.out.println("data from client------VVVV");
+        System.out.println(UserName);
+
+        User user =uRepo.findByUsername(UserName);
+        user.setName(Name);
+        user.setHeight(Double.valueOf(Height));
+        user.setWeight(Double.valueOf(Weight));
+        uRepo.saveAndFlush(user);
+        return "set profile successfully";
+    }
+	
+	//end goal
+	@RequestMapping(value = "/endGoal",method = RequestMethod.POST)
+    public String endTheGoal(@RequestParam String UserName,@RequestParam String goalId) {
+        System.out.println("data from client------VVVV");
+        System.out.println(UserName);
+
+        User user =uRepo.findByUsername(UserName);
+    	Goal currentgoal = gRepo.findCurrentGoal(user.getId());
+        currentgoal.setStatus(StatusEnum.CANCELLED);
+        gService.cancelGoal(currentgoal);
+        return "end goal successfully";
+    }
 	
 }
 
