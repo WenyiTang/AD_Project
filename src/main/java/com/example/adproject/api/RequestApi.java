@@ -92,13 +92,11 @@ public class RequestApi {
             MealEntry editedMeal = mRepo.findMealEntryByMealId(Integer.valueOf(mealId));
             if (editedMeal != null){
                 editedMeal.setDescription(mealDes);
-//                String timeStr = mealTime;
-//                DateTimeFormatter timeDtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//                LocalDateTime localDateTime = LocalDateTime.parse(timeStr, timeDtf);
-////                ZoneId zone = ZoneId.systemDefault();
-////                Instant instant = localDateTime.atZone(zone).toInstant();
-////                Date date = Date.from(instant);
-//                editedMeal.setTimeStamp(localDateTime);
+                String timeStr = mealTime;
+
+                DateTimeFormatter timeDtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime localDateTime = LocalDateTime.parse(timeStr, timeDtf);
+                editedMeal.setTimeStamp(localDateTime);
                 if (publicStates.equals("1")){
                     editedMeal.setVisibility(true);
                 }else if (publicStates.equals("0")){
