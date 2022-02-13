@@ -29,9 +29,23 @@
             <a th:href="@{'/meals/editmeal/' + ${entry.id}}">Edit Entry</a>
         </div>
 
-
         <p contenteditable="false" class = "description" th:text = "${entry.description}"></p>
 
+<!--        <div class="switch">-->
+<!--            Public:-->
+<!--            <input calss="input" type="checkbox" />-->
+<!--            <div class="circle"></div>-->
+<!--        </div>-->
+
+<!--        <div class="form-box">-->
+<!--            Public:-->
+<!--            <div class="button-box">-->
+<!--                <div id="btn"></div>-->
+<!--                <button type="button" class="toggle-btn" onclick="leftClick()">On</button>-->
+<!--                <button type="button" class="toggle-btn" onclick="rightClick()">Off</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <script src="/js/setPublic.js"></script>-->
 
         <div>
             <a th:href="@{'/meals/deleteMeal/' + ${entry.id}}" class="btn btn-primary">delete Entry</a>
@@ -55,12 +69,6 @@
 
 
     </div>
-
-
-
-
-
-
 
 </div>
 <script src = "/blog/javascript/toggle_like.js"></script>
