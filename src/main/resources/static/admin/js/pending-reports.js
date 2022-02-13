@@ -4,4 +4,5 @@ function closeX(){
 
 	console.log("test");
   	modal.style.display = "none";
+  	window.location.href= "/admin/pendingreports"
 }
