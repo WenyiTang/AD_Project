@@ -56,7 +56,7 @@ create table meal_entry
 (
     id             int auto_increment
         primary key,
-    description    varchar(255)                                  null,
+    description    varchar(500)                                  null,
     feeling        enum ('CRYING', 'PENSIVE', 'HAPPY', 'JOYFUL') null,
     flagged        bit                                           not null,
     imageurl       varchar(255)                                  null,
