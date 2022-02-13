@@ -56,7 +56,6 @@ public class RequestApi {
         goal.setTotalMealCount(Integer.valueOf(totalMealCount));
         goal.setTargetCount(Integer.valueOf(targetCount));
         goal.setStatus(StatusEnum.IN_PROGRESS);
-
         User user = uRepo.findByUsername(UserName);
         if (user != null){
             user.getGoals().add(goal);
@@ -69,16 +68,16 @@ public class RequestApi {
 
 
     @RequestMapping(value = "/pastMeals",method = RequestMethod.POST)
-    public ResultJson viewPastMeals(@RequestParam String UserName){
+    public List<MealEntry> viewPastMeals(@RequestParam String UserName){
         User user = uRepo.findByUsername(UserName);
         if (user != null){
             List<MealEntry> allMeals = user.getEntries();
             if (allMeals.size() == 0){
                 allMeals = new ArrayList<MealEntry>();
             }
-            return new ResultJson(200,"get meals successfully",allMeals);
+            return allMeals;
         }else {
-            return ResultJson.error("User does not exist");
+            return null;
         }
     }
 
