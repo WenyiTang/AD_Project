@@ -2,6 +2,7 @@ package com.example.adproject.security;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,8 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.adproject.model.Goal;
 import com.example.adproject.model.MealEntry;
+import com.example.adproject.model.Role;
+import com.example.adproject.model.User;
 import com.example.adproject.repo.GoalRepo;
 import com.example.adproject.repo.MealEntryRepo;
+import com.example.adproject.service.ReportService;
 import com.example.adproject.service.UserService;
 
 @Controller
@@ -36,9 +40,13 @@ public class LoginController {
 	
 	@Autowired
 	private UserService uService;
+	
+	@Autowired
+	ReportService rService;
 
-	@GetMapping("")
+	@GetMapping("/")
 	public String viewHomePage(Model model, Principal principal) {
+		
 		Integer userId = uService.findUserByUsername(principal.getName()).getId();
 		long countOnT = mRepo.findEntryByAuthor(userId).stream()
 						.filter(x->x.getTrackScore()==1)
@@ -57,6 +65,18 @@ public class LoginController {
 		model.addAttribute("currentGoal", currentGoal);
 		model.addAttribute("completedGoal", completedGoal);
 		model.addAttribute("allEntries", allEntries);
+		
+		//if user is admin
+		User loggedin = uService.findUserByUsername(principal.getName());
+		Set<Role> roles = loggedin.getRoles();
+		for (Role r : roles) {
+			if (r.getType().equalsIgnoreCase("ADMIN")) {
+				Integer reportCount = rService.findPendingNProgressReports(loggedin).size();
+				model.addAttribute("reportCount", reportCount);
+				return "redirect:/admin/pendingreports";
+			}
+		}
+
 		model.addAttribute("title", "Food Diary - Home"); 
 		return "index"; 
 	}
