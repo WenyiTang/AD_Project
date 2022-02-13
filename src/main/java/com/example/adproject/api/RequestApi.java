@@ -56,7 +56,6 @@ public class RequestApi {
         goal.setTotalMealCount(Integer.valueOf(totalMealCount));
         goal.setTargetCount(Integer.valueOf(targetCount));
         goal.setStatus(StatusEnum.IN_PROGRESS);
-
         User user = uRepo.findByUsername(UserName);
         if (user != null){
             user.getGoals().add(goal);
@@ -69,16 +68,16 @@ public class RequestApi {
 
 
     @RequestMapping(value = "/pastMeals",method = RequestMethod.POST)
-    public ResultJson viewPastMeals(@RequestParam String UserName){
+    public List<MealEntry> viewPastMeals(@RequestParam String UserName){
         User user = uRepo.findByUsername(UserName);
         if (user != null){
             List<MealEntry> allMeals = user.getEntries();
             if (allMeals.size() == 0){
                 allMeals = new ArrayList<MealEntry>();
             }
-            return new ResultJson(200,"get meals successfully",allMeals);
+            return allMeals;
         }else {
-            return ResultJson.error("User does not exist");
+            return null;
         }
     }
 
@@ -92,13 +91,11 @@ public class RequestApi {
             MealEntry editedMeal = mRepo.findMealEntryByMealId(Integer.valueOf(mealId));
             if (editedMeal != null){
                 editedMeal.setDescription(mealDes);
-//                String timeStr = mealTime;
-//                DateTimeFormatter timeDtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//                LocalDateTime localDateTime = LocalDateTime.parse(timeStr, timeDtf);
-////                ZoneId zone = ZoneId.systemDefault();
-////                Instant instant = localDateTime.atZone(zone).toInstant();
-////                Date date = Date.from(instant);
-//                editedMeal.setTimeStamp(localDateTime);
+                String timeStr = mealTime;
+
+                DateTimeFormatter timeDtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime localDateTime = LocalDateTime.parse(timeStr, timeDtf);
+                editedMeal.setTimeStamp(localDateTime);
                 if (publicStates.equals("1")){
                     editedMeal.setVisibility(true);
                 }else if (publicStates.equals("0")){
