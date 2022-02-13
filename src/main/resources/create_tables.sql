@@ -3,15 +3,15 @@ create database adproject;
 
 use adproject;
 
-create table admin
-(
-    id        int auto_increment
-        primary key,
-    email     varchar(255) null,
-    name      varchar(255) null,
-    password  varchar(255) null,
-    user_name varchar(255) null
-);
+-- create table admin
+-- (
+--     id        int auto_increment
+--         primary key,
+--     email     varchar(255) null,
+--     name      varchar(255) null,
+--     password  varchar(255) null,
+--     user_name varchar(255) null
+-- );
 
 create table role
 (
