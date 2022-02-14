@@ -79,7 +79,7 @@ public class SocialFeedTest {
                 String title = titles[i % titles.length];
                 String description = lorem;
                 boolean flagged = false;
-                FeelingEnum feeling = FeelingEnum.JOYFUL;
+                FeelingEnum feeling = FeelingEnum.JOY;
                 int trackScore = this.trackScore;
                 LocalDateTime timeStamp = today.minusDays(i);
                 entriesToInsert.add(new MealEntry(imageURL, visibility, title, description, flagged, feeling, trackScore, timeStamp, author));

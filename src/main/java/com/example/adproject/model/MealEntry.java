@@ -41,7 +41,7 @@ public class MealEntry {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String imageURL;
-
+	private String filename;
 	private boolean visibility;
 	private String title;
 	@Size(max = 500)
