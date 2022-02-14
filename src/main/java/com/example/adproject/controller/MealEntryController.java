@@ -64,6 +64,7 @@ public class MealEntryController {
 								   @RequestParam String imageFileName,
 								   @RequestParam String imageURL,
 								   @RequestParam String mealTitle,
+								   @RequestParam String description,
 								   @RequestParam String feeling,
 								   @RequestParam String trackScore,
 								   @RequestParam String timeStamp,
@@ -83,8 +84,9 @@ public class MealEntryController {
 			}
 			Files.copy(inputStream,  Paths.get(uploadPathStr).resolve(imageFileName), StandardCopyOption.REPLACE_EXISTING);
 			System.out.println(imageFileName);
-			System.out.println(mealTitle);
 			System.out.println(imageURL);
+			System.out.println(mealTitle);
+			System.out.println(description);
 			System.out.println(feeling);
 			System.out.println(trackScore);
 			System.out.println(timeStamp);
@@ -101,6 +103,7 @@ public class MealEntryController {
 			newMealEntry.setImageURL(imageURL);
 			newMealEntry.setFilename(imageFileName);
 			newMealEntry.setTitle(mealTitle);
+			newMealEntry.setDescription(description);
 			newMealEntry.setFeeling(feeling_);
 			newMealEntry.setTrackScore(trackScore_);
 			newMealEntry.setTimeStamp(timeStamp_);
