@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+<meta charset="ISO-8859-1" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+
+</head>
+
+<body>
+	<div th:replace="fragments/layout.html::menu" />
+	</div>
+	<div class="container">
+	<div sec:authorize="isAuthenticated()">
+		Welcome <b><span sec:authentication="principal.username">Username</span></b>
+		&nbsp;
+		<!--<i><span sec:authentication="principal.authorities">Roles</span></i>-->
+		
+	</div>
+	<div sec:authorize="hasAnyAuthority('USER')">
+		<tr class="goal">
+			<th><span><b>Current goal:</b></span></th>
+			<th th:text="${currentGoal?.goalDescription}?: 'no goal set yet'">Description</th >
+		</tr>
+	</div >
+		
+	<div id="container"
+			style="width: 350px; height: 300px; margin: 0 auto" th:unless="${#lists.isEmpty(allEntries)}"></div>
+	</div>
+	
+	
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script th:inline="javascript">
+    $(function(){
+    Highcharts.chart('container', {
+        chart: {
+            type: 'pie',
+				options3d : {
+					enabled : true,
+					alpha : 50,
+					beta : 0
+				}
+        },
+        title: {
+            text: 'How did I progress?'
+        },
+
+        tooltip: {
+			pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+			pie : {
+					allowPointSelect : true,
+					cursor : 'pointer',
+					dataLabels : {
+						enabled : true,
+						format : '{point.name}'
+					}
+				}
+        },
+			series : [ {
+				type : 'pie',
+				name : 'Ratio',
+				data : [ [ 'On Track', [[${onTrack}]] ], [ 'Off Track', [[${offTrack}]] ]  ]
+			} ]
+      });
+    });
+</script>
+
+
+	<div class="container" th:unless="${#lists.isEmpty(completedGoal)}">
+		
+		<p> <b>Achieved goals: </p> </b>
+		<table class="table">
+		<tr class="listHeading">
+				<th><span>Achievement</span></th>
+				<th><span>Start Date</span></th>
+				<th><span>End Date</span></th>
+			
+			</tr>
+			<tr th:each="achievement : ${completedGoal}" class="listRecord">
+				<td align="left" th:text="${achievement?.goalDescription}">Name</td>
+				<td align="left" th:text="${#temporals.format(achievement?.startDate, 'dd/MMM/yyyy')}">Start Date</td>
+				<td align="left" th:text="${#temporals.format(achievement?.endDate, 'dd/MMM/yyyy')}">End Date</td>
+			</tr>
+		</table>
+		
+
+	</div>
+
+</body>
+
+</html>

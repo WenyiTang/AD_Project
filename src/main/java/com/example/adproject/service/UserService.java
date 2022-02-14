@@ -8,7 +8,22 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface UserService {
+    
 
     List<User> findFriendsOf(User user);
     
+    User findUserByUsername(String username); 
+    
+    User findUserByEmail(String email); 
+    
+    void updateResetPasswordToken(String token, String email) throws UserNotFoundException; 
+    
+    User getByResetPasswordToken(String token);
+    
+    void updatePassword(User user, String newPassword); 
+   
+
+    User findUser(int id); 
+
+    User save(User user); 
 }

@@ -1,0 +1,79 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- use fragment in separate div to prevent it from deleting other stuff -->
+    <div  th:replace="fragments/layout.html :: html_head"></div>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Blog</title>
+    <link rel="stylesheet" href="/blog/styles/food_blog.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+
+    <div th:replace="fragments/layout.html::menu" />
+
+    <div>
+        <h1 class = "page-title" th:text = "${user.username} + '\'s blog'"></h1>
+    </div>
+
+
+
+    <div class="list-view"  >
+
+        <div class = "list-item" th:each = "entry:${entries}">
+            <a class= "pic-anchor" th:href="@{'/blog/view/entry/' + ${entry.id}}">
+                <img class = "pic" th:src="@{${entry.imageURL}}" alt="">
+            </a>
+            <h2 class = "title" th:text = "${entry.title}" ></h2>
+            <p class = "date" th:text = "${#temporals.format(entry.timeStamp,'d MMM yyyy, h:mm a')}"></p>
+            <p class = "inappropriate-text" th:if = "${mService.hasUserFlaggedThis(activeUser.id,entry.id)}">
+                You have flagged this post as inappropriate
+            </p>
+            <p class = "description" th:text = "${entry.description}"></p>
+
+            <p class = "likes">
+                Liked by 
+                <span   class ="total-likes" 
+                        th:text = "${mService.getTotalNumberOfLikesById(entry.id)}" 
+                        th:attr="id = 'total-likes-mealentry-' + ${entry.id}, data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}">
+                </span> 
+                users
+            </p>
+
+            <div class = "like-flag">
+                
+                <img    th:if = "${mService.hasUserLikedThis(activeUser.id,entry.id)}" 
+                        th:attr="data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}"  
+                        src="/blog/images/thumb-logo-blue-fill.svg" 
+                        class = "thumb-logo" 
+                        alt=""> 
+                
+                <img    th:unless = "${mService.hasUserLikedThis(activeUser.id,entry.id)}" 
+                        th:attr="data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}" 
+                        src="/blog/images/thumb-logo-no-fill.svg" 
+                        class = "thumb-logo" 
+                        alt=""> 
+                
+                <span title = "You have flagged this entry as inappropriate" th:if = "${mService.hasUserFlaggedThis(activeUser.id,entry.id)}">
+                    <img  src="/blog/images/flag-logo-red-fill.svg" alt="">
+                </span>
+
+                <a th:unless = "${mService.hasUserFlaggedThis(activeUser.id,entry.id)}" th:href="@{'/blog/report/entry/' + ${entry.id}}">
+                    <img src="/blog/images/flag-logo-no-fill.svg" alt="">
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+    <script src = "/blog/javascript/toggle_like.js"></script>
+</body>
+</html>

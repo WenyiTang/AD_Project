@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+   <head th:replace="fragments/layout.html :: html_head" >
+      <meta charset="ISO-8859-1" />
+      <link rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+      <!-- Optional theme -->
+      <link rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+      <link th:rel="stylesheet" th:href="@{/css/bootstrap.css}">
+      <link rel="stylesheet" th:href="@{/css/simple.css}" />
+      <link rel="stylesheet" th:href="@{/css/table.css}" />
+   </head>
+
+<body>
+<div th:replace="fragments/layout.html::menu" />
+<div th:if= "${#lists.isEmpty(pastgoal)}">
+         <tr class="goal">
+            <th th:text="'no completed goal'">Description</th >
+         </tr>
+      </div>
+<div class="container" th:unless="${#lists.isEmpty(pastgoal)}">
+		
+		<h4> Achieved goals: </h4>
+		<table class="table">
+		<tr class="listHeading">
+				<th><span>Achievement</span></th>
+				<th><span>Start Date</span></th>
+				<th><span>End Date</span></th>
+				<th><span>Status</span></th>
+			
+			</tr>
+			<tr th:each="achievement : ${pastgoal}" class="listRecord">
+				<td align="left" th:text="${achievement?.goalDescription}">Name</td>
+				<td align="left" th:text="${#temporals.format(achievement?.startDate, 'dd/MMM/yyyy')}">Start Date</td>
+				<td align="left" th:text="${#temporals.format(achievement?.endDate, 'dd/MMM/yyyy')}">End Date</td>
+				<td align="left" th:text="${achievement?.status}">End Date</td>
+			</tr>
+		</table>
+		
+
+	</div>
+</body>
+</html>

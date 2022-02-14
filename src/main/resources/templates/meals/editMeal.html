@@ -1,0 +1,56 @@
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- use fragment in separate div to prevent it from deleting other stuff -->
+    <div  th:replace="fragments/layout.html :: html_head"></div>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Entry</title>
+    <link rel="stylesheet" href="/blog/styles/meal_entry.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div th:replace="fragments/layout.html::menu" />
+
+<div>
+    <h1>Edit Entry</h1>
+</div>
+
+<div class = "content-area">
+
+    <form action="#" th:action="@{/meals/editmeal/}+${entry.id}"
+          th:object="${entry}" method="POST">
+
+    <div class = "mealdetails">
+
+            Entry Date:<br>
+            <input type="text" th:field="${entry.mealTime}">
+            <br>
+            Entry Description:<br>
+           <input type="text"  th:field= "${entry.description}" style="height: 100px; width: 350px; word-wrap: break-word" >
+            <br><br>
+        <div>
+            <input class="btn btn-primary" type="submit" value="Save" />
+        </div>
+
+<!--        <a th:href="@{'/meals/editmeal/' + ${entry.id}}" class="btn btn-primary">Save</a>-->
+<!--        <p contenteditable="true" class = "date" th:text = "${#temporals.format(entry.timeStamp,'d MMM yyyy, h:mm a')}"></p>-->
+<!--        <p contenteditable="true" class = "description" th:text = "${entry.description}"></p>-->
+
+<!--        <div>-->
+<!--            <a th:href="@{'/meals/editmeal/' + ${entry.id}}" class="btn btn-primary">Save</a>-->
+<!--        </div>-->
+    </div>
+
+    </form>
+
+
+</div>
+
+
+</div>
+<script src = "/blog/javascript/toggle_like.js"></script>
+</body>
+</html>
