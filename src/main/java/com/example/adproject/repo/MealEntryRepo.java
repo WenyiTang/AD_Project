@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.adproject.model.MealEntry;
+import java.util.List;
 import com.example.adproject.model.User;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,9 @@ public interface MealEntryRepo extends JpaRepository<MealEntry, Integer>{
 
     @Query("SELECT m FROM MealEntry m where m.id = :mealId")
     MealEntry findMealEntryByMealId(@Param("mealId") Integer mealId);
+  
+    @Query("SELECT me.trackScore FROM MealEntry me WHERE me.author.id = :id")
+    public List<Integer> findUserMealEntryTrackScore(@Param("id") int id);
     
    
     @Transactional
