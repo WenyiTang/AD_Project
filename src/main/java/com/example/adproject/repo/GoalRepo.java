@@ -17,8 +17,8 @@ public interface GoalRepo extends JpaRepository<Goal, Integer> {
 	@Query("Select g from Goal g where g.author.id = :userid AND g.status ='IN_PROGRESS'")
 	public Goal findCurrentGoal(@Param("userid") Integer userId);
 
-  @Query("SELECT g.targetCount FROM Goal g WHERE g.id = :id")
-  public int findGoalIdTargetCount(@Param("id") int id);
+  	@Query("SELECT g.targetCount FROM Goal g WHERE g.id = :id")
+  	public int findGoalIdTargetCount(@Param("id") int id);
 
 	@Query("Select g from Goal g where g.author.id = :userid AND g.status ='COMPLETED' OR g.status ='CANCELLED' ")
 	public List<Goal> findPastGoals(@Param("userid") Integer userId);
