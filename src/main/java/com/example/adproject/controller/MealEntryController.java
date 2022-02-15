@@ -110,11 +110,13 @@ public class MealEntryController {
 			newMealEntry.setAuthor(user_);
 			newMealEntry.setGoal(goal_);
 			meRepo.saveAndFlush(newMealEntry);
-			int userTargetCount = gRepo.findGoalIdTargetCount(Integer.parseInt(goalId));
-			List<Integer> userTrackScore = meRepo.findUserMealEntryTrackScore(Integer.parseInt(userId));
+			int goalIdInt = Integer.parseInt(goalId);
+			int userIdInt = Integer.parseInt(userId);
+			int userTargetCount = gRepo.findGoalIdTargetCount(goalIdInt);
+			List<Integer> userGoalTrackScore = meRepo.findMealEntryTrackScoreByUserAndGoalId(userIdInt, goalIdInt);
 			System.out.println(userTargetCount);
-			System.out.println(userTrackScore);
-			String responseString = sendDataToFlaskWMA(userTargetCount, userTrackScore);
+			System.out.println(userGoalTrackScore);
+			String responseString = sendDataToFlaskWMA(userTargetCount, userGoalTrackScore);
 			return responseString;
 		}
 		catch (IOException e) {
