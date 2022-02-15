@@ -6,12 +6,15 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.adproject.helper.BlogEntry;
 import com.example.adproject.helper.EntriesDataTable;
 import com.example.adproject.helper.RecResultJson;
 import com.example.adproject.helper.SearchResult;
@@ -126,27 +129,27 @@ public class RecommenderAPI {
 		RestTemplate restTemplate = new RestTemplate();
 		SearchResult results = new SearchResult();
 		results = restTemplate.getForObject(url, SearchResult.class);
-		System.out.println("getResultJson");
-		System.out.println(results.getRes0());
-		System.out.println(results.getRes1());
-		System.out.println(results.getRes2());
-		System.out.println(results.getRes3());
-		System.out.println(results.getRes4());
-		RecResultJson r = new RecResultJson();
-		Integer[] resultArray = new Integer[] {
-				results.getRes0(), results.getRes1(), results.getRes2(), results.getRes3(), results.getRes4()
-				};
 		
-		String[] titles = new String[resultArray.length];
-		for (int x=0; x<resultArray.length; x++) {
-			titles[x] = mrepo.findById(resultArray[x]).get().getTitle();
-		}
-		System.out.println("In getResultJson");
-		for (String s : titles) {
-			System.out.println(s);
-		}
-		r.setTitles(titles);
-		r.setGoodResult(results.getGoodResult()); 
+		MealEntry[] resultArray = new MealEntry[] {
+				mService.findMealEntryById(results.getRes0()),
+				mService.findMealEntryById(results.getRes1()),
+				mService.findMealEntryById(results.getRes2()),
+				mService.findMealEntryById(results.getRes3()),
+				mService.findMealEntryById(results.getRes4()),
+		};
+		
+		RecResultJson r = new RecResultJson(resultArray, results.getGoodResult());
+		
+//		String[] titles = new String[resultArray.length];
+//		for (int x=0; x<resultArray.length; x++) {
+//			titles[x] = mrepo.findById(resultArray[x]).get().getTitle();
+//		}
+//		System.out.println("In getResultJson");
+//		for (String s : titles) {
+//			System.out.println(s);
+//		}
+//		r.setTitles(titles);
+//		r.setGoodResult(results.getGoodResult()); 
 		return r;
 	}
 
@@ -181,4 +184,6 @@ public class RecommenderAPI {
 		data.setTrack_score(track_scores.toArray(new Integer[size]));
 		return data;
 	}
+	
+
 }
