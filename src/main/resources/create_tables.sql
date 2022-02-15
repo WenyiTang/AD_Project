@@ -29,6 +29,7 @@ create table user
     enabled              bit          not null,
     gender               varchar(255) null,
     height               double       null,
+    imageurl             varchar(255) null,
     name                 varchar(255) null,
     password             varchar(255) null,
     profile_pic          varchar(64)  null,

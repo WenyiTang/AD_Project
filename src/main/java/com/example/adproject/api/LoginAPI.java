@@ -24,6 +24,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -153,6 +155,59 @@ public class LoginAPI {
             response.put("username", username);
         }
         return response;
+    }
+
+    @PostMapping("/create02")
+    public Map<String, String> validateAndSetParticulars(@RequestParam String username,
+                                                         @RequestParam String name,
+                                                         @RequestParam String height,
+                                                         @RequestParam String weight,
+                                                         @RequestParam String gender,
+                                                         @RequestParam String dob) {
+
+        Map<String, String> response = new HashMap<>();
+
+        User user = uService.findUserByUsername(username);
+        Double weight_ = Double.parseDouble(weight);
+        Double height_ = Double.parseDouble(height) * 100;
+
+        if (weight_<= 0 && height_ <= 0) {
+            response.put("status", "Invalid W & H");
+            return response;
+        }
+        if (weight_ <= 0) {
+            response.put("status", "Invalid W");
+            return response;
+        }
+        if (height_ <= 0) {
+            response.put("status", "Invalid H");
+            return response;
+        }
+
+        if (user == null) {
+            response.put("status", "Error");
+        }
+         else {
+             user.setName(name);
+
+
+             user.setHeight(height_);
+
+
+             user.setWeight(weight_);
+
+             user.setGender(gender);
+
+             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MMM-yyyy");
+             LocalDate dob_ = LocalDate.parse(dob, formatter);
+
+             user.setDateOfBirth(dob_);
+
+             uService.save(user);
+
+             response.put("status", "OK");
+        }
+         return response;
     }
 
     private void sendEmail(String user_email, String resetPasswordLink)
