@@ -86,13 +86,14 @@ public class MealEntryUserGoalTest {
 
     }
 
+
     @Test
     @Order(3)
     public void testFindUserMealEntryTrackScoreWithExistingObjects() {
-        Goal newGoal = grepo.findById(15).get();
+        Goal newGoal = grepo.findById(1).get();
         List<Goal> goalList = new ArrayList<>();
         goalList.add(newGoal);
-        User newUser = urepo.findById(12).get();
+        User newUser = urepo.findById(1).get();
         newUser.setGoals(goalList);
 
         MealEntry mealEntry1 = new MealEntry();
@@ -118,5 +119,7 @@ public class MealEntryUserGoalTest {
         System.out.println(trackScore);
 
     }
+
+
 
 }
