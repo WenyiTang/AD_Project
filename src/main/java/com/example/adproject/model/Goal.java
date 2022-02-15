@@ -9,8 +9,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.example.adproject.helper.StatusEnum;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
+
 public class Goal {
 	
 	@Id
@@ -31,15 +34,20 @@ public class Goal {
 	private StatusEnum status;
 	private LocalDate startDate;
 	private LocalDate endDate;
+	//added user author attribute
+	@ManyToOne
+	private User author;
+	
 	
 	public Goal(String goalDescription, int totalMealCount, int targetCount,
-				StatusEnum status, LocalDate startDate, LocalDate endDate) {
+				StatusEnum status, LocalDate startDate, LocalDate endDate, User author) {
 		this.goalDescription = goalDescription;
 		this.totalMealCount = totalMealCount;
 		this.targetCount = targetCount;
 		this.status = status;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.author = author;
 	}
 	
 }

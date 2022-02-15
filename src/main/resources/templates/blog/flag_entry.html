@@ -1,0 +1,74 @@
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- use fragment in separate div to prevent it from deleting other stuff -->
+    <div  th:replace="fragments/layout.html :: html_head"></div>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag Meal Entry</title>
+    <link rel="stylesheet" href="/blog/styles/flag_entry.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div th:replace="fragments/layout.html::menu" />
+
+
+    <div class = "content-area">
+        <div class = "details">
+            <img class = "pic" th:src="@{${entry.imageURL}}" alt="">
+            <h2 class = "title" th:text = "${entry.title}" ></h2>
+            <p class = "date" th:text = "${#temporals.format(entry.timeStamp,'h:mm a, d MMM yyyy')}"></p>
+            <p class = "description" th:text = "${entry.description}"></p>
+        </div>
+
+        <div class="flag-area">
+            <h2>Flag as inappropriate</h2>
+            <form th:attr="data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}" action="" id="flag-form">
+                <h3>Reason:</h3>
+
+                <div class="reason-div">
+                    <label for="">Offensive language</label>
+                    <input type="radio" name="reason" value = "offensive language" id="">
+                </div>
+
+                <div class="reason-div">
+                    <label for="">Offensive image</label>
+                    <input type="radio" name="reason" value = "offensive image" id="">
+                </div>
+
+                <div class="reason-div">
+                    <label for="">Irrelevant</label>
+                    <input type="radio" name="reason" value = "irrelevant" id="">
+                </div>
+
+                <div class="reason-div">
+                    <label for="">Advertisement</label>
+                    <input type="radio" name="reason" value = "advertisement" id="">
+                </div>
+
+                <div class="reason-div">
+                    <label for="">Other:</label>
+                    <input type="radio" name="reason" id="other-reason">
+
+                    <!-- The onkeydown attribute is to prevent user from "submitting" the form by typing in the text
+                        input and pressing the enter key -->
+                    <input class = "other-reason" type="text" name="" id="other-reason-text" onkeydown="return (event.keyCode!=13);">
+                </div>
+
+                <div>
+                    <button type="button" onclick="submitReport()">Submit</button>
+                </div>
+
+            </form>
+            <script src="/blog/javascript/submit_report.js"></script>
+
+
+        </div>
+       
+            
+
+    </div>
+</body>

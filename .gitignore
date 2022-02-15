@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+*.class
+*.class
+bin/src/main/java/com/example/adproject/model/Admin.class
+src/main/resources/application.properties
