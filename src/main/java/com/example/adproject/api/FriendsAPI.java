@@ -1,18 +1,21 @@
 package com.example.adproject.api;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.IOUtils;
 import com.example.adproject.model.FriendRequest;
 import com.example.adproject.repo.FriendRequestRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.adproject.helper.UserHelper;
 import com.example.adproject.model.User;
@@ -127,5 +130,13 @@ public class FriendsAPI {
 		}
 
 		return responseMap;
+	}
+
+	@GetMapping(value ="/profilePic", produces = MediaType.IMAGE_JPEG_VALUE, params = {"fileName", "userId"})
+	public @ResponseBody byte[] getProfilePic(@RequestParam String fileName, @RequestParam String userId) throws IOException {
+		String path = "images/" + userId + "/" + fileName;
+		File file = new File(path);
+		byte[] fileContent = Files.readAllBytes(file.toPath());
+		return fileContent;
 	}
 }
