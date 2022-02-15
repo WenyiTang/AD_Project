@@ -27,8 +27,8 @@ public interface MealEntryRepo extends JpaRepository<MealEntry, Integer>{
     @Query("SELECT m FROM MealEntry m where m.id = :mealId")
     MealEntry findMealEntryByMealId(@Param("mealId") Integer mealId);
   
-    @Query("SELECT me.trackScore FROM MealEntry me WHERE me.author.id = :id")
-    public List<Integer> findUserMealEntryTrackScore(@Param("id") int id);
+    @Query("SELECT me.trackScore FROM MealEntry me WHERE me.author.id = :uid AND me.goal.id = :gid")
+    public List<Integer> findMealEntryTrackScoreByUserAndGoalId(@Param("uid") int uid, @Param("gid") int gid);
     
    
     @Transactional
