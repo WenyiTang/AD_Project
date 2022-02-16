@@ -53,8 +53,15 @@ public class HomeController {
    
     @GetMapping("/getCurrentGoal/{userId}")
     public String currentGoal(@PathVariable Integer userId) {
-    	String currentGoal =gRepo.findCurrentGoal(userId).getGoalDescription();
-		return currentGoal;
+    	if (gRepo.findCurrentGoal(userId)==null) {
+    		return "no goal set yet";
+    	}
+    	else {
+    		return gRepo.findCurrentGoal(userId).getGoalDescription();
+    	}
+    	
+//    	String currentGoal =(gRepo.findCurrentGoal(userId) == null) ? "NA" : gRepo.findCurrentGoal(userId).getGoalDescription();
+//		return currentGoal;
     	
     }
     
@@ -80,10 +87,10 @@ public class HomeController {
   @GetMapping("/getTrack/{userId}")
   public ResultJson getMealTrack(@PathVariable Integer userId) {
   	//Integer userId = 3;
-		float countOnT = mRepo.findEntryByAuthor(userId).stream()
+		float countOnT = mRepo.findIPEntryByAuthor(userId).stream()
 				.filter(x->x.getTrackScore()==1)
 				.count();
-		float countOffT= mRepo.findEntryByAuthor(userId).stream()
+		float countOffT= mRepo.findIPEntryByAuthor(userId).stream()
 				.filter(x->x.getTrackScore() == 0)
 				.count();
 

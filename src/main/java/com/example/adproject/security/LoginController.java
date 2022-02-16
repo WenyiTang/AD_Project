@@ -48,10 +48,10 @@ public class LoginController {
 	public String viewHomePage(Model model, Principal principal) {
 		
 		Integer userId = uService.findUserByUsername(principal.getName()).getId();
-		long countOnT = mRepo.findEntryByAuthor(userId).stream()
+		long countOnT = mRepo.findIPEntryByAuthor(userId).stream()
 						.filter(x->x.getTrackScore()==1)
 						.count();
-		long countOffT = mRepo.findEntryByAuthor(userId).stream()
+		long countOffT = mRepo.findIPEntryByAuthor(userId).stream()
 						.filter(x->x.getTrackScore() == 0)
 						.count();
 		

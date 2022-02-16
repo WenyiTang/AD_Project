@@ -23,7 +23,10 @@ public interface MealEntryRepo extends JpaRepository<MealEntry, Integer>{
 
     @Query("Select me from MealEntry me where me.author.id = :userid")
 	public List<MealEntry> findEntryByAuthor(@Param("userid") Integer userId);
-
+    
+    @Query("Select me from MealEntry me inner join Goal g on g.id = me.goal.id where me.author.id = :userid and g.status='IN_PROGRESS'")
+	public List<MealEntry> findIPEntryByAuthor(@Param("userid") Integer userId);
+    
     @Query("SELECT m FROM MealEntry m where m.id = :mealId")
     MealEntry findMealEntryByMealId(@Param("mealId") Integer mealId);
   
