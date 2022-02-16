@@ -19,6 +19,7 @@ public class RecResultJson {
 	private String[] feelings;
 	private String[] trackScores;
 	private String[] imageUrls;
+	private String[] descriptions;
 	private String goodResult;
 	
 	public RecResultJson(MealEntry[] results, String goodResult) {
@@ -30,6 +31,7 @@ public class RecResultJson {
 		this.feelings = new String[count];
 		this.trackScores = new String[count];
 		this.imageUrls = new String[count];
+		this.descriptions = new String[count];
 		this.goodResult = goodResult;
 		
 		for (int x=0; x<count; x++) {
@@ -43,6 +45,7 @@ public class RecResultJson {
 			else {
 				trackScores[x] = "off-track";
 			}
+			descriptions[x] = m.getDescription();
 			imageUrls[x] = m.getImageURL();
 		}
 	}

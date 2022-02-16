@@ -1,16 +1,23 @@
 package com.example.adproject.api;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,7 +34,6 @@ import com.example.adproject.service.UserService;
 @RestController
 @RequestMapping("/api/recommend")
 public class RecommenderAPI {
-	//private String[] titles = new String[5];
 	
 	@Autowired
 	UserService uService;
@@ -37,89 +43,6 @@ public class RecommenderAPI {
 
 	@Autowired
 	MealEntryService mService;
-
-//	SearchResult results = new SearchResult();
-
-//	@GetMapping("/getStringData")
-//	public String getString() {
-//		return "get text";
-//	}
-
-
-//	@RequestMapping(value = "/postStringData/{uid}", method = RequestMethod.POST)
-//	public SearchQuery postString(@PathVariable("uid") Integer userId, @RequestParam String input, String feeling, String track) {
-//		System.out.println("post string: " + userId);
-//		System.out.println(input);
-//		System.out.println(feeling);
-//		System.out.println(track);
-////		String q = input + " " + track + " " + feeling;
-////		System.out.println(q);
-//		User user = uService.findUser(userId);
-//		SearchQuery query = sqrepo.findSearchQueryByUser(user);
-//		if (query == null) {
-//			query = new SearchQuery(user);
-//		}
-//		query.setQueryHelper(new QueryHelper(input, feeling, track)); 
-//		sqrepo.save(query);
-//		return query;
-//	}
-//
-////	@RequestMapping(value = "/postpostStringData", method = RequestMethod.POST)
-////	public String postpostString(@RequestBody String input) {
-////		System.out.println(input);
-////		return input;
-////	}
-//
-//	@GetMapping("/enterquery1/{uid}")
-//	public QueryHelper queryString(@PathVariable("uid") Integer userId) {
-//		User user = uService.findUser(userId);
-//		SearchQuery query = sqrepo.findSearchQueryByUser(user);
-//		return query.getQueryHelper();
-//	}
-//
-//	@RequestMapping(value = "/runSearch", method = RequestMethod.POST)
-//	public SearchResult runSearch(Integer userId) {
-//		System.out.print("post string: " + userId);
-//		System.out.println("runSearch1");
-//		String url = "http://localhost:5000/enterquery?uid=" + userId;
-//		RestTemplate restTemplate = new RestTemplate();
-//		results = restTemplate.getForObject(url, SearchResult.class);
-//		System.out.println("got results from flask");
-//		System.out.println(results.getRes0());
-//		System.out.println(results.getRes1());
-//		System.out.println(results.getRes2());
-//		System.out.println(results.getRes3());
-//		System.out.println(results.getRes4());
-//		results.setResults(new Integer[] {
-//				results.getRes0(), results.getRes1(), results.getRes2(), results.getRes3(), results.getRes4()
-//				});
-//		System.out.println(results.getGoodResult());
-//		return results;
-//	}
-//
-//	@GetMapping("/getResultJson/{uid}")
-//	public RecResultJson resultJson(@PathVariable("uid") Integer userId) {
-//		System.out.print("post string: " + userId);
-//		results = runSearch(userId);
-//		RecResultJson r = new RecResultJson();
-//		System.out.println("getResultJson");
-//		System.out.println(results.getRes0());
-//		System.out.println(results.getRes1());
-//		System.out.println(results.getRes2());
-//		System.out.println(results.getRes3());
-//		System.out.println(results.getRes4());
-//		Integer[] resultArray = results.getResults();
-//		for (int x=0; x<resultArray.length; x++) {
-//			titles[x] = mrepo.findById(resultArray[x]).get().getTitle();
-//		}
-//		System.out.println("In getResultJson");
-//		for (String s : titles) {
-//			System.out.println(s);
-//		}
-//		r.setTitles(titles);
-//		r.setGoodResult(results.getGoodResult()); 
-//		return r;
-//	}
 	
 	@RequestMapping(value = "/postStringData/{uid}/{input}/{feeling}/{track}", method = {RequestMethod.POST, RequestMethod.GET})
 	public RecResultJson postQuery(@PathVariable("uid") Integer userId, @PathVariable("input") String input,
@@ -140,16 +63,6 @@ public class RecommenderAPI {
 		
 		RecResultJson r = new RecResultJson(resultArray, results.getGoodResult());
 		
-//		String[] titles = new String[resultArray.length];
-//		for (int x=0; x<resultArray.length; x++) {
-//			titles[x] = mrepo.findById(resultArray[x]).get().getTitle();
-//		}
-//		System.out.println("In getResultJson");
-//		for (String s : titles) {
-//			System.out.println(s);
-//		}
-//		r.setTitles(titles);
-//		r.setGoodResult(results.getGoodResult()); 
 		return r;
 	}
 
@@ -185,5 +98,24 @@ public class RecommenderAPI {
 		return data;
 	}
 	
-
+	@RequestMapping(value = "/getEntryCount/{uid}", method = RequestMethod.GET)
+	public Integer getEntryCount(@PathVariable("uid") Integer userId) {
+		Integer count = mService.findEntryByAuthor(userId).size();
+		System.out.println(count);
+		return count;
+	}
+	
+	@GetMapping(value ="/getEntryPic", produces = MediaType.IMAGE_JPEG_VALUE, params = {"fileName"})
+	public @ResponseBody byte[] getEntryPic(@RequestParam String fileName) throws IOException {
+		String path = "upload/" + fileName;
+		System.out.println(path);
+		
+		File file = new File(path);
+		byte[] fileContent = Files.readAllBytes(file.toPath());
+		return fileContent;
+		
+//		InputStream in = getClass()
+//				.getResourceAsStream(path);
+//		return IOUtils.toByteArray(in);
+	}
 }
