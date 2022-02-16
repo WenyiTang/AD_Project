@@ -82,12 +82,47 @@ public class FriendsAPI {
 		return convertUserToUserSummary(queryResult);
 	}
 
+	@PostMapping("/delete")
+	public Map<String, String> deleteFriend(@RequestParam("username") String username, @RequestParam("friend_username") String friend_username) {
+		Map<String, String> response = new HashMap<>();
+
+		User user = uService.findUserByUsername(username);
+		User friend = uService.findUserByUsername(friend_username);
+
+		if (user != null && friend != null) {
+			FriendRequest friendShip = fService.findAcceptedRequestsByUsers(user, friend);
+			fService.deleteRequest(friendShip);
+			response.put("status", "OK");
+			return  response;
+		} else {
+			response.put("status", "error");
+			return response;
+		}
+	}
+
+	@PostMapping("/add")
+	public Map<String, String> addFriend(@RequestParam("username") String username, @RequestParam("friend_username") String friend_username) {
+		Map<String, String> response = new HashMap<>();
+
+		User user = uService.findUserByUsername(username);
+		User friend = uService.findUserByUsername(friend_username);
+
+		if (user != null && friend != null) {
+			FriendRequest request = new FriendRequest(user, friend);
+			fRepo.saveAndFlush(request);
+			response.put("status", "OK");
+		} else {
+			response.put("status", "ERROR");
+		}
+		return response;
+	}
+
 	@GetMapping("/requests")
-	public List<UserHelper> findPendingFriendRequests(@RequestParam("username") String username, @RequestParam("sent") boolean sent) {
+	public List<UserHelper> findPendingFriendRequests(@RequestParam("username") String username, @RequestParam("sent") String sent) {
 		User user = uService.findUserByUsername(username);
 		List<UserHelper> pendingFriends = new ArrayList<>();
 
-		if (sent) {
+		if (sent.equals("true")) {
 			List<FriendRequest> sent_requests = fRepo.findPendingRequestsBySender(user);
 			List<User> users = sent_requests.stream().map(x -> x.getRecipient()).collect(Collectors.toList());
 			return convertUserToUserSummary(users);

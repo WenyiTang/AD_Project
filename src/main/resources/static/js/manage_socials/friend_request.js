@@ -8,7 +8,7 @@ $(document).ready(function() {
             url: "http://localhost:8080/api/friends/requests",
             data: {
                 username: $("#username").val(),
-                sent: true
+                sent: "true"
             },
             success: function(response) {
                 console.log(response);
@@ -25,7 +25,7 @@ $(document).ready(function() {
             url: "http://localhost:8080/api/friends/requests",
             data: {
                 username: $("#username").val(),
-                sent: false
+                sent: "false"
             },
             success: function(response) {
                 console.log(response);
