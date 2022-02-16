@@ -30,21 +30,22 @@
 				</div>
 			</div>
 			<form class="form-inline">
-				<div class="form-group">
-					<div class="col-sm-9">
+				<div class="row">
+					<div>
 						<input type="text" class="form-control" placeholder="Enter username" id="query"/>
+						<input type="submit" th:value="Search" class="btn btn-primary" id="search">
 					</div>
-					<input type="submit" th:value="Search" class="btn btn-primary" id="search">
+
 				</div>
 			</form>
 			<br/>
 			<div class="row">
 				<table border="1 pt" class="table">
-					<thead class="thead-light">
+					<thead class="thead-light" id="tblHeader">
 					<tr>
 						<th>Profile Pic</th>
-						<th>Username</th>
 						<th>Name</th>
+						<th>Username</th>
 						<th>Send Friend Request</th>
 					</tr>
 					</thead>

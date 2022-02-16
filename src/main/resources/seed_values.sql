@@ -62,7 +62,7 @@ VALUES
     (3, 7, 'PENDING'),
     (5, 3, 'PENDING');
 
-INSERT INTO `meal_entry` (`id`, `description`, `feeling`, `flagged`, `imageurl`, `time_stamp`, `title`, `track_score`, `visibility`, `author_user_id`, `goal_id`) VALUES (5, 'best chicken rice in town', 'JOYFUL', b'0', 'https://static.thehoneycombers.com/wp-content/uploads/sites/2/2020/06/chicken-rice.jpg', '2022-02-08 14:21:32.000000', 'chicken rice', 0, b'0', 1, NULL);
+INSERT INTO `meal_entry` (`id`, `description`, `feeling`, `flagged`, `imageurl`, `time_stamp`, `title`, `track_score`, `visibility`, `author_user_id`, `goal_id`) VALUES (5, 'best chicken rice in town', 'JOY', b'0', 'https://static.thehoneycombers.com/wp-content/uploads/sites/2/2020/06/chicken-rice.jpg', '2022-02-08 14:21:32.000000', 'chicken rice', 0, b'0', 1, NULL);
 INSERT INTO `meal_entry` (`id`, `description`, `feeling`, `flagged`, `imageurl`, `time_stamp`, `title`, `track_score`, `visibility`, `author_user_id`, `goal_id`) VALUES (6, 'duck rice desc', 'HAPPY', b'0', 'https://eatbook.sg/wp-content/uploads/2018/02/braised-duck-rice-wei-ji.jpg', '2022-02-08 14:21:32.000000', 'duck rice', 0, b'0', 1, NULL);
 
 INSERT INTO `report` (`id`, `comments`, `date_reported`, `date_resolved`, `reason`, `status`, `meal_entry_id`, `reporter_user_id`, `resolved_by_user_id`) VALUES (1, NULL, '2022-02-07', NULL, 'language', 'PENDING', 5, 2, NULL);

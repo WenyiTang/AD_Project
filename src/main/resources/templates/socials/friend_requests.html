@@ -23,7 +23,7 @@
 	<br>
 	<div sec:authorize="isAuthenticated()" class="row">
 		<div>
-			<button class="btn btn-primary" id="sent">View Sent Requests</button>
+			<button class="btn btn-secondary" id="sent">View Sent Requests</button>
 			<button class="btn btn-secondary" id="received">View Received Requests</button>
 		</div>
 	</div>
@@ -35,11 +35,11 @@
 	</div>
 	<div class="row">
 		<table border="1 pt" class="table">
-			<thead class="thead-light">
+			<thead class="thead-light" id="tblHeader">
 			<tr>
 				<th>Profile Pic</th>
-				<th>Username</th>
 				<th>Name</th>
+				<th>Username</th>
 				<th>Action</th>
 			</tr>
 			</thead>
