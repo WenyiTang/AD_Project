@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer"})
 public class Goal {
 	
 	@Id

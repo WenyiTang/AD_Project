@@ -61,6 +61,9 @@ public class MealEntryUserGoalTest {
         newUser.setGoals(goalList);
         urepo.saveAndFlush(newUser);
 
+        int goalIdInt = newGoal.getId();
+        int userIdInt = newUser.getId();
+
         MealEntry mealEntry1 = new MealEntry();
         mealEntry1.setTrackScore(1);
         mealEntry1.setAuthor(newUser);
@@ -78,7 +81,7 @@ public class MealEntryUserGoalTest {
         merepo.saveAndFlush(mealEntry3);
 
         int targetCount = grepo.findGoalIdTargetCount(newGoal.getId());
-        List<Integer> trackScore = merepo.findUserMealEntryTrackScore(newUser.getId());
+        List<Integer> trackScore = merepo.findMealEntryTrackScoreByUserAndGoalId(userIdInt, goalIdInt);
 
         System.out.println("Test 2 targetCount should be 20, and trackScore is [1, 1, 1]");
         System.out.println(targetCount);
@@ -86,14 +89,18 @@ public class MealEntryUserGoalTest {
 
     }
 
+
     @Test
     @Order(3)
     public void testFindUserMealEntryTrackScoreWithExistingObjects() {
-        Goal newGoal = grepo.findById(15).get();
+        Goal newGoal = grepo.findById(1).get();
         List<Goal> goalList = new ArrayList<>();
         goalList.add(newGoal);
-        User newUser = urepo.findById(12).get();
+        User newUser = urepo.findById(1).get();
         newUser.setGoals(goalList);
+
+        int goalIdInt = newGoal.getId();
+        int userIdInt = newUser.getId();
 
         MealEntry mealEntry1 = new MealEntry();
         mealEntry1.setTrackScore(1);
@@ -104,7 +111,7 @@ public class MealEntryUserGoalTest {
         mealEntry2.setAuthor(newUser);
         mealEntry2.setGoal(newGoal);
         MealEntry mealEntry3 = new MealEntry();
-        mealEntry3.setTrackScore(1);
+        mealEntry3.setTrackScore(0);
         mealEntry3.setAuthor(newUser);
         mealEntry3.setGoal(newGoal);
         merepo.saveAndFlush(mealEntry1);
@@ -112,11 +119,13 @@ public class MealEntryUserGoalTest {
         merepo.saveAndFlush(mealEntry3);
 
         int targetCount = grepo.findGoalIdTargetCount(newGoal.getId());
-        List<Integer> trackScore = merepo.findUserMealEntryTrackScore(newUser.getId());
+        List<Integer> trackScore = merepo.findMealEntryTrackScoreByUserAndGoalId(userIdInt, goalIdInt);
 
         System.out.println(targetCount);
         System.out.println(trackScore);
 
     }
+
+
 
 }
