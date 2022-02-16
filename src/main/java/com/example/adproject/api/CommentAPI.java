@@ -1,6 +1,7 @@
 package com.example.adproject.api;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.example.adproject.helper.CommentHelper;
@@ -42,6 +43,8 @@ public class CommentAPI {
         if(comments == null) {
             return null;
         }
+        // Reverse order of comments so that it shows most recent on top 
+        Collections.reverse(comments);
 
         ArrayList<CommentHelper> commentHelpers = new ArrayList<CommentHelper>();
 
