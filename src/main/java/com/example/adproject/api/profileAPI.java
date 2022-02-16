@@ -8,13 +8,27 @@ import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
 import com.example.adproject.service.GoalService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 
@@ -83,17 +97,53 @@ public class profileAPI {
 	
 	@RequestMapping(value = "/saveProfile",method = RequestMethod.POST)
     public String saveProfile(@RequestParam String UserName,@RequestParam String Name, @RequestParam String dateOfBirth,
-                                       @RequestParam String Height, @RequestParam String Weight) {
+                                       @RequestParam String Height, @RequestParam String Weight, @RequestParam MultipartFile multipartFile,@RequestParam String fileName) {
         System.out.println("data from client------VVVV");
         System.out.println(UserName);
 
         User user =uRepo.findByUsername(UserName);
         user.setName(Name);
+        SimpleDateFormat strToDate = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+			Date dateofBirth = strToDate.parse(dateOfBirth);
+			LocalDate localDate=dateofBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			user.setDateOfBirth(localDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+  
+        String uploadDir = "./images/" + user.getId();
+
+        Path uploadPath = Paths.get(uploadDir);
+
+        // Saving user's profile pic into directory
+        if (!Files.exists(uploadPath)) {
+            try {
+                Files.createDirectories(uploadPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            File profileImg = new File("images/" + user.getId() + "/" + fileName);
+            profileImg.createNewFile();
+            FileOutputStream fout = new FileOutputStream(profileImg);
+            fout.write(multipartFile.getBytes());
+            fout.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         user.setHeight(Double.valueOf(Height));
         user.setWeight(Double.valueOf(Weight));
+        user.setProfilePic(fileName);
         uRepo.saveAndFlush(user);
-        return "set profile successfully";
-    }
+        return "successful";
+
+	    }
 	
 	//end goal
 	@RequestMapping(value = "/endGoal",method = RequestMethod.POST)
@@ -119,6 +169,14 @@ public class profileAPI {
     
 }
 	
-	
+	@RequestMapping(value = "/pastGoal",method = RequestMethod.POST)
+	public ResultJson viewPastGoal(@RequestParam String UserName){
+
+		User user =uRepo.findByUsername(UserName);
+    	List<Goal> pastGoals = gRepo.findPastGoals(user.getId());
+
+    	return new ResultJson(200,"get pastGoals successfully",pastGoals);
+    
 }
+} 
 
