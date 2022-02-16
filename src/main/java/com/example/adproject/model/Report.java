@@ -29,13 +29,13 @@ public class Report {
 	private String reason;
 	private LocalDate dateReported;
 	private LocalDate dateResolved;
-	@Column(columnDefinition = "ENUM('PENDING', 'RESOLVED')")
+	@Column(columnDefinition = "ENUM('IN_PROGRESS', 'PENDING', 'RESOLVED')")
 	@Enumerated(EnumType.STRING)
 	private ReportEnum status;
 	private String comments;
 	
 	@OneToOne
-	private Admin resolvedBy;
+	private User resolvedBy;
 
 	// Added @JsonIgnore annotation to @ManyToOne mapped attributes
 	// This is to prevent java.lang.IllegalStateException Cannot call sendError()

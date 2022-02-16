@@ -13,9 +13,9 @@
 	<div th:replace="fragments/layout.html::menu" />
 	</div>
 	&nbsp;
-	<div>
-		<img th:src="@{'/images/' + ${user.getId()} + '/' + ${user.getProfilePic()}}" style="width: 100px; height: 100px"/>
-	</div>
+<!--	<div>-->
+<!--		<img th:src="@{'/images/' + ${user.getId()} + '/' + ${user.getProfilePic()}}" style="width: 100px; height: 100px"/>-->
+<!--	</div>-->
 	<div>
 		<input type="hidden" th:value="${user.username}" id="username"/>
 	</div>

@@ -19,7 +19,7 @@ public interface MealEntryService {
 
 	public List<MealEntry> findEntryByAuthor(Integer userId);
 	
-
+	public MealEntry findMealEntryById(Integer id);
 
     public void likeEntryByObject(User user, MealEntry mealEntry);
 

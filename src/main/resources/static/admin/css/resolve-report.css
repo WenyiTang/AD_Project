@@ -1,0 +1,19 @@
+.pic {
+
+    /*height: 200px;
+    width: 200px;*/
+    max-width: 80%;
+    height:auto;
+
+}
+
+.post {
+	border: 0.5px solid black;
+  	border-collapse: collapse;
+}
+
+.blank_row
+{
+    height: 10px !important; 
+    background-color: #FFFFFF;
+}

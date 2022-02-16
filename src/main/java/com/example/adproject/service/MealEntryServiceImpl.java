@@ -41,6 +41,11 @@ public class MealEntryServiceImpl implements MealEntryService {
 
     @Autowired
     UserService uService;
+    
+    @Override
+    public MealEntry findMealEntryById(Integer id) {
+		return mRepo.findById(id).get();
+	}
 
     @Override
     public void likeEntryByObject(User user, MealEntry mealEntry) {
