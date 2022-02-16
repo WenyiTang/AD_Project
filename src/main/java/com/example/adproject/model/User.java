@@ -9,7 +9,6 @@ import java.util.Set;
 
 import java.util.Objects;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,24 +63,23 @@ public class User {
 	private String name;
 	private String gender;
 
-	@Past(message= "Must be a past date")
+	@Past(message = "Must be a past date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
-	@LogicalDimension(message= "Invalid height")
+	@LogicalDimension(message = "Invalid height")
 	private Double height;
-	@LogicalDimension(message= "Invalid weight")
+	@LogicalDimension(message = "Invalid weight")
 	private Double weight;
-	@Column(nullable=true, length=64)
+	@Column(nullable = true, length = 64)
 	private String profilePic;
 
-	private boolean enabled; 
+	private boolean enabled;
 	@Column(name = "reset_password_token")
-	private String resetPasswordToken; 
-	
-	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL }, orphanRemoval=true)
+	private String resetPasswordToken;
+
+	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Comment> comments;
-	
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL })
@@ -102,20 +100,16 @@ public class User {
 
 	@OneToMany(mappedBy = "sender")
 	private List<FriendRequest> sentRequests;
-	
+
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(
-			name = "users_roles",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id")
-			)
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
-	
+
 	/* Test of using enum for role differentiation for Spring Security */
 //	@Column(name="role", columnDefinition = "ENUM('USER', 'ADMIN')")
 //	@Enumerated(EnumType.STRING)
 //	private RoleEnum role; 
-	
+
 //	@OneToOne
 //	private Session session;
 
@@ -143,8 +137,8 @@ public class User {
 	public User(String username, String password, String email, boolean enabled) {
 		this.username = username;
 		this.password = password;
-		this.email = email; 
-		this.enabled = enabled; 
+		this.email = email;
+		this.enabled = enabled;
 	}
 
 	@Override
@@ -163,7 +157,6 @@ public class User {
 		return Objects.hash(id, username);
 	}
 
-
 	public User(String name, @Past LocalDate dateOfBirth, double height, double weight) {
 		super();
 		this.name = name;
@@ -171,12 +164,12 @@ public class User {
 		this.height = height;
 		this.weight = weight;
 	}
-	
+
 	// For displaying profile pic
 	@Transient
 	public String getImagePath() {
 		if (profilePic == null || id == null) {
-			return null; 
+			return null;
 		}
 		return "/user-profilePic." + id + "/" + profilePic;
 	}
