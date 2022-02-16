@@ -19,56 +19,74 @@
    <body>
       <div th:replace="fragments/layout.html::menu" />
       <div class = "container">
-         <h3 align="center" style = "font-weight:bold;font-size:40px;color: #355681;">Edit Profile</h3>
+      <div class="border border-secondary p-3 rounded">
+         <h3 align="center" style = "font-weight:bold;font-size:40px;color: rgb(0, 0, 0);">Edit Profile</h3>
          <div class = "row">
-            <div class="col-3">
+            <div class="col-2">
                
             </div>
-            <div class="col-9">
+            <div class="col-8">
                <div>
-                  <div style="float:left; margin-right:20px;" >
+                  
                      <form action="#" th:action="@{/user/myProfile/}+${user.id}"
-                        th:object="${user}" method="POST" enctype="multipart/form-data">
-                        <label for="fileImage">Profile Picture:</label>
-                        <div class = "avatar">
-                            <img id="thumbnail" class="img-fluid rounded mx-auto d-block w-25"
-						th:src="@{'/images/' + ${user.getId()} + '/' + ${user.getProfilePic()}}" alt="Profile Pic Preview" width="150px" height= "150px" />
-							<input type="file" id="fileImage" name="fileImage" accept="image/png, image/jpeg" />
-                        </div>
+                        th:object="${user}" method="POST" >
+                        
                         
                         <table>
                            <tbody>
                               <tr>
                                  <td> <span th:text="#{fieldLabel.name}"></span></td>
                                  <td><input type="text" th:field="${user.name}" size="40" /></td>
+                               
                               </tr>
+                              <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
                               <tr>
                                  <td><span th:text="#{fieldLabel.DateOfBirth}"></span></td>
                                  <td><input type="date" th:field="${user.dateOfBirth}" size="40" /></td>
+                                
+                              </tr>
+                              <p class="text-danger" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></p>
+                              <tr>
+                                 <td><span th:text="#{fieldLabel.gender}"></span></td>
+                                 <td><select id="gender" class="form-select form-select-lg mb-3" aria-label=".form-select-lg"
+					th:field="*{gender}" required>
+					<option selected th:value=null>Gender</option>
+					<option th:value="M">Male</option>
+					<option th:value="F">Female</option>
+					<option th:value="O">Others</option>
+				</select></td>
                               </tr>
                               <tr>
                                  <td><span th:text="#{fieldLabel.Height}"></span></td>
                                  <td><input type="text" th:field="${user.height}" size="40" /></td>
+                                 
                               </tr>
+                              <p class="text-danger" th:if="${#fields.hasErrors('height')}" th:errors="*{height}"></p>
                               <tr>
                                  <td><span th:text="#{fieldLabel.Weight}"></span></td>
                                  <td><input type="text" th:field="${user.weight}" size="40" /></td>
+                                 
                               </tr>
+                              <p class="text-danger" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></p>
                            </tbody>
                         </table>
                         <div id ="container2">
                            <div class = "button4">
-                              <input type="submit" value="Save" />
+                              <input type="submit" value="Save" class="btn btn-primary btn-block" />
                            </div>
                            <div class = "button5">
-                              <input type="reset" value="Reset" />
+                              <input type="reset" value="Reset" class="btn btn-primary btn-block" />
                            </div>
                         </div>
                      </form>
+                     <div th:if="${message_error != null}">
+			<p class="text-danger" th:text="${message_error}">Account creation failed. Please try again.</p>
+		</div>
                   </div>
                </div>
             </div>
          </div>
+      </div>
       </div>
    </body>
 <script> type = "text/javascript" >

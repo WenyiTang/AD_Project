@@ -77,7 +77,7 @@ public class MealEntryGoalTest {
 		mealEntry1.setTitle("First Meal");
 		mealEntry1.setDescription("2 Tacos and Mexican cola");
 		mealEntry1.setFlagged(true);
-		mealEntry1.setFeeling(FeelingEnum.JOYFUL);
+		mealEntry1.setFeeling(FeelingEnum.JOY);
 		mealEntry1.setTrackScore(0);
 		mealEntry1.setTimeStamp(LocalDateTime.now());
 		mealEntry1.setGoal(goal1);

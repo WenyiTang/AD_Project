@@ -1,5 +1,5 @@
 package com.example.adproject.helper;
 
 public enum ReportEnum {
-	PENDING, RESOLVED
+	IN_PROGRESS, PENDING, RESOLVED
 }

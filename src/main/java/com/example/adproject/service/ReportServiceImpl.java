@@ -2,6 +2,7 @@ package com.example.adproject.service;
 
 import java.util.List;
 
+import com.example.adproject.helper.ReportEnum;
 import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.Report;
 import com.example.adproject.model.User;
@@ -63,5 +64,29 @@ public class ReportServiceImpl implements ReportService {
         }
         
     }
+    
+    public List<Report> findReportsByStatus(ReportEnum status){
+		return rRepo.findReportsByStatus(status);
+	}
+
+	public Report findReportById(Integer id) {
+		return rRepo.findById(id).get();
+	}
+
+	public void save(Report r) {
+		rRepo.save(r);
+	}
+
+	public List<Report> findReportsByStatusEntryReason(ReportEnum status, MealEntry entry, String reason){
+		return rRepo.findReportsByStatusEntryReason(status, entry, reason);
+	}
+
+	public List<Report> findPendingNProgressReports(User admin){
+		return rRepo.findPendingNProgressReports(admin);
+	}
+
+	public List<Report> findPendingNProgressReportsEntryReason(MealEntry entry, String reason){
+		return rRepo.findPendingNProgressReportsEntryReason(entry, reason);
+	}
     
 }

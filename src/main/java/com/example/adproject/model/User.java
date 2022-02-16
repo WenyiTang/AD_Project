@@ -1,6 +1,7 @@
 package com.example.adproject.model;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -27,6 +28,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import org.hibernate.annotations.LazyCollection;
@@ -81,6 +84,7 @@ public class User {
 	private List<Comment> comments;
 	
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "author", cascade = { CascadeType.ALL })
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<MealEntry> entries;

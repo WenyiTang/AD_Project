@@ -1,5 +1,8 @@
 package com.example.adproject.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +21,7 @@ public class GoalServiceImpl implements GoalService {
 	@Transactional
 	public void cancelGoal(Goal goal) {
 		goal.setStatus(StatusEnum.CANCELLED);
+		goal.setEndDate(LocalDate.now());
 		grepo.saveAndFlush(goal);
 		return;
 	}

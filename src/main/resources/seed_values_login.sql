@@ -15,7 +15,8 @@ values
     (str_to_date('2022-01-01', '%Y-%m-%d'), 'jane@gmail.com', true,'', 160, 'Jane', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', 'jane.jpeg', 'jane', 50),
     (str_to_date('2022-01-01', '%Y-%m-%d'), 'jane123@gmail.com', true,'', 160, 'Jane Porter', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', 'jane123.jpeg', 'jane123', 50),
     (str_to_date('2022-01-01', '%Y-%m-%d'), 'appfooddiary@gmail.com', true,'', 160, 'John', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', 'john.jpeg', 'john', 50),
-    (null, 'admin@gmail.com', true,'', 0, 'admin', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '','admin', 0);
+    (null, 'admin@gmail.com', true,'', 0, 'admin', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '','admin', 0),
+    (null, 'admin2@gmail.com', true,'', 0, 'admin2', '$2a$12$HY72DB4KJuPZpJSjAdWJ8OKvsCRlm.gvA91BXKHf.xaG/Gx602CVO', '','admin2', 0);
 
 
 insert into adproject.users_roles
@@ -29,20 +30,23 @@ values
 (6,1),
 (7,1),
 (8,1),
-(9,2);
+(9,2),
+(10,2);
 
 
 INSERT INTO adproject.goal
-(id, end_date, goal_description, start_date, status, target_count, total_meal_count, author_user_id)
+(id, end_date, goal_description, start_date, status, target_count, total_meal_count)
 VALUES
-	(1, '2021-12-06', 'Eat vegetables', '2021-10-06', 'COMPLETED', 60, 60, 3),
-	(2, '2022-01-06', 'Eat fruits', '2021-12-07', 'COMPLETED', 30, 30, 3),
-	(3, NULL, 'Lose weight', '2022-01-07', 'IN_PROGRESS', 40, 40, 3);
+    (1, '2022-02-07', 'Eat very healthy', '2022-02-05', 'STARTED', 3, 12),
+    (2, '2022-02-10', 'Eat healthy', '2022-02-05', 'IN_PROGRESS', 4, 20),
+    (3, '2022-02-10', 'No sweet drinks', '2022-02-05', 'STARTED', 20, 30);
 
-
+INSERT INTO `user_goals` (`user_user_id`, `goals_id`, `goals_order`) VALUES (1, 1, 0);
+INSERT INTO `user_goals` (`user_user_id`, `goals_id`, `goals_order`) VALUES (2, 2, 0);
+INSERT INTO `user_goals` (`user_user_id`, `goals_id`, `goals_order`) VALUES (2, 3, 1);
 
 INSERT INTO adproject.meal_entry
-(id, description, feeling, flagged, imageurl, time_stamp, title, track_score, visibility, author_user_id, goal_id)
+(`id`, `description`, `feeling`, `flagged`, `imageurl`, `time_stamp`, `title`, `track_score`, `visibility`, `author_user_id`, `goal_id`)
 VALUES
 	(1, 'happy', 'JOYFUL', 0, NULL, NULL, NULL, 1, 1, 3, 3),
 	(2, 'yummy', 'JOYFUL', 0, NULL, NULL, NULL, 1, 1, 3, 3),
@@ -57,4 +61,12 @@ VALUES
     (3, 6, 'ACCEPTED'),
     (3, 7, 'PENDING'),
     (5, 3, 'PENDING');
+
+INSERT INTO `meal_entry` (`id`, `description`, `feeling`, `flagged`, `imageurl`, `time_stamp`, `title`, `track_score`, `visibility`, `author_user_id`, `goal_id`) VALUES (5, 'best chicken rice in town', 'JOYFUL', b'0', 'https://static.thehoneycombers.com/wp-content/uploads/sites/2/2020/06/chicken-rice.jpg', '2022-02-08 14:21:32.000000', 'chicken rice', 0, b'0', 1, NULL);
+INSERT INTO `meal_entry` (`id`, `description`, `feeling`, `flagged`, `imageurl`, `time_stamp`, `title`, `track_score`, `visibility`, `author_user_id`, `goal_id`) VALUES (6, 'duck rice desc', 'HAPPY', b'0', 'https://eatbook.sg/wp-content/uploads/2018/02/braised-duck-rice-wei-ji.jpg', '2022-02-08 14:21:32.000000', 'duck rice', 0, b'0', 1, NULL);
+
+INSERT INTO `report` (`id`, `comments`, `date_reported`, `date_resolved`, `reason`, `status`, `meal_entry_id`, `reporter_user_id`, `resolved_by_user_id`) VALUES (1, NULL, '2022-02-07', NULL, 'language', 'PENDING', 5, 2, NULL);
+INSERT INTO `report` (`id`, `comments`, `date_reported`, `date_resolved`, `reason`, `status`, `meal_entry_id`, `reporter_user_id`, `resolved_by_user_id`) VALUES (2, NULL, '2022-02-08', NULL, 'picture', 'PENDING', 6, 4, NULL);
+INSERT INTO `report` (`id`, `comments`, `date_reported`, `date_resolved`, `reason`, `status`, `meal_entry_id`, `reporter_user_id`, `resolved_by_user_id`) VALUES (3, NULL, '2022-02-10', NULL, 'language', 'PENDING', 5, 3, NULL);
+INSERT INTO `report` (`id`, `comments`, `date_reported`, `date_resolved`, `reason`, `status`, `meal_entry_id`, `reporter_user_id`, `resolved_by_user_id`) VALUES (4, NULL, '2022-02-08', NULL, 'picture', 'PENDING', 5, 4, NULL);
 

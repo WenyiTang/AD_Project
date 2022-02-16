@@ -15,6 +15,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/photo.js"></script>
+	<script src="/admin/js/resolve-report.js"></script>
 </head>
 
 <body>
@@ -34,7 +35,7 @@
 						<li class="nav-item dropdown">
 							<a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown" type="button"> Data </a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" th:href="@{/leave/add}"> View Past Meals</a></li>
+								<li><a class="dropdown-item" th:href="@{/meals/pastmeals}"> View Past Meals</a></li>
 								<li><a class="dropdown-item" th:href="@{/staff/history/}"> View Analytics</a></li>
 							</ul>
 						</li>
@@ -43,7 +44,7 @@
 								Goals </a>
 							<ul class="dropdown-menu">
 								<li><a class="dropdown-item" th:href="@{/user/goals}"> View Current Goal</a></li>
-								<li><a class="dropdown-item" th:href="@{/staff/listot}"> View Past Goals</a></li>
+								<li><a class="dropdown-item" th:href="@{/user/pastgoals}"> View Past Goals</a></li>
 							</ul>
 						</li>
 						<li class="nav-item dropdown">
@@ -66,8 +67,14 @@
 				</div>
 				<div class="collapse navbar-collapse" id="main_nav" sec:authorize="hasAnyAuthority('ADMIN')">
 					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link" th:href="@{/admin/user/list}"> Manage Staff </a>
-						</li>
+						<!--<li class="nav-item"><a class="nav-link" th:href="@{/admin/user/list}"> Manage Staff </a>
+						</li>-->
+						<li id="reportcount" class="nav-item"><a class="nav-link" th:href="@{/admin/pendingreports}"
+							th:text="'Reports (' + ${reportCount} + ')'" >Reports (0)</a>
+						</li >
+						<li id="reportcount" class="nav-item"><a class="nav-link" 
+							th:href="@{/admin/create-account-admin}">Create Admin</a>
+						</li >
 						<li class="nav-item">
 						<!--<a class="nav-link" th:href="@{/logout}"> Logout </a>-->
 						<li class="nav-item"><a class="nav-link" th:href="@{/logout}"> Logout </a>

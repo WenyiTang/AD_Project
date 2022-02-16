@@ -2,12 +2,14 @@ package com.example.adproject.repo;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.lang.Nullable;
 
 import com.example.adproject.model.Goal;
-import com.example.adproject.model.MealEntry;
 
 public interface GoalRepo extends JpaRepository<Goal, Integer> {
 	
@@ -19,5 +21,10 @@ public interface GoalRepo extends JpaRepository<Goal, Integer> {
 	@Query("Select g from Goal g where g.author.id = :userid AND g.status ='IN_PROGRESS'")
 	public Goal findCurrentGoal(@Param("userid") Integer userId);
 
+  	@Query("SELECT g.targetCount FROM Goal g WHERE g.id = :id")
+  	public int findGoalIdTargetCount(@Param("id") int id);
+
+	@Query("Select g from Goal g where g.author.id = :userid AND g.status ='COMPLETED' OR g.status ='CANCELLED' ")
+	public List<Goal> findPastGoals(@Param("userid") Integer userId);
 
 }

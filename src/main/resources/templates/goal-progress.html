@@ -27,11 +27,21 @@
                   left:40%;
                   margin:-200px 0 0 -300px;">
                   <img class="img2" th:src="@{/images/cutweight.jpg}" width="300px" height= "200px" alt=""/>
-                  <span style="position: absolute; top: 80px; left: 70px;font-size:32px;font-weight:bold;" th:text="${goal.goalDescription}">Current Goal</span>
+                  <span style="position: absolute; top: 80px; left: 50px;font-size:32px;font-weight:bold;" th:text="${goal.goalDescription}">Current Goal</span>
+               	  <div class="goalDetail">
+               	  <p>
+					<span th:text="#{fieldLabel.TargetCountAndTotalCount}"></span>
+					<span th:text="${goal.targetCount} +'/' + ${goal.totalMealCount} "></span>
+				  </p>
+				  <p>
+					<span th:text="#{fieldLabel.GoalDate}"></span>
+					<span th:text="${goal.startDate}"></span>
+				  </p>
+               	  </div>
                </div>
             </div>
             <div class="col-6">
-               <h3 style = "text-align: center;font-weight:bold;font-size:40px;margin-left:15px;color: #355681; font-style:italic;" th:text="'Status: ' + ${goal.status}">Status</h3>
+               <h4 style = "text-align: center;" th:text="'Status: ' + ${goal.status}">Status</h4>
                <h4 style="text-align: center;" th:text="'You are ' + ${percentCount} + '% on path!'"></h4>
                <progress style="text-align: center; font-size:50px;" th:value="${percentCount}" max="100"></progress> 
                <div>
