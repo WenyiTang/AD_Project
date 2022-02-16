@@ -42,7 +42,7 @@ public class SetGoalController {
             user.getGoals().add(goal);
             uRepo.saveAndFlush(user);
         }
-        return "redirect:/meals/list";
+        return "redirect:/meals/pastmeals";
     }
 
 
