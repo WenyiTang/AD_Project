@@ -57,16 +57,17 @@ create table meal_entry
 (
     id             int auto_increment
         primary key,
-    description    varchar(500)                                  null,
-    feeling        enum ('CRYING', 'PENSIVE', 'HAPPY', 'JOYFUL') null,
-    flagged        bit                                           not null,
-    imageurl       varchar(255)                                  null,
-    time_stamp     datetime(6)                                   null,
-    title          varchar(255)                                  null,
-    track_score    int                                           not null,
-    visibility     bit                                           not null,
-    author_user_id int                                           null,
-    goal_id        int                                           null,
+    description    varchar(500)                            null,
+    feeling        enum ('CRY', 'PENSIVE', 'HAPPY', 'JOY') null,
+    filename       varchar(255)                            null,
+    flagged        bit                                     not null,
+    imageurl       varchar(255)                            null,
+    time_stamp     datetime(6)                             null,
+    title          varchar(255)                            null,
+    track_score    int                                     not null,
+    visibility     bit                                     not null,
+    author_user_id int                                     null,
+    goal_id        int                                     null,
     constraint FKjeefyqy8fgbt4lbslstfx9kby
         foreign key (author_user_id) references user (user_id),
     constraint FKq0r8klx8kt066npvwnpou3ucl

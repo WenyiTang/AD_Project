@@ -48,8 +48,8 @@ INSERT INTO `user_goals` (`user_user_id`, `goals_id`, `goals_order`) VALUES (2, 
 INSERT INTO adproject.meal_entry
 (`id`, `description`, `feeling`, `flagged`, `imageurl`, `time_stamp`, `title`, `track_score`, `visibility`, `author_user_id`, `goal_id`)
 VALUES
-	(1, 'happy', 'JOYFUL', 0, NULL, NULL, NULL, 1, 1, 3, 3),
-	(2, 'yummy', 'JOYFUL', 0, NULL, NULL, NULL, 1, 1, 3, 3),
+	(1, 'happy', 'JOY', 0, NULL, NULL, NULL, 1, 1, 3, 3),
+	(2, 'yummy', 'JOY', 0, NULL, NULL, NULL, 1, 1, 3, 3),
 	(3, 'sinful', 'PENSIVE', 0, NULL, NULL, NULL, 0, 1, 3, 3),
 	(4, 'simple', 'HAPPY', 0, NULL, NULL, NULL, 1, 1, 3, 3);
 
