@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $("#tblHeader").hide();
     $("#search").click(function (e) {
         e.preventDefault();
         $("#usersTbl").empty();
@@ -18,6 +19,7 @@ $(document).ready(function() {
 });
 
 function buildTable(data) {
+    $("#tblHeader").show();
     var table = document.getElementById("usersTbl")
 
     for (var i = 0; i < data.length; i++) {
@@ -26,8 +28,8 @@ function buildTable(data) {
 						    <img id="thumbnail" style="width: 100px" 
 						    src="/images/${data[i].userId}/${data[i].profilePic}"/>
 						</td>
-						<td>${data[i].username}</td>
 						<td>${data[i].name}</td>
+						<td>${data[i].username}</td>
 						<td>
 							<a id="manage" href="/socials/friend/add/${data[i].username}" class="btn btn-primary">Add Friend</a>
 						</td>

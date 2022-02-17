@@ -84,10 +84,23 @@ public class UserServiceImpl implements UserService {
 		return uRepo.findById(userId).orElse(null);
 	}
 
-  @Override
+	@Override
 	public User save(User user) {
 		uRepo.save(user); 
 		
 		return uRepo.findByUsername(user.getUsername()); 
+	}
+
+	@Override
+	public boolean authenticateUser(String username, String password) {
+		User user = uRepo.findByUsername(username);
+
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+		if (encoder.matches(password, user.getPassword())) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

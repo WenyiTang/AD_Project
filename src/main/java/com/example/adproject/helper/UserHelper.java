@@ -5,14 +5,14 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UserSummary {
+public class UserHelper {
 
-	private Integer userId; 
+	private String userId;
 	private String username; 
 	private String name; 
 	private String profilePic;
 	
-	public UserSummary(Integer userId, String username, String name, String profilePic) {
+	public UserHelper(String userId, String username, String name, String profilePic) {
 		super(); 
 		this.userId = userId; 
 		this.username = username; 

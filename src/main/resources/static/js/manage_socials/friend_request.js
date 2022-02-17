@@ -1,5 +1,10 @@
 $(document).ready(function() {
+    $("#tblHeader").hide();
     $("#sent").click(function (e) {
+        $("#sent").removeClass("btn btn-secondary");
+        $("#sent").addClass("btn btn-primary");
+        $("#received").removeClass();
+        $("#received").addClass("btn btn-secondary");
         e.preventDefault();
         $("#requestsTbl").empty();
         document.getElementById("req_display").innerHTML = "Sent Requests";
@@ -8,7 +13,7 @@ $(document).ready(function() {
             url: "http://localhost:8080/api/friends/requests",
             data: {
                 username: $("#username").val(),
-                sent: true
+                sent: "true"
             },
             success: function(response) {
                 console.log(response);
@@ -18,6 +23,10 @@ $(document).ready(function() {
     });
     $("#received").click (function (e, msg) {
         e.preventDefault();
+        $("#received").removeClass("btn btn-secondary");
+        $("#received").addClass("btn btn-primary");
+        $("#sent").removeClass();
+        $("#sent").addClass("btn btn-secondary");
         $("#requestsTbl").empty();
         document.getElementById("req_display").innerHTML = "Received Requests";
         $.ajax({
@@ -25,7 +34,7 @@ $(document).ready(function() {
             url: "http://localhost:8080/api/friends/requests",
             data: {
                 username: $("#username").val(),
-                sent: false
+                sent: "false"
             },
             success: function(response) {
                 console.log(response);
@@ -36,31 +45,74 @@ $(document).ready(function() {
 });
 
 function buildTable_sent(data) {
-    var table = document.getElementById("requestsTbl")
+    $("#tblHeader").show();
+    var tableData = "";
+    data.forEach(function (user) {
+        tableData += '<tr>' +
+            '<td><img id="thumbnail" style="width: 100px" src="/images/' + user.userId + '/' + user.profilePic + '"/>' + '</td>' +
+            '<td>' + user.name + '</td>' +
+            '<td>' + user.username + '</td>' +
+            '<td id="action_space">' +
+            '<button id="delete_req' + user.userId + '" class="btn btn-danger" value="' + user.username + '">Delete Request</button>' +
+            '</td>' +
+            '</tr>';
+    });
 
-    for (var i = 0; i < data.length; i++) {
-        var row = `<tr>
-						<td><img id="thumbnail" style="width: 100px" 
-								src="/images/${data[i].userId}/${data[i].profilePic}"/></td>
-						<td>${data[i].username}</td>
-						<td>${data[i].name}</td>
-						<td id="action_space">
-							 <button id="delete_req" class="btn btn-danger" value="${data[i].username}">Delete Request</button>
-						</td>
-					</tr>`
-        table.innerHTML += row
+    $("#tblId>tbody").html(tableData);
 
-        $('#delete_req').click(function(e) {
+    data.forEach(function(user) {
+        $('#delete_req'+user.userId).click(function (e) {
             e.preventDefault();
             $.ajax({
                 method: 'GET',
                 url: "http://localhost:8080/api/friends/request/process",
                 data: {
                     username: $("#username").val(),
-                    sender: $("#delete_req").val(),
+                    sender: $("#delete_req"+user.userId).val(),
                     action: "delete"
                 },
-                success: function(response) {
+                success: function (response) {
+                    console.log(response);
+                    // var obj = JSON.parse(response);
+                    // var msg = obj['message'];
+                    document.getElementById("sent").click();
+                }
+            });
+        })
+    })
+}
+
+function buildTable_received(data) {
+    $("#tblHeader").show();
+    var tableData = "";
+    data.forEach(function (user) {
+        tableData += '<tr>' +
+            '<td><img id="thumbnail" style="width: 100px" src="/images/' + user.userId + '/' + user.profilePic + '"/></td>' +
+            '<td>' + user.name + '</td>' +
+            '<td id="sender_username">' + user.username + '</td>'+
+            '<td>' +
+                '<div id="action_space">' +
+                    '<button id="accept_req' + user.userId +'" class="btn btn-success" value="' + user.username +'">Accept</button>' + '\n' +
+                    '<button id="reject_req' + user.userId +'" class="btn btn-danger" value="' + user.username +'">Reject</button>' +
+                '</div>' +
+            '</td>' +
+        '</tr>';
+    });
+
+    $("#tblId>tbody").html(tableData);
+
+    data.forEach(function(user) {
+        $('#accept_req'+user.userId).click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                method: 'GET',
+                url: "http://localhost:8080/api/friends/request/process",
+                data: {
+                    username: $("#username").val(),
+                    sender: $("#accept_req" + user.userId).val(),
+                    action: "accept"
+                },
+                success: function (response) {
                     console.log(response);
                     // var obj = JSON.parse(response);
                     // var msg = obj['message'];
@@ -68,64 +120,25 @@ function buildTable_sent(data) {
                 }
             });
         });
-    }
-}
-
-function buildTable_received(data) {
-    var table = document.getElementById("requestsTbl")
-
-    for (var i = 0; i < data.length; i++) {
-        var row = `<tr>
-						<td><img id="thumbnail" style="width: 100px" 
-								src="/images/${data[i].userId}/${data[i].profilePic}"/></td>
-						<td id="sender_username">${data[i].username}</td>
-						<td>${data[i].name}</td>
-						<td>
-						    <div id="action_space">
-						       <button id="accept_req" class="btn btn-success" value="${data[i].username}">Accept</button>
-							   <button id="reject_req" class="btn btn-danger" value="${data[i].username}">Reject</button>
-                            </div>
-						</td>
-					</tr>`
-        table.innerHTML += row
-
-        $('#accept_req').click(function(e) {
+        $('#reject_req'+user.userId).click(function(e) {
             e.preventDefault();
             $.ajax({
                 method: 'GET',
                 url: "http://localhost:8080/api/friends/request/process",
                 data: {
                     username: $("#username").val(),
-                    sender: $("#accept_req").val(),
-                    action: "accept"
-                },
-                success: function(response) {
-                    console.log(response);
-                    // var obj = JSON.parse(response);
-                    // var msg = obj['message'];
-                    document.getElementById("received").click();
-                }
-            });
-        });
-        $('#reject_req').click(function(e) {
-            e.preventDefault();
-            $.ajax({
-                method: 'GET',
-                url: "http://localhost:8080/api/friends/request/process",
-                data: {
-                    username: $("#username").val(),
-                    sender: $("#reject_req").val(),
+                    sender: $("#reject_req" + user.userId).val(),
                     action: "reject"
                 },
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     // var obj = JSON.parse(response);
                     // var msg = obj['message'];
-                    // document.getElementById("message").innerHTML = "<span class='text-danger'>msg</span>";
                     document.getElementById("received").click();
                 }
             });
         });
-    }
+    })
 }
+
 

@@ -32,21 +32,21 @@ public class ManageSocialsController {
 		User user = uService.findUserByUsername(principal.getName()); 
 		model.addAttribute("user", user); 
 		
-		return "manage_socials"; 
+		return "./socials/manage_socials";
 	}
 	
 	@GetMapping("/add")
 	public String loadAddFriendPage(Model model, Principal principal) {
 		User user = uService.findUserByUsername(principal.getName()); 
 		model.addAttribute("user", user); 
-		return "add_friend"; 
+		return "./socials/add_friend";
 	}
 	
 	@GetMapping("/friend_requests")
 	public String loadFriendRequestsPage(Model model, Principal principal) {
 		User user = uService.findUserByUsername(principal.getName()); 
 		model.addAttribute("user", user); 
-		return "friend_requests"; 
+		return "./socials/friend_requests";
 	}
 	
 	@GetMapping("/friend/{username}")
@@ -55,7 +55,7 @@ public class ManageSocialsController {
 		ModelAndView mav = new ModelAndView(); 
 		
 		mav.addObject("friend", user); 
-		mav.setViewName("friend_details"); 
+		mav.setViewName("./socials/friend_details");
 		return mav; 
 	}
 
@@ -70,7 +70,7 @@ public class ManageSocialsController {
 		model.addAttribute("user", user);
 		String message = "You are no longer friends with " + friend.getName();
 		model.addAttribute("message", message);
-		return "manage_socials";
+		return "./socials/manage_socials";
 	}
 
 	@RequestMapping("/friend/add/{username}")
@@ -84,6 +84,6 @@ public class ManageSocialsController {
 		model.addAttribute("user", user);
 		String message = "Friend request sent to " + friend.getName() + ".";
 		model.addAttribute("message", message);
-		return "add_friend";
+		return "./socials/add_friend";
 	}
 }
