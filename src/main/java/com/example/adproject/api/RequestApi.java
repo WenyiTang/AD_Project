@@ -8,6 +8,7 @@ import com.example.adproject.model.User;
 import com.example.adproject.repo.GoalRepo;
 import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -172,6 +173,14 @@ public class RequestApi {
             return ResultJson.error("User does not exist");
         }
     }
+
+    @GetMapping(value = "/foodImage/get",produces = MediaType.IMAGE_JPEG_VALUE,params = {"imagePath"})
+    public @ResponseBody byte[] getInageWithMediaType(@RequestParam String imagePath) throws IOException{
+        InputStream in = getClass().getResourceAsStream(imagePath);
+        return IOUtils.toByteArray(in);
+
+    }
+
 
 
 }
