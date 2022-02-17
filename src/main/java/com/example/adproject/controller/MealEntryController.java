@@ -69,7 +69,9 @@ public class MealEntryController {
 								   @RequestParam String trackScore,
 								   @RequestParam String timeStamp,
 								   @RequestParam String userId,
-								   @RequestParam String goalId) {
+								   @RequestParam String goalId,
+								   @RequestParam String flagged,
+								   @RequestParam String visibility) {
 
 		//STILL NEED USER DETAILS
 		if (multipartFile == null || multipartFile.isEmpty()) {
@@ -109,6 +111,8 @@ public class MealEntryController {
 			newMealEntry.setTimeStamp(timeStamp_);
 			newMealEntry.setAuthor(user_);
 			newMealEntry.setGoal(goal_);
+			newMealEntry.setFlagged(Boolean.parseBoolean(flagged));
+			newMealEntry.setVisibility(Boolean.parseBoolean(visibility));
 			meRepo.saveAndFlush(newMealEntry);
 			int goalIdInt = Integer.parseInt(goalId);
 			int userIdInt = Integer.parseInt(userId);
