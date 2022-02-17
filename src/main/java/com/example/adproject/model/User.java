@@ -73,6 +73,7 @@ public class User {
 	private Double weight;
 	@Column(nullable=true, length=64)
 	private String profilePic;
+	private String imageURL;
 
 	private boolean enabled; 
 	@Column(name = "reset_password_token")

@@ -58,8 +58,8 @@ function buildTable(data) {
 							<img id="thumbnail" style="width: 100px"  
 							src="/images/${data[i].userId}/${data[i].profilePic}"/>
 						</td>
-						<td>${data[i].username}</td>
 						<td>${data[i].name}</td>
+						<td>${data[i].username}</td>
 						<td>
 							<a id="manage" href="/socials/friend/${data[i].username}" class="btn btn-secondary">Manage</a>
 						</td>

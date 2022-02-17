@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface UserService {
-    
 
     List<User> findFriendsOf(User user);
     
@@ -20,10 +19,11 @@ public interface UserService {
     
     User getByResetPasswordToken(String token);
     
-    void updatePassword(User user, String newPassword); 
-   
+    void updatePassword(User user, String newPassword);
 
     User findUser(int id); 
 
-    User save(User user); 
+    User save(User user);
+
+    boolean authenticateUser(String username, String password);
 }
