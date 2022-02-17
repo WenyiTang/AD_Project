@@ -69,10 +69,9 @@ public class RecommenderAPI {
 	//pass mealEntryTable to Flask
 	@RequestMapping(value = "/passData/{uid}", method = {RequestMethod.POST, RequestMethod.GET})
 	public EntriesDataTable passDataToFlask(@PathVariable("uid") String userId) {
-		System.out.println("userId: " + userId);
 		User user = uService.findUser(Integer.parseInt(userId));
 		List<MealEntry> entries = mService.findMealEntryByUser(user);
-		//to implement include friend's posts
+		//In future to implement include friend's posts
 		//...
 		
 		Integer size = entries.size();
@@ -101,21 +100,15 @@ public class RecommenderAPI {
 	@RequestMapping(value = "/getEntryCount/{uid}", method = RequestMethod.GET)
 	public Integer getEntryCount(@PathVariable("uid") Integer userId) {
 		Integer count = mService.findEntryByAuthor(userId).size();
-		System.out.println(count);
 		return count;
 	}
 	
 	@GetMapping(value ="/getEntryPic", produces = MediaType.IMAGE_JPEG_VALUE, params = {"fileName"})
 	public @ResponseBody byte[] getEntryPic(@RequestParam String fileName) throws IOException {
 		String path = "upload/" + fileName;
-		System.out.println(path);
 		
 		File file = new File(path);
 		byte[] fileContent = Files.readAllBytes(file.toPath());
 		return fileContent;
-		
-//		InputStream in = getClass()
-//				.getResourceAsStream(path);
-//		return IOUtils.toByteArray(in);
 	}
 }

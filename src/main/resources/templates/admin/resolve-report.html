@@ -47,7 +47,7 @@
 			</tr>
 			<tr>
 				<td style="width:50%" align="center">
-					<img class = "pic" th:src="@{${report.mealEntry.imageURL}}" alt="">
+					<img class = "pic" th:src="@{'/upload/' + ${report.mealEntry.imageURL}}" alt="">
 				</td  >
 				<td style="width:50%; vertical-align:top">
 					<h2 class = "title" th:text = "${report.mealEntry.title}" ></h2>
@@ -86,7 +86,7 @@
 				<td id="textBoxError">Please enter comments.</td >
 			</tr >
 			<tr >
-				<td colspan="2" id="textBox" style="display: none">
+				<td colspan="2" id="textBox" style="display: none;">
 					<textarea id="textArea" rows="4" cols="40" placeholder="(Required) Additional Comments" th:field="${outcome.comments}"></textarea>
 				</td >
 				<!--<td align="right" style="vertical-align: bottom;">
@@ -95,13 +95,15 @@
 				</td >-->
 				<td align="right" style="vertical-align: bottom;">
 					<a
-							th:href="@{/admin/cancelresolve/} + ${report.id}"><button type="button">Cancel</button></a>
-					<button th:type="submit">Submit</button>
+							th:href="@{/admin/cancelresolve/} + ${report.id}"><button type="button" class="btn btn-primary">Cancel</button></a>
+				</td >
+				<td align="right" style="vertical-align: bottom; width:10%">
+					<button th:type="submit" class="btn btn-primary">Submit</button>
 				</td >
 			</tr >
 		</table >
 		</form>
 	</div   >
-	</br></br></br>
+	</br></br><r>
 </body >
 </html>

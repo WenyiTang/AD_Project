@@ -55,7 +55,7 @@
 					<td th:text="${report.status}">Status</td>
 					<td><a
 							th:href="@{/admin/resolvereport/} + ${report.id}">
-							<button type="button" th:data-thing="${report.status}" onclick="checkAvail()">Resolve</button></a></td>
+							<button type="button" th:data-thing="${report.status}" onclick="checkAvail()" class="btn btn-primary btn-block" >Resolve</button></a></td>
 				</tr>
 			</tbody>	
 		</table>

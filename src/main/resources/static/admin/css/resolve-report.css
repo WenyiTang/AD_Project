@@ -17,3 +17,7 @@
     height: 10px !important; 
     background-color: #FFFFFF;
 }
+
+a:hover {
+  text-decoration: none;
+}
