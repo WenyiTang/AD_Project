@@ -123,7 +123,7 @@ public class LoginAPI {
             String encoderPassword = encoder.encode(newUser.getPassword());
             newUser.setPassword(encoderPassword);
 
-            Role role = rRepo.findByType("ADMIN");
+            Role role = rRepo.findByType("USER");
             newUser.getRoles().add(role);
 
             uService.save(newUser);

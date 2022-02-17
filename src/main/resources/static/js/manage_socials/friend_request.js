@@ -46,27 +46,29 @@ $(document).ready(function() {
 
 function buildTable_sent(data) {
     $("#tblHeader").show();
-    var table = document.getElementById("requestsTbl")
-    for (var i = 0; i < data.length; i++) {
-        var row = `<tr>
-						<td><img id="thumbnail" style="width: 100px"
-								src="/images/${data[i].userId}/${data[i].profilePic}"/></td>
-						<td>${data[i].name}</td>
-						<td>${data[i].username}</td>
-						<td id="action_space">
-							 <button id="'delete_req'+i+'" class="btn btn-danger" value="${data[i].username}">Delete Request</button>
-						</td>
-					</tr>`
-        table.innerHTML += row
+    var tableData = "";
+    data.forEach(function (user) {
+        tableData += '<tr>' +
+            '<td><img id="thumbnail" style="width: 100px" src="/images/' + user.userId + '/' + user.profilePic + '"/>' + '</td>' +
+            '<td>' + user.name + '</td>' +
+            '<td>' + user.username + '</td>' +
+            '<td id="action_space">' +
+            '<button id="delete_req' + user.userId + '" class="btn btn-danger" value="' + user.username + '">Delete Request</button>' +
+            '</td>' +
+            '</tr>';
+    });
 
-        $(document).on('click', '#delete_req', function (e) {
+    $("#tblId>tbody").html(tableData);
+
+    data.forEach(function(user) {
+        $('#delete_req'+user.userId).click(function (e) {
             e.preventDefault();
             $.ajax({
                 method: 'GET',
                 url: "http://localhost:8080/api/friends/request/process",
                 data: {
                     username: $("#username").val(),
-                    sender: $("#delete_req").val(),
+                    sender: $("#delete_req"+user.userId).val(),
                     action: "delete"
                 },
                 success: function (response) {
@@ -76,85 +78,67 @@ function buildTable_sent(data) {
                     document.getElementById("sent").click();
                 }
             });
-        });
-
-        $('#delete_req' + i).click(function (e) {
-            e.preventDefault();
-            $.ajax({
-                method: 'GET',
-                url: "http://localhost:8080/api/friends/request/process",
-                data: {
-                    username: $("#username").val(),
-                    sender: $("#delete_req").val(),
-                    action: "delete"
-                },
-                success: function (response) {
-                    console.log(response);
-                    // var obj = JSON.parse(response);
-                    // var msg = obj['message'];
-                    document.getElementById("sent").click();
-                }
-            });
-        });
-    }
+        })
+    })
 }
 
 function buildTable_received(data) {
     $("#tblHeader").show();
-    var table = document.getElementById("requestsTbl")
+    var tableData = "";
+    data.forEach(function (user) {
+        tableData += '<tr>' +
+            '<td><img id="thumbnail" style="width: 100px" src="/images/' + user.userId + '/' + user.profilePic + '"/></td>' +
+            '<td>' + user.name + '</td>' +
+            '<td id="sender_username">' + user.username + '</td>'+
+            '<td>' +
+                '<div id="action_space">' +
+                    '<button id="accept_req' + user.userId +'" class="btn btn-success" value="' + user.username +'">Accept</button>' + '\n' +
+                    '<button id="reject_req' + user.userId +'" class="btn btn-danger" value="' + user.username +'">Reject</button>' +
+                '</div>' +
+            '</td>' +
+        '</tr>';
+    });
 
-    for (var i = 0; i < data.length; i++) {
-        var row = `<tr>
-						<td><img id="thumbnail" style="width: 100px" 
-								src="/images/${data[i].userId}/${data[i].profilePic}"/></td>
-						<td>${data[i].name}</td>
-						<td id="sender_username">${data[i].username}</td>
-						<td>
-						    <div id="action_space">
-						       <button id="accept_req" class="btn btn-success" value="${data[i].username}">Accept</button>
-							   <button id="reject_req" class="btn btn-danger" value="${data[i].username}">Reject</button>
-                            </div>
-						</td>
-					</tr>`
-        table.innerHTML += row
+    $("#tblId>tbody").html(tableData);
 
-        $('#accept_req').click(function(e) {
+    data.forEach(function(user) {
+        $('#accept_req'+user.userId).click(function (e) {
             e.preventDefault();
             $.ajax({
                 method: 'GET',
                 url: "http://localhost:8080/api/friends/request/process",
                 data: {
                     username: $("#username").val(),
-                    sender: $("#accept_req").val(),
+                    sender: $("#accept_req" + user.userId).val(),
                     action: "accept"
                 },
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     // var obj = JSON.parse(response);
                     // var msg = obj['message'];
-                    document.getElementById("received").click();
+                    document.getElementById("sent").click();
                 }
             });
         });
-        $('#reject_req').click(function(e) {
+        $('#reject_req'+user.userId).click(function(e) {
             e.preventDefault();
             $.ajax({
                 method: 'GET',
                 url: "http://localhost:8080/api/friends/request/process",
                 data: {
                     username: $("#username").val(),
-                    sender: $("#reject_req").val(),
+                    sender: $("#reject_req" + user.userId).val(),
                     action: "reject"
                 },
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     // var obj = JSON.parse(response);
                     // var msg = obj['message'];
-                    // document.getElementById("message").innerHTML = "<span class='text-danger'>msg</span>";
                     document.getElementById("received").click();
                 }
             });
         });
-    }
+    })
 }
+
 
