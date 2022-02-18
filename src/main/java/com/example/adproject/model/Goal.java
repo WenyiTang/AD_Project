@@ -30,7 +30,7 @@ public class Goal {
 	private String goalDescription;
 	private int totalMealCount;
 	private int targetCount;
-	@Column(columnDefinition = "ENUM('STARTED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED')")
+	@Column(columnDefinition = "ENUM('IN_PROGRESS', 'COMPLETED', 'CANCELLED')")
 	@Enumerated(EnumType.STRING)
 	private StatusEnum status;
 	@JsonFormat(locale="en", pattern = "yyyy-MM-dd")

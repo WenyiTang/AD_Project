@@ -48,7 +48,7 @@ public class MealEntryGoalTest {
 		goal1.setGoalDescription("Eat very healthy");
 		goal1.setTotalMealCount(12);
 		goal1.setTargetCount(3);
-		goal1.setStatus(StatusEnum.STARTED);
+		goal1.setStatus(StatusEnum.IN_PROGRESS);
 		goal1.setStartDate(LocalDate.now());
 		goal1.setEndDate(LocalDate.now().plusDays(2));
 		grepo.save(goal1);
