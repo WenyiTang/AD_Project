@@ -3,10 +3,10 @@
 
 <head th:replace="fragments/layout.html :: html_head" />
 <meta charset="ISO-8859-1" />
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
-<!-- Optional theme -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
 
@@ -29,7 +29,7 @@
 		</tr>
 	</div >
 		
-	<div id="dashboard-container"
+	<div id="dashboard-container1"
 			style="width: 800px; height: 300px; margin: 0 auto" th:unless="${#lists.isEmpty(allEntries)}"
 			sec:authorize="hasAnyAuthority('USER')"></div>
 	</div>
@@ -43,21 +43,32 @@
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	<script th:inline="javascript">
-    $(function(){
-    Highcharts.chart('dashboard-container', {
-        chart: {
-            type: 'pie',
-				options3d : {
-					enabled : true,
-					alpha : 50,
-					beta : 0
-				}
-        },
-        title: {
-            text: 'How did I progress?'
-        },
-
-        tooltip: {
+   $(function() {
+  $('#dashboard-container1').highcharts({
+    title: {
+      text: 'Progress Chart',
+      useHTML: true
+    },
+    labels: {
+      items: [{
+        html: 'How did I progress?',
+        style: {
+          left: '100px',
+          top: '0px',
+       
+        }
+      },
+      {
+        html: 'How am I feeling?',
+        style: {
+          left: '500px',
+          top: '0px',
+          
+        }
+      }
+      ]
+    },
+     tooltip: {
 			pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         plotOptions: {
@@ -70,13 +81,36 @@
 					}
 				}
         },
-			series : [ {
-				type : 'pie',
-				name : 'Ratio',
-				data : [ [ 'On Track', [[${onTrack}]] ], [ 'Off Track', [[${offTrack}]] ]  ]
-			} ]
-      });
-    });
+    series: [{
+      type: 'pie',
+      name: 'Ratio',
+      data: [ [ 'On Track', [[${onTrack}]] ], [ 'Off Track', [[${offTrack}]] ]  ],
+      center: [150, 120],
+      size: 150,
+      showInLegend: false,
+      dataLabels: {
+        enabled: true
+      }
+    }, {
+      type: 'pie',
+      name: 'Ratio',
+      data: [ [ '<span>&#128516;</span>', [[${joy}]] ], 
+      [ '<span>&#128522;</span>', [[${happy}]] ], 
+      [ '<span>&#128532;</span>', [[${pensive}]] ], 
+      [ '<span>&#128557;</span>', [[${cry}]] ]  ],
+      center: [550, 120],
+      size: 150,
+      showInLegend: false,
+      dataLabels: {
+        enabled: true,
+        style:{
+			fontSize:'15px'
+		}
+      }
+    }]
+  });
+});
+
 </script>
 
 

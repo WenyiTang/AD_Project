@@ -54,10 +54,23 @@ public class LoginController {
 		long countOffT = mRepo.findIPEntryByAuthor(userId).stream()
 						.filter(x->x.getTrackScore() == 0)
 						.count();
+		long countJoy = mRepo.findIPEntryByAuthor(userId).stream()
+				.filter(x->x.getFeeling().toString()== "JOY")
+				.count();
+		long countHappy = mRepo.findIPEntryByAuthor(userId).stream()
+				.filter(x->x.getFeeling().toString()== "HAPPY")
+				.count();
+		long countPensive = mRepo.findIPEntryByAuthor(userId).stream()
+				.filter(x->x.getFeeling().toString()== "PENSIVE")
+				.count();
+		long countCry = mRepo.findIPEntryByAuthor(userId).stream()
+				.filter(x->x.getFeeling().toString()== "CRY")
+				.count();
+
 		
 		Goal currentGoal= gRepo.findCurrentGoal(userId);
 		List<Goal> completedGoal = gRepo.findCompletedGoals(userId);
-		List<MealEntry> allEntries = mRepo.findEntryByAuthor(userId);
+		List<MealEntry> allEntries = mRepo.findIPEntryByAuthor(userId);
 		
 
 		model.addAttribute("onTrack", countOnT);
@@ -65,6 +78,11 @@ public class LoginController {
 		model.addAttribute("currentGoal", currentGoal);
 		model.addAttribute("completedGoal", completedGoal);
 		model.addAttribute("allEntries", allEntries);
+
+		model.addAttribute("joy", countJoy);
+		model.addAttribute("happy", countHappy);
+		model.addAttribute("pensive", countPensive);
+		model.addAttribute("cry", countCry);
 		
 		//if user is admin
 		User loggedin = uService.findUserByUsername(principal.getName());
