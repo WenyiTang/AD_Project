@@ -51,12 +51,16 @@ public class RequestApi {
         System.out.println("data from client------VVVV");
         System.out.println(UserName);
 
+
+        User user = uRepo.findByUsername(UserName);
+
         Goal goal = new Goal();
         goal.setGoalDescription(goalDescription);
         goal.setTotalMealCount(Integer.valueOf(totalMealCount));
         goal.setTargetCount(Integer.valueOf(targetCount));
         goal.setStatus(StatusEnum.IN_PROGRESS);
-        User user = uRepo.findByUsername(UserName);
+        goal.setAuthor(user);
+
         if (user != null){
             user.getGoals().add(goal);
             uRepo.saveAndFlush(user);
@@ -80,7 +84,7 @@ public class RequestApi {
                         mealEntry.isVisibility(),mealEntry.getTitle(),mealEntry.getDescription(),mealEntry.getTrackScore(),mealEntry.getTimeStamp()));
                 }
 
-            String goalStr = "";
+            String goalStr = " ";
             if (user.getGoals().size() > 0){
                 Goal goal = gRepo.findCurrentGoal(user.getId());
                 if (goal!= null){

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/goal")
@@ -33,11 +34,12 @@ public class SetGoalController {
 
 
     @PostMapping("/setgoal")
-    public String addGoal(HttpSession session,@ModelAttribute("goal") Goal goal){
+    public String addGoal(Principal principal, @ModelAttribute("goal") Goal goal){
         //from session get User Id or UserName, generate the user_goals data
 
 //        String Username = session.getAttribute("username").toString();
-        User user = uRepo.findByUsername("Ken");
+//        User user = uRepo.findByUsername("Ken");
+        User user = uRepo.findByUsername(principal.getName());
         if (user != null){
             user.getGoals().add(goal);
             uRepo.saveAndFlush(user);
