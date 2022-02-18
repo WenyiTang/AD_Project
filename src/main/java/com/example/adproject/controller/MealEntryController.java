@@ -69,7 +69,6 @@ public class MealEntryController {
 								   @RequestParam String trackScore,
 								   @RequestParam String timeStamp,
 								   @RequestParam String userId,
-								   @RequestParam String goalId,
 								   @RequestParam String flagged,
 								   @RequestParam String visibility) {
 
@@ -98,8 +97,13 @@ public class MealEntryController {
 			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 			LocalDateTime timeStamp_ = LocalDateTime.parse(timeStamp, format);
 
-			User user_ = uRepo.findById(Integer.parseInt(userId)).get();
-			Goal goal_ = gRepo.findById(Integer.parseInt(goalId)).get();
+			int userIdInt = Integer.parseInt(userId);
+			User user_ = uRepo.findById(userIdInt).get();
+			Goal userCurrentGoal = gRepo.findCurrentGoal(userIdInt);
+			if (userCurrentGoal == null) {
+				return "nocurrentgoalset";
+			}
+			int userCurrentGoalIdInt = userCurrentGoal.getId();
 
 			MealEntry newMealEntry = new MealEntry();
 			newMealEntry.setImageURL(imageURL);
@@ -110,14 +114,12 @@ public class MealEntryController {
 			newMealEntry.setTrackScore(trackScore_);
 			newMealEntry.setTimeStamp(timeStamp_);
 			newMealEntry.setAuthor(user_);
-			newMealEntry.setGoal(goal_);
+			newMealEntry.setGoal(userCurrentGoal);
 			newMealEntry.setFlagged(Boolean.parseBoolean(flagged));
 			newMealEntry.setVisibility(Boolean.parseBoolean(visibility));
 			meRepo.saveAndFlush(newMealEntry);
-			int goalIdInt = Integer.parseInt(goalId);
-			int userIdInt = Integer.parseInt(userId);
-			int userTargetCount = gRepo.findGoalIdTargetCount(goalIdInt);
-			List<Integer> userGoalTrackScore = meRepo.findMealEntryTrackScoreByUserAndGoalId(userIdInt, goalIdInt);
+			int userTargetCount = gRepo.findGoalIdTargetCount(userCurrentGoalIdInt);
+			List<Integer> userGoalTrackScore = meRepo.findMealEntryTrackScoreByUserAndGoalId(userIdInt, userCurrentGoalIdInt);
 			System.out.println(userTargetCount);
 			System.out.println(userGoalTrackScore);
 			String responseString = sendDataToFlaskWMA(userTargetCount, userGoalTrackScore);

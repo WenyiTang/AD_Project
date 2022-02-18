@@ -67,7 +67,7 @@ public class AdminReportController {
 		User admin = uService.findUserByUsername(principal.getName());
 		
 		//if report has been taken by another admin
-		if (report.getStatus() == ReportEnum.IN_PROGRESS && report.getResolvedBy() != admin) {
+		if (report.getStatus() != ReportEnum.PENDING && report.getResolvedBy() != admin) {
 			model.addAttribute("reportTaken", true);
 			String str = pendingReports(model, principal);
 			return str;
@@ -119,6 +119,7 @@ public class AdminReportController {
 		MealEntry mealEntry = report.getMealEntry();
 		if (outcome.getInappropriate() == true) {
 			mealEntry.setVisibility(false);
+			mealEntry.setFlagged(true);
 			report.setComments(outcome.getComments());
 		}
 		report.setDateResolved(LocalDate.now());

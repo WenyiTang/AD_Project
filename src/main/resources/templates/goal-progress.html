@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
    <head th:replace="fragments/layout.html :: html_head" >
-      <meta charset="ISO-8859-1" />
+      
       <link rel="stylesheet"
          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
       <!-- Optional theme -->
@@ -87,22 +87,11 @@
          </div>
          <div>
             <h3>Recent Meals</h3>
-            <div>
-               <div style="float:left;width:80px; margin-right:15px;">
-                  <img th:src="@{/images/chicken-rice.jpg}" width="200px" height= "150px"/>
-                  <p align="center">25/01/2022</p>
-               </div>
-               <div style="float:left;width:80px; margin-left:230px;">
-                  <img th:src="@{/images/chicken-rice.jpg}" width="200px" height= "150px"/>
-                  <p align="center">25/01/2022</p>
-               </div>
-               <div style="float:left;width:80px; margin-left:230px;">
-                  <img th:src="@{/images/chicken-rice.jpg}" width="200px" height= "150px"/>
-                  <p align="center">24/01/2022</p>
-               </div>
-               <div style="float:left;width:80px; margin-left:230px;">
-                  <img th:src="@{/images/chicken-rice.jpg}" width="200px" height= "150px"/>
-                  <p style="text-align: center;">24/01/2022</p>
+            <div >
+               <div style="float:left;width:80px; margin-left:180px;" th:each = "entry:${entries}">
+                  <a class= "pic-anchor">
+            <img class = "pic" th:src="@{'/images/' + ${entry.imageURL}}" alt="" width="200px" height= "150px"></a>
+                  <p th:text = "${entry.timeStamp}"></p>
                </div>
             </div>
          </div>

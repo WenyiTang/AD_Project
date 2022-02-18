@@ -1,0 +1,16 @@
+package com.example.adproject.helper;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class SearchResult {
+	private Integer res0;
+	private Integer res1;
+	private Integer res2;
+	private Integer res3;
+	private Integer res4;
+	private Integer[] results;
+	private String goodResult;
+}

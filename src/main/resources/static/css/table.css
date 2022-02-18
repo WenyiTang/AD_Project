@@ -78,6 +78,7 @@ h4{
     text-decoration: none;
     color: white;
 }
+
 #container2{overflow: hidden;}
 
 #container2 div{width:200px;height:50px; margin-top: 50px}
@@ -172,7 +173,7 @@ margin-right: 30px;
 .button1 p {
     float: left;
     display: block;
-    margin-left: 90px;
+    margin-left: 135px;
     font-size: 25px;
     font-weight: normal;
     color: #669;
