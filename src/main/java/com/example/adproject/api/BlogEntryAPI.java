@@ -52,7 +52,4 @@ public class BlogEntryAPI {
         }
         return blogEntries;
     }
-
-    
-    
 }

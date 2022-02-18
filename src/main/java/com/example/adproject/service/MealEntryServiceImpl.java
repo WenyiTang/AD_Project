@@ -46,6 +46,11 @@ public class MealEntryServiceImpl implements MealEntryService {
     public MealEntry findMealEntryById(Integer id) {
 		return mRepo.findById(id).get();
 	}
+    
+    @Override
+    public List<MealEntry> findMealEntryByUser(User user){
+		return mRepo.findMealEntryByUser(user);
+	}
 
     @Override
     public void likeEntryByObject(User user, MealEntry mealEntry) {

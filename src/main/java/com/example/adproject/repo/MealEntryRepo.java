@@ -2,6 +2,7 @@ package com.example.adproject.repo;
 
 import java.util.List;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -32,6 +33,9 @@ public interface MealEntryRepo extends JpaRepository<MealEntry, Integer>{
   
     @Query("SELECT me.trackScore FROM MealEntry me WHERE me.author.id = :uid AND me.goal.id = :gid")
     public List<Integer> findMealEntryTrackScoreByUserAndGoalId(@Param("uid") int uid, @Param("gid") int gid);
+    
+    @Query("Select m from MealEntry m where m.author = :user")
+	public List<MealEntry> findMealEntryByUser(@Param("user") User user);
     
    
     @Transactional
