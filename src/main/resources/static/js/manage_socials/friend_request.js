@@ -53,7 +53,7 @@ function buildTable_sent(data) {
             '<td>' + user.name + '</td>' +
             '<td>' + user.username + '</td>' +
             '<td id="action_space">' +
-            '<button id="delete_req' + user.userId + '" class="btn btn-danger" value="' + user.username + '">Delete Request</button>' +
+            '<button id="delete_req' + user.userId + '" class="btn btn-danger" value="' + user.username + '" data-toggle="modal" data-target="#confirmModal">Delete Request</button>' +
             '</td>' +
             '</tr>';
     });
@@ -61,25 +61,30 @@ function buildTable_sent(data) {
     $("#tblId>tbody").html(tableData);
 
     data.forEach(function(user) {
-        $('#delete_req'+user.userId).click(function (e) {
+        $('#delete_req' + user.userId).click(function (e) {
             e.preventDefault();
-            $.ajax({
-                method: 'GET',
-                url: "http://localhost:8080/api/friends/request/process",
-                data: {
-                    username: $("#username").val(),
-                    sender: $("#delete_req"+user.userId).val(),
-                    action: "delete"
-                },
-                success: function (response) {
-                    console.log(response);
-                    // var obj = JSON.parse(response);
-                    // var msg = obj['message'];
-                    document.getElementById("sent").click();
-                }
+            $("#yes_btn").unbind('click');
+            var name = user.name;
+            var username_this = $("#username").val();
+            $("#to_msg").html("To: " + name);
+            $("#exampleModalLabel").html("Delete Friend Request?");
+            $("#yes_btn").on('click', function (e) {
+                $.ajax({
+                    method: 'GET',
+                    url: "http://localhost:8080/api/friends/request/process",
+                    data: {
+                        username: username_this,
+                        sender: $("#delete_req" + user.userId).val(),
+                        action: "delete"
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        document.getElementById("sent").click();
+                    }
+                });
             });
-        })
-    })
+        });
+    });
 }
 
 function buildTable_received(data) {
@@ -92,8 +97,8 @@ function buildTable_received(data) {
             '<td id="sender_username">' + user.username + '</td>'+
             '<td>' +
                 '<div id="action_space">' +
-                    '<button id="accept_req' + user.userId +'" class="btn btn-success" value="' + user.username +'">Accept</button>' + '\n' +
-                    '<button id="reject_req' + user.userId +'" class="btn btn-danger" value="' + user.username +'">Reject</button>' +
+                    '<button id="accept_req' + user.userId +'" class="btn btn-success" value="' + user.username +'" data-toggle="modal" data-target="#confirmModal">Accept</button>' + '\n' +
+                    '<button id="reject_req' + user.userId +'" class="btn btn-danger" value="' + user.username +'" data-toggle="modal" data-target="#confirmModal">Reject</button>' +
                 '</div>' +
             '</td>' +
         '</tr>';
@@ -102,42 +107,53 @@ function buildTable_received(data) {
     $("#tblId>tbody").html(tableData);
 
     data.forEach(function(user) {
-        $('#accept_req'+user.userId).click(function (e) {
+        $('#accept_req' + user.userId).click(function (e) {
             e.preventDefault();
-            $.ajax({
-                method: 'GET',
-                url: "http://localhost:8080/api/friends/request/process",
-                data: {
-                    username: $("#username").val(),
-                    sender: $("#accept_req" + user.userId).val(),
-                    action: "accept"
-                },
-                success: function (response) {
-                    console.log(response);
-                    // var obj = JSON.parse(response);
-                    // var msg = obj['message'];
-                    document.getElementById("sent").click();
-                }
+            $("#yes_btn").unbind('click');
+            var name = user.name;
+            var username_this = $("#username").val();
+            $("#to_msg").html("From: " + name);
+            $("#exampleModalLabel").html("Confirm Accept Friend Request?");
+            $("#yes_btn").on('click', function (e) {
+                $.ajax({
+                    method: 'GET',
+                    url: "http://localhost:8080/api/friends/request/process",
+                    data: {
+                        username: username_this,
+                        sender: $("#accept_req" + user.userId).val(),
+                        action: "accept"
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        document.getElementById('received').click();
+                    }
+                });
             });
-        });
-        $('#reject_req'+user.userId).click(function(e) {
+        })
+
+        $('#reject_req' + user.userId).click(function (e) {
             e.preventDefault();
-            $.ajax({
-                method: 'GET',
-                url: "http://localhost:8080/api/friends/request/process",
-                data: {
-                    username: $("#username").val(),
-                    sender: $("#reject_req" + user.userId).val(),
-                    action: "reject"
-                },
-                success: function (response) {
-                    console.log(response);
-                    // var obj = JSON.parse(response);
-                    // var msg = obj['message'];
-                    document.getElementById("received").click();
-                }
+            $("#yes_btn").unbind('click');
+            var name = user.name;
+            var username_this = $("#username").val();
+            $("#to_msg").html("From: " + name);
+            $("#exampleModalLabel").html("Confirm Reject Friend Request?");
+            $("#yes_btn").on('click', function (e) {
+                $.ajax({
+                    method: 'GET',
+                    url: "http://localhost:8080/api/friends/request/process",
+                    data: {
+                        username: username_this,
+                        sender: $("#reject_req" + user.userId).val(),
+                        action: "reject"
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        document.getElementById('received').click();
+                    }
+                });
             });
-        });
+        })
     })
 }
 

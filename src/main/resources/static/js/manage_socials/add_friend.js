@@ -20,20 +20,28 @@ $(document).ready(function() {
 
 function buildTable(data) {
     $("#tblHeader").show();
-    var table = document.getElementById("usersTbl")
+    var tableData = "";
+    data.forEach(function (user) {
+        tableData += '<tr>' +
+            '<td><img id="thumbnail" style="width: 100px" src="/images/' + user.userId + '/' + user.profilePic + '"/>' + '</td>' +
+            '<td>' + user.name + '</td>' +
+            '<td>' + user.username + '</td>' +
+            '<td id="action_space">' +
+            '<button id="add_friend' + user.userId + '" class="btn btn-primary" value="' + user.username + '" data-toggle="modal" data-target="#confirmModal">Add Friend</button>' +
+            '</td>' +
+            '</tr>';
+    });
 
-    for (var i = 0; i < data.length; i++) {
-        var row = `<tr>
-						<td>
-						    <img id="thumbnail" style="width: 100px" 
-						    src="/images/${data[i].userId}/${data[i].profilePic}"/>
-						</td>
-						<td>${data[i].name}</td>
-						<td>${data[i].username}</td>
-						<td>
-							<a id="manage" href="/socials/friend/add/${data[i].username}" class="btn btn-primary">Add Friend</a>
-						</td>
-					</tr>`
-        table.innerHTML += row
-    }
+    $("#TblId>tbody").html(tableData);
+
+    data.forEach(function(user) {
+        $("#add_friend" + user.userId).click(function(e) {
+            var name = user.name;
+            var username = user.username;
+            $("#to_msg").html("To: " + name);
+            $("#yes_btn").attr("href", "/socials/friend/add/" + username);
+        })
+    })
 }
+
+
