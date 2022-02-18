@@ -1,4 +1,6 @@
 package com.example.adproject.api;
+import com.example.adproject.helper.BlogEntry;
+import com.example.adproject.helper.PastMeal;
 import com.example.adproject.helper.StatusEnum;
 import com.example.adproject.model.Goal;
 import com.example.adproject.model.MealEntry;
@@ -6,6 +8,7 @@ import com.example.adproject.model.User;
 import com.example.adproject.repo.GoalRepo;
 import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -25,10 +28,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -68,16 +68,53 @@ public class RequestApi {
 
 
     @RequestMapping(value = "/pastMeals",method = RequestMethod.POST)
-    public List<MealEntry> viewPastMeals(@RequestParam String UserName){
+    public Object viewPastMeals(@RequestParam String UserName){
         User user = uRepo.findByUsername(UserName);
         if (user != null){
             List<MealEntry> allMeals = user.getEntries();
-            if (allMeals.size() == 0){
-                allMeals = new ArrayList<MealEntry>();
+
+            ArrayList<PastMeal> mealEntries = new ArrayList<PastMeal>();
+
+            for(MealEntry mealEntry : allMeals) {
+                mealEntries.add(new PastMeal(mealEntry.getId(),mealEntry.getImageURL(), mealEntry.getFilename(),
+                        mealEntry.isVisibility(),mealEntry.getTitle(),mealEntry.getDescription(),mealEntry.getTrackScore(),mealEntry.getTimeStamp()));
+                }
+
+            String goalStr = "";
+            if (user.getGoals().size() > 0){
+                Goal goal = gRepo.findCurrentGoal(user.getId());
+                if (goal!= null){
+                    goalStr = goal.getGoalDescription();
+                }
             }
-            return allMeals;
+
+            Map<String,Object> result = new HashMap<>();
+            result.put("data",mealEntries);
+            result.put("goalStr",goalStr);
+
+            return result;
+        }
+
+        return null;
+
+    }
+
+
+    @RequestMapping(value = "/currentGoal",method = RequestMethod.POST)
+    public String viewCurrentGoal(@RequestParam String UserName){
+        User user = uRepo.findByUsername(UserName);
+        if (user != null){
+            String goalStr = "";
+            if (user.getGoals().size() > 0){
+                Goal goal = gRepo.findCurrentGoal(user.getId());
+                if (goal!= null){
+                    goalStr = goal.getGoalDescription();
+                }
+            }
+
+            return goalStr;
         }else {
-            return null;
+            return " ";
         }
     }
 
@@ -91,18 +128,23 @@ public class RequestApi {
             MealEntry editedMeal = mRepo.findMealEntryByMealId(Integer.valueOf(mealId));
             if (editedMeal != null){
                 editedMeal.setDescription(mealDes);
-                String timeStr = mealTime;
+                String timeStr = mealTime + ":00";
+
+//                String testStr = "2022-02-07T10:26:42.902";
+//                String newStr = testStr.substring(0,19).replaceAll("T"," ");
+//                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//                LocalDateTime testTime = LocalDateTime.parse(newStr, df);
 
                 DateTimeFormatter timeDtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime localDateTime = LocalDateTime.parse(timeStr, timeDtf);
                 editedMeal.setTimeStamp(localDateTime);
+
                 if (publicStates.equals("1")){
                     editedMeal.setVisibility(true);
                 }else if (publicStates.equals("0")){
                     editedMeal.setVisibility(false);
                 }
                 mRepo.saveAndFlush(editedMeal);
-
                 return new ResultJson(200,"delete meal successfully");
             }else {
 
@@ -131,6 +173,14 @@ public class RequestApi {
             return ResultJson.error("User does not exist");
         }
     }
+
+    @GetMapping(value = "/foodImage/get",produces = MediaType.IMAGE_JPEG_VALUE,params = {"imagePath"})
+    public @ResponseBody byte[] getInageWithMediaType(@RequestParam String imagePath) throws IOException{
+        InputStream in = getClass().getResourceAsStream(imagePath);
+        return IOUtils.toByteArray(in);
+
+    }
+
 
 
 }

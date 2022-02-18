@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.adproject.model.MealEntry;
+import java.util.List;
 import com.example.adproject.model.User;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +24,15 @@ public interface MealEntryRepo extends JpaRepository<MealEntry, Integer>{
 
     @Query("Select me from MealEntry me where me.author.id = :userid")
 	public List<MealEntry> findEntryByAuthor(@Param("userid") Integer userId);
-
+    
+    @Query("Select me from MealEntry me inner join Goal g on g.id = me.goal.id where me.author.id = :userid and g.status='IN_PROGRESS'")
+	public List<MealEntry> findIPEntryByAuthor(@Param("userid") Integer userId);
+    
     @Query("SELECT m FROM MealEntry m where m.id = :mealId")
     MealEntry findMealEntryByMealId(@Param("mealId") Integer mealId);
+  
+    @Query("SELECT me.trackScore FROM MealEntry me WHERE me.author.id = :uid AND me.goal.id = :gid")
+    public List<Integer> findMealEntryTrackScoreByUserAndGoalId(@Param("uid") int uid, @Param("gid") int gid);
     
     @Query("Select m from MealEntry m where m.author = :user")
 	public List<MealEntry> findMealEntryByUser(@Param("user") User user);

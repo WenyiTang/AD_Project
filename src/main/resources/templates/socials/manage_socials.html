@@ -41,11 +41,11 @@
 			</div>
 		</div>
 		<form class="form-inline">
-			<div class="form-group">
-				<div class="col-sm-9">
+			<div class="row">
+				<div>
 					<input type="text" class="form-control" placeholder="Enter username" id="query"/>
+					<input type="submit" th:value="Search" class="btn btn-secondary" id="search">
 				</div>
-				<input type="submit" th:value="Search" class="btn btn-secondary" id="search">
 			</div>
 		</form>
 		<br/>
@@ -54,8 +54,8 @@
 				<thead class="thead-light">
 					<tr>
 						<th>Profile Pic</th>
-						<th>Username</th>
 						<th>Name</th>
+						<th>Username</th>
 						<th>Action</th>
 					</tr>
 				</thead>

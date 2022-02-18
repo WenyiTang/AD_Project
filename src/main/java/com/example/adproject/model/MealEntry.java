@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
 import com.example.adproject.helper.FeelingEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -36,12 +37,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class MealEntry {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String imageURL;
-
+	private String filename;
 	private boolean visibility;
 	private String title;
 	@Size(max = 500)
@@ -54,6 +55,7 @@ public class MealEntry {
 	private int trackScore;
 	// @DateTimeFormat(pattern ="dd-MM-yyyy")
 	// @DateTimeFormat(pattern ="h:mm a, d MMM yyyy")
+	@JsonFormat(locale="en", pattern = "yyyy-MM-dd, h:mm a")
 	private LocalDateTime timeStamp;
 
 	@JsonIgnore
@@ -61,26 +63,22 @@ public class MealEntry {
 	private Goal goal;
 
 	@JsonIgnore
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinTable(name = "meal_entry_likers", 
-	  joinColumns = @JoinColumn(name = "meal_entry_id"), 
-	  inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JoinTable(name = "meal_entry_likers", joinColumns = @JoinColumn(name = "meal_entry_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> likers;
 
-	
 	@ManyToOne
 	private User author;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "mealEntry", cascade = { CascadeType.ALL })
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Comment> comments;
-	
-	
-	public MealEntry(String imageURL, boolean visibility, String title, String description, 
-					 boolean flagged, FeelingEnum feeling, int trackScore, LocalDateTime timeStamp, 
-					 Goal goal, List<User> likers, User author, List<Comment> comments) {
+
+	public MealEntry(String imageURL, boolean visibility, String title, String description, boolean flagged,
+			FeelingEnum feeling, int trackScore, LocalDateTime timeStamp, Goal goal, List<User> likers, User author,
+			List<Comment> comments) {
 		this.imageURL = imageURL;
 		this.visibility = visibility;
 		this.title = title;
@@ -95,9 +93,8 @@ public class MealEntry {
 		this.comments = comments;
 	}
 
-	public MealEntry(String imageURL, boolean visibility, String title, String description, 
-					 boolean flagged, FeelingEnum feeling, int trackScore, LocalDateTime timeStamp, 
-					 User author) {
+	public MealEntry(String imageURL, boolean visibility, String title, String description, boolean flagged,
+			FeelingEnum feeling, int trackScore, LocalDateTime timeStamp, User author) {
 		this.imageURL = imageURL;
 		this.visibility = visibility;
 		this.title = title;
@@ -109,23 +106,12 @@ public class MealEntry {
 		this.author = author;
 	}
 
-
 	@Override
 	public String toString() {
-		return "{" +
-			" id='" + getId() + "'" +
-			", imageURL='" + getImageURL() + "'" +
-			", visibility='" + isVisibility() + "'" +
-			", title='" + getTitle() + "'" +
-			", description='" + getDescription() + "'" +
-			", flagged='" + isFlagged() + "'" +
-			", feeling='" + getFeeling() + "'" +
-			", trackScore='" + getTrackScore() + "'" +
-			", timeStamp='" + getTimeStamp() + "'" +
-			"}";
+		return "{" + " id='" + getId() + "'" + ", imageURL='" + getImageURL() + "'" + ", visibility='" + isVisibility()
+				+ "'" + ", title='" + getTitle() + "'" + ", description='" + getDescription() + "'" + ", flagged='"
+				+ isFlagged() + "'" + ", feeling='" + getFeeling() + "'" + ", trackScore='" + getTrackScore() + "'"
+				+ ", timeStamp='" + getTimeStamp() + "'" + "}";
 	}
-
-
-
 
 }

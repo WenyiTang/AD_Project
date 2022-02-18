@@ -33,9 +33,9 @@
 			</tr>
 			<tr th:each="achievement : ${pastgoal}" class="listRecord">
 				<td align="left" th:text="${achievement?.goalDescription}">Name</td>
-				<td align="left" th:text="${#temporals.format(achievement?.startDate, 'dd/MMM/yyyy')}">Start Date</td>
-				<td align="left" th:text="${#temporals.format(achievement?.endDate, 'dd/MMM/yyyy')}">End Date</td>
-				<td align="left" th:text="${achievement?.status}">End Date</td>
+				<td align="left" th:text="${achievement?.startDate}">Start Date</td>
+				<td align="left" th:text="${achievement?.endDate}">End Date</td>
+				<td align="left" th:text="${achievement?.status}">Status</td>
 			</tr>
 		</table>
 		
