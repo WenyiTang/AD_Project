@@ -47,7 +47,7 @@
 			</tr>
 			<tr>
 				<td style="width:50%" align="center">
-					<img class = "pic" th:src="@{'/upload/' + ${report.mealEntry.imageURL}}" alt="">
+					<img class = "pic" th:src="@{'/upload/' + ${report.mealEntry.filename}}" alt="">
 				</td  >
 				<td style="width:50%; vertical-align:top">
 					<h2 class = "title" th:text = "${report.mealEntry.title}" ></h2>

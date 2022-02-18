@@ -46,7 +46,7 @@ public class RecResultJson {
 				trackScores[x] = "off-track";
 			}
 			descriptions[x] = m.getDescription();
-			imageUrls[x] = m.getImageURL();
+			imageUrls[x] = m.getFilename();
 		}
 	}
 }

@@ -64,6 +64,9 @@ public class AdminReportController {
 	@GetMapping("/resolvereport/{rid}")
 	public String resolveReport(@PathVariable("rid") Integer reportId, Model model, Principal principal) {
 		Report report = rService.findReportById(reportId);
+		System.out.println("filename: " + report.getMealEntry().getFilename());
+		System.out.println("url: " + report.getMealEntry().getImageURL());
+		
 		User admin = uService.findUserByUsername(principal.getName());
 		
 		//if report has been taken by another admin
