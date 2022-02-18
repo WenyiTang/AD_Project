@@ -129,9 +129,13 @@ public class profileAPI {
 
         try {
             File profileImg = new File("images/" + user.getId() + "/" + fileName);
+            File copyToStatic = new File("src/main/resources/static/blog/images/" +fileName);
             profileImg.createNewFile();
+            copyToStatic.createNewFile();
             FileOutputStream fout = new FileOutputStream(profileImg);
+            FileOutputStream fou1 = new FileOutputStream(copyToStatic);
             fout.write(multipartFile.getBytes());
+            fou1.write(multipartFile.getBytes());
             fout.close();
         } catch (IOException e) {
             e.printStackTrace();

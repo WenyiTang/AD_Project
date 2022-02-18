@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import com.example.adproject.helper.StatusEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
@@ -20,9 +21,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@JsonIgnoreProperties(value = { "hibernateLazyInitializer"})
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer" })
 public class Goal {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -32,15 +33,16 @@ public class Goal {
 	@Column(columnDefinition = "ENUM('STARTED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED')")
 	@Enumerated(EnumType.STRING)
 	private StatusEnum status;
+	@JsonFormat(locale="en", pattern = "yyyy-MM-dd")
 	private LocalDate startDate;
+	@JsonFormat(locale="en", pattern = "yyyy-MM-dd")
 	private LocalDate endDate;
-	//added user author attribute
+	// added user author attribute
 	@ManyToOne
 	private User author;
-	
-	
-	public Goal(String goalDescription, int totalMealCount, int targetCount,
-				StatusEnum status, LocalDate startDate, LocalDate endDate, User author) {
+
+	public Goal(String goalDescription, int totalMealCount, int targetCount, StatusEnum status, LocalDate startDate,
+			LocalDate endDate, User author) {
 		this.goalDescription = goalDescription;
 		this.totalMealCount = totalMealCount;
 		this.targetCount = targetCount;
@@ -49,5 +51,5 @@ public class Goal {
 		this.endDate = endDate;
 		this.author = author;
 	}
-	
+
 }

@@ -39,10 +39,10 @@
                      <table>
                         <thead>
                            <tr>
-                              <th><span th:text="#{fieldLabel.name}"></span></th>
-                              <th><span th:text="#{fieldLabel.dateOfBirth}"></span></th>
-                              <th><span th:text="#{fieldLabel.height}"></span></th>
-                              <th><span th:text="#{fieldLabel.weight}"></span></th>
+                              <th><span text="Name :">Name :</span></th>
+                              <th><span >Date Of Birth :</span></th>
+                              <th><span ></span>Height :</th>
+                              <th><span ></span>Weight :</th>
                            </tr>
                         </thead>
                         <tbody>
@@ -55,8 +55,8 @@
                         </tbody>
                      </table>
                      <div class = "button1" th:object="${bmi}" method="get">
-                        <span th:text="#{fieldLabel.BMI}"></span>
-                        <p th:text="${bmi}">My BMI: </p>
+                        <span>BMI :</span>
+                        <p th:text="${bmi}">My BMI:</p>
                         <a th:href="@{/user/myProfile/}+${user.id}"> Edit Profile</a>
                      </div>
                   </div>
@@ -77,8 +77,8 @@
                   <tbody>
                      <tr th:each="achievement : ${completedGoal}" class="listRecord">
                         <td align="left" th:text="${achievement?.goalDescription}">Name</td>
-                        <td align="left" th:text="${#temporals.format(achievement?.startDate, 'dd/MMM/yyyy')}">Start Date</td>
-                        <td align="left" th:text="${#temporals.format(achievement?.endDate, 'dd/MMM/yyyy')}">End Date</td>
+                        <td align="left" th:text="${achievement?.startDate}">Start Date</td>
+                        <td align="left" th:text="${achievement?.endDate}">End Date</td>
                      </tr>
                   </tbody>
                </table>
