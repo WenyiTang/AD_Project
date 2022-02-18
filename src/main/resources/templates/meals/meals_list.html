@@ -24,7 +24,7 @@
 <div class="list-view"  >
 
     <div class = "list-item" th:each = "entry:${entries}">
-        <a class= "pic-anchor" style="width: 200px; height:200px"th:href="@{'/meals/view/mealDetail/' + ${entry.id}}">
+        <a class= "pic-anchor" th:href="@{'/meals/view/mealDetail/' + ${entry.id}}">
             <img class = "pic" th:src="@{'/upload/' + ${entry.filename}}" alt="">
         </a>
         <h2 class = "title" th:text = "${entry.title}" ></h2>
