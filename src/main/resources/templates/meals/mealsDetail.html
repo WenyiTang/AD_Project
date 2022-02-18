@@ -20,14 +20,10 @@
 
 <div class = "content-area">
     <div class = "mealdetails">
-        <img class = "pic" th:src="@{${entry.imageURL}}" alt="">
+        <img class = "pic" th:src="@{'/blog/images/' + ${entry.imageURL}}" alt="">
         <h2 class = "title" th:text = "${entry.title}" ></h2>
 
         <p contenteditable="false" class = "date" th:text = "${#temporals.format(entry.timeStamp,'d MMM yyyy, h:mm a')}"></p>
-
-        <div>
-            <a th:href="@{'/meals/editmeal/' + ${entry.id}}">Edit Entry</a>
-        </div>
 
         <p contenteditable="false" class = "description" th:text = "${entry.description}"></p>
 
@@ -48,9 +44,9 @@
 <!--        <script src="/js/setPublic.js"></script>-->
 
         <div>
-            <a th:href="@{'/meals/deleteMeal/' + ${entry.id}}" class="btn btn-primary">delete Entry</a>
-            <a th:href="@{/socials/friend_requests}" class="btn btn-primary">Share to FaceBook</a>
-            <a th:href="@{/socials/friend_requests}" class="btn btn-primary">Share to Instagram</a>
+            <a th:href="@{'/meals/editmeal/' + ${entry.id}}">Edit Entry</a>
+
+            <a th:href="@{'/meals/deleteMeal/' + ${entry.id}}">delete Entry</a>
         </div>
 
 
