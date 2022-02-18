@@ -100,6 +100,9 @@ public class MealEntryController {
 			int userIdInt = Integer.parseInt(userId);
 			User user_ = uRepo.findById(userIdInt).get();
 			Goal userCurrentGoal = gRepo.findCurrentGoal(userIdInt);
+			if (userCurrentGoal == null) {
+				return "nocurrentgoalset";
+			}
 			int userCurrentGoalIdInt = userCurrentGoal.getId();
 
 			MealEntry newMealEntry = new MealEntry();
