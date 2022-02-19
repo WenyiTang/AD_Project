@@ -1,6 +1,7 @@
 package com.example.adproject.repo;
 
 import com.example.adproject.AdProjectApplication;
+import com.example.adproject.helper.StatusEnum;
 import com.example.adproject.model.Goal;
 import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.User;
@@ -124,6 +125,14 @@ public class MealEntryUserGoalTest {
         System.out.println(targetCount);
         System.out.println(trackScore);
 
+    }
+
+    @Test
+    @Order(4)
+    public void testGoalCompletion() {
+        Goal goal = grepo.findById(2).get();
+        goal.setStatus(StatusEnum.COMPLETED);
+        grepo.saveAndFlush(goal);
     }
 
 

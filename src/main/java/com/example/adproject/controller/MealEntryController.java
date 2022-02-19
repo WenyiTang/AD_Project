@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.adproject.helper.FeelingEnum;
+import com.example.adproject.helper.StatusEnum;
 import com.example.adproject.model.Goal;
 import com.example.adproject.model.MealEntry;
 import com.example.adproject.model.User;
@@ -123,6 +124,12 @@ public class MealEntryController {
 			System.out.println(userTargetCount);
 			System.out.println(userGoalTrackScore);
 			String responseString = sendDataToFlaskWMA(userTargetCount, userGoalTrackScore);
+
+			boolean completed = checkAndSetGoalCompletion(userCurrentGoal, userGoalTrackScore);
+			if (completed == true) {
+				responseString = "goalcompleted";
+			}
+
 			return responseString;
 		}
 		catch (IOException e) {
@@ -227,6 +234,19 @@ public class MealEntryController {
 
 	}
 	 */
+
+	private boolean checkAndSetGoalCompletion(Goal userCurrentGoal, List<Integer> userGoalTrackScore) {
+		int totalMealCount = userCurrentGoal.getTotalMealCount();
+		int numEntries = userGoalTrackScore.size();
+		if (numEntries == totalMealCount) {
+			userCurrentGoal.setStatus(StatusEnum.COMPLETED);
+			gRepo.saveAndFlush(userCurrentGoal);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 	private FeelingEnum getFeelingEnumVal(String feeling) {
 		if (feeling.equalsIgnoreCase("cry")) {
