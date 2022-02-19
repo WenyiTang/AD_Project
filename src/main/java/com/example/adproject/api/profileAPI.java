@@ -1,6 +1,7 @@
 package com.example.adproject.api;
 
 import com.example.adproject.helper.StatusEnum;
+import com.example.adproject.helper.UserHelper;
 import com.example.adproject.model.Goal;
 import com.example.adproject.model.User;
 import com.example.adproject.repo.GoalRepo;
@@ -65,10 +66,11 @@ public class profileAPI {
     public User viewuserProfile(@RequestParam String UserName){
 
 			User user =uRepo.findByUsername(UserName);
-        	
+			
+			User user1 = new User(user.getId(), user.getName(),user.getGender(),user.getDateOfBirth(),user.getHeight(),user.getWeight(),user.getProfilePic());
 //        	String currentGoal1 =currentgoal.getGoalDescription();
 //        	return currentGoal1;
-        	return user;
+        	return user1;
         
     }
 	
@@ -129,13 +131,13 @@ public class profileAPI {
 
         try {
             File profileImg = new File("images/" + user.getId() + "/" + fileName);
-            File copyToStatic = new File("src/main/resources/static/blog/images/" +fileName);
+//            File copyToStatic = new File("src/main/resources/static/blog/images/" +fileName);
             profileImg.createNewFile();
-            copyToStatic.createNewFile();
+//            copyToStatic.createNewFile();
             FileOutputStream fout = new FileOutputStream(profileImg);
-            FileOutputStream fou1 = new FileOutputStream(copyToStatic);
+//            FileOutputStream fou1 = new FileOutputStream(copyToStatic);
             fout.write(multipartFile.getBytes());
-            fou1.write(multipartFile.getBytes());
+//            fou1.write(multipartFile.getBytes());
             fout.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -193,7 +195,7 @@ public class profileAPI {
 
 		User user =uRepo.findByUsername(UserName);
     	List<Goal> completedGoals = gRepo.findCompletedGoals(user.getId());
-
+	
     	return new ResultJson(200,"get completedgoals successfully",completedGoals);
     
 }

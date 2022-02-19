@@ -208,7 +208,7 @@ public class userController {
 		model.addAttribute("totalMeals", totalmeals);
 		model.addAttribute("percentCount", percentCount1);
 		model.addAttribute("goal", currentgoal);
-		return "goal-progress";
+		return "./goal/goal-progress";
 	}
 
 	// Save&Continue end of a goal
@@ -220,7 +220,7 @@ public class userController {
 
 		String msg = "Leave was successfully cancelled.";
 		System.out.println(msg);
-		return "goal-progress";
+		return "./goal/goal-progress";
 
 	}
 
@@ -231,7 +231,7 @@ public class userController {
 		Integer userId = uService.findUserByUsername(principal.getName()).getId();
 		List<Goal> pastgoal = grepo.findPastGoals(userId);
 		model.addAttribute("pastgoal", pastgoal);
-		return "goal-completed";
+		return "./goal/goal-completed";
 	}
 
 }
