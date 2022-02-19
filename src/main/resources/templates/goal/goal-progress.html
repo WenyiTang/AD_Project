@@ -90,8 +90,8 @@
             <div >
                <div style="float:left;width:80px; margin-left:180px;" th:each = "entry:${entries}">
                   <a class= "pic-anchor">
-            <img class = "pic" th:src="@{'/images/' + ${entry.imageURL}}" alt="" width="200px" height= "150px"></a>
-                  <p th:text = "${entry.timeStamp}"></p>
+            <img class = "pic" th:src="@{'/upload/' + ${entry.filename}}" alt="" width="200px" height= "150px"></a>
+                  <p th:text = "${#temporals.format(entry.timeStamp,'yyyy-MM-dd')}"></p>
                </div>
             </div>
          </div>

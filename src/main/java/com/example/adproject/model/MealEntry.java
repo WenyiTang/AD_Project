@@ -55,7 +55,7 @@ public class MealEntry {
 	private int trackScore;
 	// @DateTimeFormat(pattern ="dd-MM-yyyy")
 	// @DateTimeFormat(pattern ="h:mm a, d MMM yyyy")
-	@JsonFormat(locale="en", pattern = "yyyy-MM-dd, h:mm a")
+	@JsonFormat(locale="en_US", pattern = "yyyy-MM-dd, h:mm a")
 	private LocalDateTime timeStamp;
 
 	@JsonIgnore
