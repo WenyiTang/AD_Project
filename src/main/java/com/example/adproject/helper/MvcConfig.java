@@ -32,15 +32,15 @@ public class MvcConfig implements WebMvcConfigurer {
 				.addResourceLocations("file:images/");
 
 		String os = System.getProperty("os.name");
-		String path2 = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\images\\";
+		String path2 = System.getProperty("user.dir") + "\\upload\\";
+		String path1 = System.getProperty("user.dir") + "\\images\\";
 		if (os.toLowerCase().startsWith("win")) {
-			String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\uploads\\";
+			String path = System.getProperty("user.dir") + "\\upload\\";
 			registry.addResourceHandler("/upload/**").
 					addResourceLocations("file:" + path);
 			registry.addResourceHandler("/images/**")
-					.addResourceLocations("file:"+path2);
-		}else {//linux和mac系统 可以根据逻辑再做处理
-			;
+					.addResourceLocations("file:"+path1);
+		}else {
 
 			registry.addResourceHandler("/upload/**").
 					addResourceLocations("file:" + System.getProperty("user.dir") + System.getProperty("file.separator")
