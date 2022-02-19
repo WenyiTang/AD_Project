@@ -173,6 +173,17 @@ public class User {
 		this.weight = weight;
 	}
 	
+	public User(Integer id,String name, String gender, @Past LocalDate dateOfBirth, double height, double weight,String profilePic) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.gender= gender;
+		this.dateOfBirth = dateOfBirth;
+		this.height = height;
+		this.weight = weight;
+		this.profilePic =profilePic;
+	}
+	
 	// For displaying profile pic
 	@Transient
 	public String getImagePath() {

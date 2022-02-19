@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 
 import com.example.adproject.helper.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
@@ -39,6 +40,7 @@ public class Goal {
 	private LocalDate endDate;
 	// added user author attribute
 	@ManyToOne
+	@JsonIgnore
 	private User author;
 
 	public Goal(String goalDescription, int totalMealCount, int targetCount, StatusEnum status, LocalDate startDate,
@@ -50,6 +52,16 @@ public class Goal {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.author = author;
+	}
+	public Goal(String goalDescription, int totalMealCount, int targetCount, StatusEnum status, LocalDate startDate,
+			LocalDate endDate) {
+		this.goalDescription = goalDescription;
+		this.totalMealCount = totalMealCount;
+		this.targetCount = targetCount;
+		this.status = status;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		
 	}
 
 }

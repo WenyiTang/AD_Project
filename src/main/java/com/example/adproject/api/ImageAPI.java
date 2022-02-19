@@ -1,5 +1,7 @@
 package com.example.adproject.api;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,8 +27,9 @@ public class ImageAPI {
     @GetMapping( value = "/get",produces = MediaType.IMAGE_JPEG_VALUE, params = {"imagePath"})
     public @ResponseBody byte[] getImageWithMediaType(@RequestParam String imagePath) throws IOException {
   
-        InputStream in = getClass()
-                        .getResourceAsStream(imagePath);
+//        InputStream in = getClass()
+//                        .getResourceAsStream(imagePath);
+    	InputStream in = new BufferedInputStream(new FileInputStream(imagePath));
                         return IOUtils.toByteArray(in);
     }
     
