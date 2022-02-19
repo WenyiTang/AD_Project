@@ -51,7 +51,7 @@ public class seedVisibleMealEntries {
                             + "numquam distinctio atque dolorum labore, ab incidunt ";
 
     private LocalDateTime today = LocalDateTime.now();
-    private int trackScore = 2;
+    private int trackScore = 1;
 
     private String[] captions = {"Hi everyone!","Wow! looks great.", "So yummy!", "noice! where was this?", "did you make it yourself?", "nice photography skills"};
 

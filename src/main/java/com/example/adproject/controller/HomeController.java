@@ -26,6 +26,7 @@ import com.example.adproject.service.UserService;
 public class HomeController {
 	
 	float[] mealTrackList = new float[2];
+	float[] feelingList = new float[4];
 	
 	@Autowired
 	private GoalRepo gRepo;
@@ -41,15 +42,6 @@ public class HomeController {
         return "{'msg':'AnyData','success':200'}";
     }
 
-
-    
-//    @GetMapping("/getCurrentGoal")
-//    public String currentGoal() {
-//    	Integer userId = 3;
-//    	String currentGoal =gRepo.findCurrentGoal(userId).getGoalDescription();
-//		return currentGoal;
-//    	
-//    }
    
     @GetMapping("/getCurrentGoal/{userId}")
     public String currentGoal(@PathVariable Integer userId) {
@@ -59,30 +51,8 @@ public class HomeController {
     	else {
     		return gRepo.findCurrentGoal(userId).getGoalDescription();
     	}
-    	
-//    	String currentGoal =(gRepo.findCurrentGoal(userId) == null) ? "NA" : gRepo.findCurrentGoal(userId).getGoalDescription();
-//		return currentGoal;
-    	
     }
-    
-    
-//  @GetMapping("/getTrack")
-//  public ResultJson getMealTrack() {
-//  	Integer userId = 3;
-//		float countOnT = mRepo.findEntryByAuthor(userId).stream()
-//				.filter(x->x.getTrackScore()==1)
-//				.count();
-//		float countOffT= mRepo.findEntryByAuthor(userId).stream()
-//				.filter(x->x.getTrackScore() == 0)
-//				.count();
-//
-//		ResultJson r = new ResultJson();
-//		mealTrackList[0] = countOnT;
-//		mealTrackList[1] = countOffT;
-//		r.setMealTrack(mealTrackList);
-//		return r;
-//		
-//  }
+    	
   
   @GetMapping("/getTrack/{userId}")
   public ResultJson getMealTrack(@PathVariable Integer userId) {
@@ -98,6 +68,31 @@ public class HomeController {
 		mealTrackList[0] = countOnT;
 		mealTrackList[1] = countOffT;
 		r.setMealTrack(mealTrackList);
+		return r;
+  }
+    
+  @GetMapping("/getFeeling/{userId}")
+  public ResultJson getFeeling(@PathVariable Integer userId) {
+	  float countJoy = mRepo.findIPEntryByAuthor(userId).stream()
+				.filter(x->x.getFeeling().toString()== "JOY")
+				.count();
+		float countHappy = mRepo.findIPEntryByAuthor(userId).stream()
+				.filter(x->x.getFeeling().toString()== "HAPPY")
+				.count();
+		float countPensive = mRepo.findIPEntryByAuthor(userId).stream()
+				.filter(x->x.getFeeling().toString()== "PENSIVE")
+				.count();
+		float countCry = mRepo.findIPEntryByAuthor(userId).stream()
+				.filter(x->x.getFeeling().toString()== "CRY")
+				.count();
+
+		ResultJson r = new ResultJson();
+		feelingList[0] = countJoy;
+		feelingList[1] = countHappy;
+		feelingList[2] = countPensive;
+		feelingList[3] = countCry;
+		
+		r.setFeeling(feelingList);
 		return r;
   }
     
