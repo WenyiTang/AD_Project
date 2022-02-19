@@ -8,12 +8,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.adproject.model.Role;
 import com.example.adproject.model.User;
+import com.example.adproject.repo.ReportRepo;
 import com.example.adproject.repo.RoleRepo;
 import com.example.adproject.repo.UserRepo;
 import com.example.adproject.service.UserService;
@@ -40,6 +43,9 @@ public class ManageUserController {
 	
 	@Autowired
 	private RoleRepo rRepo; 
+	
+	@Autowired
+	private ReportRepo rpRepo;
 
 	@GetMapping("/create-account")
 	public ModelAndView loadCreateAccountForm() {
@@ -156,13 +162,17 @@ public class ManageUserController {
 	}
 	
 	@GetMapping("/create-account-admin") 
-	public ModelAndView loadCreateAdminForm() {
+	public ModelAndView loadCreateAdminForm(Principal principal) {
+		
 		ModelAndView mav = new ModelAndView("create_account_admin", "user", new User() {}); 
+		User admin = uRepo.findByUsername(principal.getName());
+		Integer reportCount = rpRepo.findPendingNProgressReports(admin).size();
+		mav.addObject("reportCount", reportCount);
 		return mav; 
 	}
 	
 	@PostMapping("/create-account-admin")
-	public ModelAndView createNewAccount(@Valid @ModelAttribute("user") User user, BindingResult result) {
+	public ModelAndView createNewAccount(@Valid @ModelAttribute("user") User user, BindingResult result, Principal principal) {
 		
 		if (result.hasErrors()) {
 			ModelAndView mav_error = new ModelAndView(); 
@@ -188,9 +198,13 @@ public class ManageUserController {
 		User newUser = uService.save(user); 
 				
 		ModelAndView mav = new ModelAndView("create_account_admin", "user", new User() {}); 
-		String message = "Account creation successful. Please login.";
+		String message = "Account creation successful. You may log into the new admin account.";
 		mav.addObject("message", message);
 		mav.setViewName("create_account_admin");
+		
+		User admin = uRepo.findByUsername(principal.getName());
+		Integer reportCount = rpRepo.findPendingNProgressReports(admin).size();
+		mav.addObject("reportCount", reportCount);
 		return mav; 
 	}
 	

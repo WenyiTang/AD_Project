@@ -17,9 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -179,7 +177,9 @@ public class RequestApi {
 
     @GetMapping(value = "/foodImage/get",produces = MediaType.IMAGE_JPEG_VALUE,params = {"imagePath"})
     public @ResponseBody byte[] getInageWithMediaType(@RequestParam String imagePath) throws IOException{
-        InputStream in = getClass().getResourceAsStream(imagePath);
+//        InputStream in = getClass().getResourceAsStream(imagePath);
+
+        InputStream in = new BufferedInputStream(new FileInputStream(imagePath ));
         return IOUtils.toByteArray(in);
 
     }

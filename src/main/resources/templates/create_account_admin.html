@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+	<div th:replace="fragments/layout.html :: html_head"></div>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 	<title>Create New Account</title>
@@ -12,12 +13,13 @@
 </head>
 
 <body>
+	<div th:replace="fragments/layout.html::menu"/>
 	<div class="container-fluid text-center">
 		<h2>Create New Admin Account</h2>
 
 		<div th:if="${message != null}">
-			<p class="text-success" th:text="${message}">Account creation successful. Please login.</p>
-			<a th:href="@{/login}">>>Login with new credentials<<</a>
+			<p class="text-success" th:text="${message}">Account creation successful. You may log into the new admin account.</p>
+			<!--<a th:href="@{/login}">>>Login with new credentials<<</a>-->
 		</div>
 		<div th:if="${message_error != null}">
 			<p class="text-danger" th:text="${message_error}">Account creation failed. Please try again.</p>

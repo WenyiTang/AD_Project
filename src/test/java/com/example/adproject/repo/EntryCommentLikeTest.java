@@ -61,7 +61,7 @@ public class EntryCommentLikeTest {
 		goal1.setGoalDescription("Eat very healthy");
 		goal1.setTotalMealCount(12);
 		goal1.setTargetCount(3);
-		goal1.setStatus(StatusEnum.STARTED);
+		goal1.setStatus(StatusEnum.IN_PROGRESS);
 		goal1.setStartDate(LocalDate.now());
 		goal1.setEndDate(LocalDate.now().plusDays(2));
 		u1.getGoals().add(goal1);
@@ -81,7 +81,7 @@ public class EntryCommentLikeTest {
 		goal3.setGoalDescription("No sweet drinks");
 		goal3.setTotalMealCount(30);
 		goal3.setTargetCount(20);
-		goal3.setStatus(StatusEnum.STARTED);
+		goal3.setStatus(StatusEnum.IN_PROGRESS);
 		goal3.setStartDate(LocalDate.now());
 		goal3.setEndDate(LocalDate.now().plusDays(5));
 		u2.getGoals().add(goal3);

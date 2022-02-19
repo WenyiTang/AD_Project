@@ -25,7 +25,7 @@
 
     <div class = "list-item" th:each = "entry:${entries}">
         <a class= "pic-anchor" th:href="@{'/meals/view/mealDetail/' + ${entry.id}}">
-            <img class = "pic" th:src="@{'/blog/images/' + ${entry.imageURL}}" alt="">
+            <img class = "pic" th:src="@{'/upload/' + ${entry.filename}}" alt="">
         </a>
         <h2 class = "title" th:text = "${entry.title}" ></h2>
         <p class = "date" th:text = "${#temporals.format(entry.timeStamp,'d MMM yyyy, h:mm a')}"></p>
