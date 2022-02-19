@@ -5,7 +5,7 @@ $(document).ready(function() {
 		$("#friendsTbl").empty();
 		$.ajax({
 			method: 'GET',
-			url: "http://localhost:8080/api/friends/find",
+			url: "http://3.1.222.99:9999/api/friends/find",
 			data: {
 				username: $("#username").val(),
 				query: $("#query").val()
@@ -21,7 +21,7 @@ $(document).ready(function() {
 		$("#friendsTbl").empty();
 		$.ajax({
 			method: 'GET',
-			url: "http://localhost:8080/api/friends/find",
+			url: "http://3.1.222.99:9999/api/friends/find",
 			data: {
 				username: $("#username").val(),
 				query: $("#query").val()
@@ -38,7 +38,7 @@ $(document).ready(function() {
 function getAllFriends() {	
 	$.ajax({
 		method: 'GET', 
-		url: "http://localhost:8080/api/friends/all",
+		url: "http://3.1.222.99:9999/api/friends/all",
 		data: {
 			username: $("#username").val()
 		}, 
@@ -72,7 +72,7 @@ function getSearchResult(e) {
 	e.preventDefault();
 	$.ajax({
 		method: 'GET',
-		url: "http://localhost:8080/api/friends/find",
+		url: "http://3.1.222.99:9999/api/friends/find",
 		data: {
 			username: $("#username").val(),
 			query: $("#query").val()
