@@ -149,6 +149,31 @@ public class profileAPI {
 
 	    }
 	
+	// save personal profile without change photo
+	@RequestMapping(value = "/saveProfileWithoutPhoto",method = RequestMethod.POST)
+    public String saveProfileWithoutPhoto(@RequestParam String UserName,@RequestParam String Name, @RequestParam String dateOfBirth,
+                                       @RequestParam String Height, @RequestParam String Weight) {
+        System.out.println("data from client------VVVV");
+        System.out.println(UserName);
+
+        User user =uRepo.findByUsername(UserName);
+        user.setName(Name);
+        SimpleDateFormat strToDate = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+			Date dateofBirth = strToDate.parse(dateOfBirth);
+			LocalDate localDate=dateofBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			user.setDateOfBirth(localDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        user.setHeight(Double.valueOf(Height));
+        user.setWeight(Double.valueOf(Weight));
+        uRepo.saveAndFlush(user);
+        return "successful";
+	}
+        
+	
 	//end goal
 	@RequestMapping(value = "/endGoal",method = RequestMethod.POST)
     public String endTheGoal(@RequestParam String UserName,@RequestParam String goalId) {

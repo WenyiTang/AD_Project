@@ -7,5 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResultJson {
 	private float[] mealTrack = new float[2];
+	private float[] feeling = new float[4];
+
 
 }
