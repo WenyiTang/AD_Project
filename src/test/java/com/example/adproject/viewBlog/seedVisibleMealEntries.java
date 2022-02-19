@@ -42,7 +42,7 @@ public class seedVisibleMealEntries {
     @Autowired
     UserService uService;
 
-    private String mealImageDir = "/upload/";
+    private String mealImageDir = "upload/";
     private String[] mealImageFilenames = {"salad.png", "shakeshack.jpeg","kookeemian.jpeg","wantan_mee.jpeg","banmian.jpeg"};
     private String[] titles = {"Salad", "Shake Shack", "Noodles", "Wonton noodles", "Banmian"};
     private String lorem = "Lorem ipsum dolor sit amet consectetur " 
@@ -78,7 +78,7 @@ public class seedVisibleMealEntries {
         for(User author : users) {
           
             for(int i = 0; i < titles.length * 2; i++) {
-                String imageURL = mealImageDir + mealImageFilenames[i % titles.length];
+                String filename = mealImageDir + mealImageFilenames[i % titles.length];
                 boolean visibility = true;
                 String title = titles[i % titles.length];
                 String description = lorem;
@@ -86,7 +86,7 @@ public class seedVisibleMealEntries {
                 FeelingEnum feeling = FeelingEnum.JOY;
                 int trackScore = this.trackScore;
                 LocalDateTime timeStamp = today.minusDays(i);
-                entriesToInsert.add(new MealEntry(imageURL, visibility, title, description, flagged, feeling, trackScore, timeStamp, author));
+                entriesToInsert.add(new MealEntry( visibility, title, description, flagged, feeling, trackScore, timeStamp, author, filename));
 
 
             }
