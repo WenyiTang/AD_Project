@@ -60,7 +60,7 @@ public class RequestApi {
         goal.setTargetCount(Integer.valueOf(targetCount));
         goal.setStatus(StatusEnum.IN_PROGRESS);
         goal.setAuthor(user);
-
+        gRepo.saveAndFlush(goal);
         if (user != null){
             user.getGoals().add(goal);
             uRepo.saveAndFlush(user);
@@ -85,12 +85,11 @@ public class RequestApi {
                 }
 
             String goalStr = " ";
-            if (user.getGoals().size() > 0){
                 Goal goal = gRepo.findCurrentGoal(user.getId());
                 if (goal!= null){
                     goalStr = goal.getGoalDescription();
                 }
-            }
+            
 
             Map<String,Object> result = new HashMap<>();
             result.put("data",mealEntries);
