@@ -26,7 +26,7 @@ class BlogEntry extends React.Component {
     return (
     <div className = "list-item">
             <a className = "pic-anchor" href = {'/blog/view/entry/' + id}>
-              <img className = "pic" src = {this.props.blogEntry.imageURL}></img>
+              <img className = "pic" src = {'/'+this.props.blogEntry.imageURL}></img>
             </a>
             <div className = "title">
               <h2 >{this.props.blogEntry.title}</h2>
