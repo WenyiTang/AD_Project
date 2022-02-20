@@ -198,7 +198,7 @@ public class userController {
 		long countOffT = mRepo.findIPEntryByAuthor(userId).stream().filter(x -> x.getTrackScore() == 0).count();
 
 		long totalmeals = countOnT + countOffT;
-		if(totalmeals ==0){
+		if(currentgoal == null){
 			return "./goal/goal-progress";
 		}else
 		{

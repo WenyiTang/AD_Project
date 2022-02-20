@@ -1,3 +1,26 @@
+.noGoaldiv{
+	margin:0 auto;
+}
+
+.noGoaldiv th {
+	font-size: 28px;
+}
+.noGoaldiv a{
+	text-align: center;
+	display:block;
+}
+.noGoaldiv button{
+			background:rgb(0, 128, 192);
+           	color:white;
+           	margin:0 auto;
+           	border-radius:30px;
+           	border:1px solid white;
+           	text-align: center;
+           	font-size:26px;
+           	
+    		margin-top: 25px;
+}
+
 img{
 	border-radius:30px;
 	margin:0 auto;
