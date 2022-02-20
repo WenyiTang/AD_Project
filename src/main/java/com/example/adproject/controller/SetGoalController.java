@@ -35,15 +35,22 @@ public class SetGoalController {
 
     @PostMapping("/setgoal")
     public String addGoal(Principal principal, @ModelAttribute("goal") Goal goal){
-        //from session get User Id or UserName, generate the user_goals data
-
-//        String Username = session.getAttribute("username").toString();
-//        User user = uRepo.findByUsername("Ken");
         User user = uRepo.findByUsername(principal.getName());
         if (user != null){
+
+            if (user.getGoals().size() > 0){
+                Goal currentGoal = gRepo.findCurrentGoal(user.getId());
+                if (currentGoal != null){
+                    // current have goal in progress, show error message
+                    
+                    return "";
+                }
+
+            }
             user.getGoals().add(goal);
             uRepo.saveAndFlush(user);
         }
+
         return "redirect:/meals/pastmeals";
     }
 

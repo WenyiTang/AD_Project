@@ -1,41 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/layout.html :: html_head" >
   <meta charset="UTF-8">
   <title>Set Goal</title>
-  <style>
-    .styleSet{
-      width: 300px;
-      height: 200px;
-      border-radius: 18px;
-      border-color: cornflowerblue;
-      outline-color: rgba(0,0,0,0);
-    }
-
-    .submit{
-        width: 80px;
-        height: 25px;
-        background-color: cornflowerblue;
-        color: aliceblue;
-        outline-color: rgba(0,0,0,0);
-        border-color: cornflowerblue;
-    }
-  </style>
-<!--  <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
-<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--  <title>Set Goal</title>-->
-<!--  <link rel="stylesheet" href="/blog/styles/food_blog.css">-->
-<!--  <link rel="preconnect" href="https://fonts.googleapis.com">-->
-<!--  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
-<!--  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">-->
 </head>
 <body>
+  <div th:replace="fragments/layout.html::menu" />
 
-  <h2 style="color: cornflowerblue">What's your lifestyle goal?</h2>
+  <div class="container">
+  <div>
+      <h2 style="color: ghostwhite">What's your lifestyle goal?</h2>
+  </div>
 
+  <div>
   <form th:object="${goal}" th:action="@{/goal/setgoal}" method="post">
    <fieldset style="border-color: rgba(0,0,0,0)">
-     <input type="text" class="styleSet" th:field="*{goalDescription}">
+     <input type="text" style="width: 300px; height: 200px; border-radius: 18px;
+      border-color: cornflowerblue; outline-color: rgba(0,0,0,0);" th:field="*{goalDescription}">
    </fieldset>
 
       <fieldset style="border-color: rgba(0,0,0,0)">
@@ -51,11 +32,16 @@
       <br>
 
       <fieldset style="border-color: rgba(0,0,0,0)">
-          <input type="submit" value="SAVE" class="submit" />
+          <input style="width: 80px;
+        height: 25px;
+        background-color: cornflowerblue;
+        color: aliceblue;
+        outline-color: rgba(0,0,0,0);
+        border-color: cornflowerblue;" type="submit" value="SAVE" class="submit" />
       </fieldset>
-
-
   </form>
+  </div>
 
+  </div>
 </body>
 </html>
