@@ -44,9 +44,9 @@
 <!--        <script src="/js/setPublic.js"></script>-->
 
         <div>
-            <a th:href="@{'/meals/editmeal/' + ${entry.id}}">Edit Entry</a>
+            <a class="btn btn-primary" th:href="@{'/meals/editmeal/' + ${entry.id}}">Edit Entry</a>
 
-            <a th:href="@{'/meals/deleteMeal/' + ${entry.id}}">delete Entry</a>
+            <a class="btn btn-primary" th:href="@{'/meals/deleteMeal/' + ${entry.id}}">Delete Entry</a>
         </div>
 
 
