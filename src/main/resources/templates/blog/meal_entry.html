@@ -20,7 +20,7 @@
 
     <div class = "content-area">
         <div class = "details">
-            <img class = "pic" th:src="@{'~/'+${entry.filename}}" alt="">
+            <img class = "pic" th:src="@{'~/upload/'+${entry.filename}}" alt="">
             <h2 class = "title" th:text = "${entry.title}" ></h2>
             <p class = "date" th:text = "${#temporals.format(entry.timeStamp,'d MMM yyyy, h:mm a')}"></p>
             <p class = "description" th:text = "${entry.description}"></p>
