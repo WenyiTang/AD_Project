@@ -1,5 +1,10 @@
 package com.example.adproject.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.adproject.model.MealEntry;
+import com.example.adproject.model.User;
 import com.example.adproject.repo.MealEntryRepo;
 import com.example.adproject.repo.UserRepo;
 import com.example.adproject.service.MealEntryService;
@@ -7,7 +12,6 @@ import com.example.adproject.service.MealEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +51,23 @@ public class LikesAPI {
     }
     
 
-    
+    @GetMapping("/get")
+    public ArrayList<String> getLikes(@RequestParam Integer mealEntryId) {
+
+        MealEntry mealEntry = mRepo.findById(mealEntryId).get();
+        if(mealEntry == null) {
+            return null;
+        }
+        List<User> likers = mealEntry.getLikers();
+        ArrayList<String> likerUsernames = new ArrayList<>();
+
+        for(User liker : likers) {
+            likerUsernames.add(liker.getUsername());
+        }
+
+        return likerUsernames;
+
+        
+    }
     
 }
