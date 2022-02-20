@@ -17,7 +17,7 @@ let modalContent = document.querySelector(".modal-content");
 btn.onclick = function() {
 
     fetch(
-        "http://localhost:8080/api/likes/get?" +
+        "http://3.1.222.99:9999/api/likes/get?" +
         new URLSearchParams({
             mealEntryId: id,
         }), {
