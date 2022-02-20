@@ -13,14 +13,15 @@
    </head>
    <body>
       <div th:replace="fragments/layout.html::menu" />
-      <div th:if= "${#lists.isEmpty(goal)}">
-         <tr class="goal">
-            <th><span><b>Current goal:</b></span></th>
-            <th th:text="${currentGoal?.goalDescription}?: 'no goal set yet'">Description</th >
+      <div th:if= "${#lists.isEmpty(goal)}" class = "noGoaldiv">
+         <tr>
+            <th><span><h3 align="center">Current goal:</h3></span></th>
+            <th><h4 align="center">No goal set yet! Click the button to set a new goal!</h4></th >
+            <th><a th:href = "@{/goal/loadgoal}"><button type="button">Set a New Goal</button></a></th>
          </tr>
       </div>
       <div class = "container" th:unless="${#lists.isEmpty(goal)}">
-         <h3 style = "margin-top: 35px;" align="center">Current Goal OverView</h3>
+         <h2 align="center">Current Goal OverView</h2>
          <div class = "row" th:object="${goal}" method="get">
             <div class="col-6">
                <div style="position:absolute; width: 600px; height: 400px; top:40%;
@@ -86,9 +87,9 @@
             </div>
          </div>
          <div>
-            <h3>Recent Meals</h3>
+            <h3 align="center">Recent Meals</h3>
             <div >
-               <div style="float:left;width:80px; margin-left:180px;" th:each = "entry:${entries}">
+               <div style="float:left;width:80px; margin-left:180px;" th:each = "entry:${entries}" th:if="${entryStat.index} lt 8">
                   <a class= "pic-anchor">
             <img class = "pic" th:src="@{'/upload/' + ${entry.filename}}" alt="" width="200px" height= "150px"></a>
                   <p th:text = "${#temporals.format(entry.timeStamp,'yyyy-MM-dd')}"></p>

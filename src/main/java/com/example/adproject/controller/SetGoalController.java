@@ -1,5 +1,6 @@
 package com.example.adproject.controller;
 
+import com.example.adproject.helper.StatusEnum;
 import com.example.adproject.model.Goal;
 import com.example.adproject.model.User;
 import com.example.adproject.repo.GoalRepo;
@@ -35,15 +36,24 @@ public class SetGoalController {
 
     @PostMapping("/setgoal")
     public String addGoal(Principal principal, @ModelAttribute("goal") Goal goal){
-        //from session get User Id or UserName, generate the user_goals data
-
-//        String Username = session.getAttribute("username").toString();
-//        User user = uRepo.findByUsername("Ken");
         User user = uRepo.findByUsername(principal.getName());
         if (user != null){
+
+            if (user.getGoals().size() > 0){
+                Goal currentGoal = gRepo.findCurrentGoal(user.getId());
+                if (currentGoal != null){
+                    // current have goal in progress, show error message
+
+                    return "";
+                }
+
+            }
+            goal.setAuthor(user);
+            goal.setStatus(StatusEnum.IN_PROGRESS);
             user.getGoals().add(goal);
             uRepo.saveAndFlush(user);
         }
+
         return "redirect:/meals/pastmeals";
     }
 

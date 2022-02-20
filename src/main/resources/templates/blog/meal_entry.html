@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Entry</title>
     <link rel="stylesheet" href="/blog/styles/meal_entry.css">
+    <link rel="stylesheet" href="/blog/styles/modal.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -20,7 +21,7 @@
 
     <div class = "content-area">
         <div class = "details">
-            <img class = "pic" th:src="@{'~/'+${entry.filename}}" alt="">
+            <img class = "pic" th:src="@{'~/upload/'+${entry.filename}}" alt="">
             <h2 class = "title" th:text = "${entry.title}" ></h2>
             <p class = "date" th:text = "${#temporals.format(entry.timeStamp,'d MMM yyyy, h:mm a')}"></p>
             <p class = "description" th:text = "${entry.description}"></p>
@@ -33,6 +34,18 @@
                         th:attr="id = 'total-likes-mealentry-' + ${entry.id}, data-userId = ${activeUser.id}, data-mealEntryId = ${entry.id}">
                 </span> 
                 users
+
+                <button id = "myBtn">See likes</button>
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <!-- <span class="close">&times;</span>
+                    <p>Some text in the Modal..</p> -->
+                </div>
+  
+            </div>
             </p>
 
             <div class = "like-flag">
@@ -82,5 +95,6 @@
 
     </div>
     <script src = "/blog/javascript/toggle_like.js"></script>
+    <script src = "/blog/javascript/likes_popup.js"></script>
 </body>
 </html>

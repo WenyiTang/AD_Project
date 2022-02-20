@@ -42,7 +42,7 @@ public class seedVisibleMealEntries {
     @Autowired
     UserService uService;
 
-    private String mealImageDir = "upload/";
+    private String mealImageDir = "";
     private String[] mealImageFilenames = {"salad.png", "shakeshack.jpeg","kookeemian.jpeg","wantan_mee.jpeg","banmian.jpeg"};
     private String[] titles = {"Salad", "Shake Shack", "Noodles", "Wonton noodles", "Banmian"};
     private String lorem = "Lorem ipsum dolor sit amet consectetur " 

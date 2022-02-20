@@ -73,7 +73,7 @@ body {
     margin:2em;
     padding: 1em;
     border-bottom: 1px solid black;
-
+    grid-template-columns: 1fr 2fr 1fr;
     grid-template-areas: 
     "pic title likes"
     "pic date like-flag"
@@ -85,7 +85,8 @@ body {
 
 .pic-anchor{
     grid-area: pic;
-    margin-right:1em;
+    justify-self: right;
+    margin-right: 1rem;
 
 }
 
@@ -107,7 +108,7 @@ body {
 
 .title > h2{
     margin: 0;
-    margin-right:1em;
+    margin-right:1rem;
 }
 .date {
     grid-area: date;
