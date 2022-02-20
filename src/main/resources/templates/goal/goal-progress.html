@@ -88,7 +88,7 @@
          <div>
             <h3>Recent Meals</h3>
             <div >
-               <div style="float:left;width:80px; margin-left:180px;" th:each = "entry:${entries}">
+               <div style="float:left;width:80px; margin-left:180px;" th:each = "entry:${entries}" th:if="${entryStat.index} lt 8">
                   <a class= "pic-anchor">
             <img class = "pic" th:src="@{'/upload/' + ${entry.filename}}" alt="" width="200px" height= "150px"></a>
                   <p th:text = "${#temporals.format(entry.timeStamp,'yyyy-MM-dd')}"></p>

@@ -12,6 +12,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -201,7 +202,7 @@ public class userController {
 		String percentCount1 = String.format("%.1f", percentCount);
 
 		List<MealEntry> entries = mRepo.findVisibleMealEntryByAuthor(uService.findUserByUsername(principal.getName()));
-
+		Collections.reverse(entries);
 		model.addAttribute("entries", entries);
 		model.addAttribute("onTrack", countOnT);
 		model.addAttribute("offTrack", countOffT);
