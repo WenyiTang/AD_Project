@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -18,7 +19,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public UserDetailsService userDetailsService() {
 		return new UserDetailsServiceImpl(); 
 	}
-	
+
+	@Bean
+	public AccessDeniedHandler accessDeniedHandler() {
+		return new CustomAccessDeniedHandler();
+	}
+
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(); 
@@ -61,7 +68,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/login?logout")
 			.permitAll()
 			.and()
-			.exceptionHandling().accessDeniedPage("/403");
+			.exceptionHandling()
+				.accessDeniedPage("/403")
+				.accessDeniedHandler(accessDeniedHandler());
 			
 		//Disable csrf token requirement for MVP
 		// this allows for POST, PUT, DELETE requests to be sent from ajax/fetch API to 

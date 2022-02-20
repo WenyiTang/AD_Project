@@ -141,7 +141,7 @@ public class MealEntryController {
 	private String sendDataToFlaskWMA(int targetCount, List<Integer> trackScore) {
 		String responseString = null;
 		try {
-			URL flaskUrl = new URL("http://127.0.0.1:5000/suggestnextmeal");
+			URL flaskUrl = new URL("http://testdeploy4-env.eba-4ipwwsa4.us-east-1.elasticbeanstalk.com/suggestnextmeal");
 			HttpURLConnection httpURLConnection = (HttpURLConnection) flaskUrl.openConnection();
 			httpURLConnection.setConnectTimeout(10000);
 			httpURLConnection.setReadTimeout(10000);
