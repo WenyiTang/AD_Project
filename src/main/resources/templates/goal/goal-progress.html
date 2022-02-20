@@ -14,9 +14,10 @@
    <body>
       <div th:replace="fragments/layout.html::menu" />
       <div th:if= "${#lists.isEmpty(goal)}">
-         <tr class="goal">
+         <tr>
             <th><span><b>Current goal:</b></span></th>
             <th th:text="${currentGoal?.goalDescription}?: 'no goal set yet'">Description</th >
+            <a th:href = "@{/goal/loadgoal}"><button type="button">Set a New Goal</button></a>
          </tr>
       </div>
       <div class = "container" th:unless="${#lists.isEmpty(goal)}">

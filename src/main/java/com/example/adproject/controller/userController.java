@@ -198,18 +198,24 @@ public class userController {
 		long countOffT = mRepo.findIPEntryByAuthor(userId).stream().filter(x -> x.getTrackScore() == 0).count();
 
 		long totalmeals = countOnT + countOffT;
-		double percentCount = (countOnT * 100 / totalmeals);
-		String percentCount1 = String.format("%.1f", percentCount);
+		if(totalmeals ==0){
+			return "./goal/goal-progress";
+		}else
+		{
+			double percentCount = (countOnT * 100 / totalmeals);
+			String percentCount1 = String.format("%.1f", percentCount);
 
-		List<MealEntry> entries = mRepo.findVisibleMealEntryByAuthor(uService.findUserByUsername(principal.getName()));
-		Collections.reverse(entries);
-		model.addAttribute("entries", entries);
-		model.addAttribute("onTrack", countOnT);
-		model.addAttribute("offTrack", countOffT);
-		model.addAttribute("totalMeals", totalmeals);
-		model.addAttribute("percentCount", percentCount1);
-		model.addAttribute("goal", currentgoal);
-		return "./goal/goal-progress";
+			List<MealEntry> entries = mRepo.findVisibleMealEntryByAuthor(uService.findUserByUsername(principal.getName()));
+			Collections.reverse(entries);
+			model.addAttribute("entries", entries);
+			model.addAttribute("onTrack", countOnT);
+			model.addAttribute("offTrack", countOffT);
+			model.addAttribute("totalMeals", totalmeals);
+			model.addAttribute("percentCount", percentCount1);
+			model.addAttribute("goal", currentgoal);
+			return "./goal/goal-progress";
+		}
+		
 	}
 
 	// Save&Continue end of a goal
