@@ -193,8 +193,8 @@ public class userController {
 
 		Integer userId = uService.findUserByUsername(principal.getName()).getId();
 		Goal currentgoal = grepo.findCurrentGoal(userId);
-		long countOnT = mRepo.findEntryByAuthor(userId).stream().filter(x -> x.getTrackScore() == 1).count();
-		long countOffT = mRepo.findEntryByAuthor(userId).stream().filter(x -> x.getTrackScore() == 0).count();
+		long countOnT = mRepo.findIPEntryByAuthor(userId).stream().filter(x -> x.getTrackScore() == 1).count();
+		long countOffT = mRepo.findIPEntryByAuthor(userId).stream().filter(x -> x.getTrackScore() == 0).count();
 
 		long totalmeals = countOnT + countOffT;
 		double percentCount = (countOnT * 100 / totalmeals);
