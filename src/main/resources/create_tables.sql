@@ -45,7 +45,7 @@ create table goal
     end_date         date                                                      null,
     goal_description varchar(255)                                              null,
     start_date       date                                                      null,
-    status           enum ('STARTED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED') null,
+    status           enum ('IN_PROGRESS', 'COMPLETED', 'CANCELLED') null,
     target_count     int                                                       not null,
     total_meal_count int                                                       not null,
     author_user_id   int                                                       null,
