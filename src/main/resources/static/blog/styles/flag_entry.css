@@ -92,7 +92,7 @@ body {
 
 }
 .flag-area {
-    width: 100%;
+    width: min(100%,400px);
     margin:1em;
     justify-self: start;
 }

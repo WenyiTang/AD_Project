@@ -30,7 +30,7 @@ public class BlogEntry{
                             int numberOfLikes) {
 
         this.id = mealEntry.getId();
-        this.imageURL = mealEntry.getImageURL();
+        this.imageURL = mealEntry.getFilename();
         this.visibility = mealEntry.isVisibility();
         this.title = mealEntry.getTitle();
         this.description = mealEntry.getDescription();

@@ -56,6 +56,19 @@ public class ViewBlogController {
         return "./blog/food_blog";
     } 
 
+    @GetMapping("/view/self")
+    public String viewOwnBlog(Principal principal, Model model) {
+        String activeUsername = principal.getName();
+        User activeUser =uRepo.findByUsername(activeUsername);
+        if(activeUser == null){
+            return null;
+        }
+        Integer id = activeUser.getId();
+
+        return "redirect:/blog/view/" + id.toString();
+        
+    }
+
     @GetMapping("/view/entry/{id}")
     public String viewMealEntry(Principal principal, Model model, @PathVariable Integer id) {
         MealEntry entry = mRepo.findById(id).get();

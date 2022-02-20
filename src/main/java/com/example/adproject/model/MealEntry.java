@@ -106,6 +106,19 @@ public class MealEntry {
 		this.author = author;
 	}
 
+	public MealEntry( boolean visibility, String title, String description, boolean flagged,
+	FeelingEnum feeling, int trackScore, LocalDateTime timeStamp, User author, String filename) {
+			this.filename = filename;
+			this.visibility = visibility;
+			this.title = title;
+			this.description = description;
+			this.flagged = flagged;
+			this.feeling = feeling;
+			this.trackScore = trackScore;
+			this.timeStamp = timeStamp;
+			this.author = author;
+		}
+
 	@Override
 	public String toString() {
 		return "{" + " id='" + getId() + "'" + ", imageURL='" + getImageURL() + "'" + ", visibility='" + isVisibility()
