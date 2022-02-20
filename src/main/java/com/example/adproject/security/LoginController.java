@@ -1,23 +1,25 @@
 package com.example.adproject.security;
 
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.adproject.model.Goal;
 import com.example.adproject.model.MealEntry;
@@ -43,6 +45,12 @@ public class LoginController {
 	
 	@Autowired
 	ReportService rService;
+
+	@Autowired
+	OTPService otpService;
+
+	@Autowired
+	JavaMailSender mailSender;
 
 	@GetMapping("/")
 	public String viewHomePage(Model model, Principal principal) {
@@ -89,9 +97,10 @@ public class LoginController {
 		Set<Role> roles = loggedin.getRoles();
 		for (Role r : roles) {
 			if (r.getType().equalsIgnoreCase("ADMIN")) {
-				Integer reportCount = rService.findPendingNProgressReports(loggedin).size();
-				model.addAttribute("reportCount", reportCount);
-				return "redirect:/admin/pendingreports";
+//				Integer reportCount = rService.findPendingNProgressReports(loggedin).size();
+//				model.addAttribute("reportCount", reportCount);
+//				return "redirect:/admin/pendingreports";
+				return "redirect:/generateOTP";
 			}
 		}
 
@@ -117,4 +126,82 @@ public class LoginController {
 	    }
 	    return "redirect:/login?logout";
 	}
+
+	@GetMapping("/generateOTP")
+	public String generateOTP(HttpServletRequest request, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+
+		String otp = otpService.generateOTP(username).toString();
+		String user_email = uService.findUserByUsername(username).getEmail();
+
+		try {
+			sendEmail(user_email, otp);
+		} catch (UnsupportedEncodingException | MessagingException e) {
+			model.addAttribute("error", "Error while sending email");
+			System.out.println("Error while sending email");
+		}
+
+		return "otp_page";
+	}
+
+	@PostMapping("/validateOTP")
+	public String validateOtp(@RequestParam("otp") Integer otp, Model model, Principal principal) {
+		final String FAIL = "Verification code is invalid";
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+		User loggedin = uService.findUserByUsername(principal.getName());
+
+		if (otp >= 0) {
+			int serverOtp = otpService.getOtp(username);
+			if (serverOtp > 0) {
+				if (otp == serverOtp) {
+					otpService.clearOtp(username);
+					Integer reportCount = rService.findPendingNProgressReports(loggedin).size();
+					model.addAttribute("reportCount", reportCount);
+					return "redirect:/admin/pendingreports";
+				} else {
+					model.addAttribute("message", FAIL);
+					return "otp_page";
+				}
+			} else {
+				model.addAttribute("message", FAIL);
+				return "otp_page";
+			}
+		}
+		return "otp_page";
+	}
+
+	@RequestMapping("/redirect")
+	public String redirectLogin(HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null){
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		return "redirect:/login";
+	}
+
+	private void sendEmail(String user_email, String otp)
+			throws MessagingException, UnsupportedEncodingException {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+
+		helper.setFrom("contact@fooddiary.com", "Food Diary App Support");
+		helper.setTo(user_email);
+
+		String subject = "Food Diary App Verify Login ";
+
+		String content = "<p>Hi there,</p> "
+				+"<p>For authentication, please use the verification code below to login:</p>"
+				+ "<p style=\"font-size:20px;\"><b>" + otp + "</b></p>" + "<br>"
+				+ "<p>Please note OTP is only valid for 15 minutes</p>";
+
+		helper.setSubject(subject);
+
+		helper.setText(content, true);
+
+		mailSender.send(message);
+	}
+
 }

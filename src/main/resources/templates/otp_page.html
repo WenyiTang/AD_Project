@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Food Diary Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+</head>
+
+<body>
+<div class="container-fluid text-center">
+    <h2>2FA Login Verification</h2>
+
+    <div th:if="${error != null}">
+        <p class="text-danger">[[${error}]]</p>
+    </div>
+
+    <div th:if="${message != null}">
+        <p class="text-danger">[[${message}]]</p>
+        &nbsp;
+        <a th:href="@{/generateOTP}" class="text-warning">>>Resend verification code<<</a>
+    </div>
+    &nbsp
+    <form th:action="@{/validateOTP}" method="POST" style="max-width: 420px; margin: 0 auto;">
+        <div class="border border-secondary rounded p-3">
+            <div>
+                <p>Enter verification code sent to email:</p>
+            </div>
+            <div>
+                <p>
+                    <input type="text" name="otp" class="form-control" placeholder="Enter code" required
+                           autofocus />
+                </p>
+                <p class="text-center">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </p>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div th:if="${message != null}">
+        <a th:href="@{/redirect}" class="btn btn-secondary">Back to login</a>
+    </div>
+</div >
+</body>
+
+</html>
