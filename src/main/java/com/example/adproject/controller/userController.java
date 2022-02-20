@@ -12,6 +12,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -193,15 +194,15 @@ public class userController {
 
 		Integer userId = uService.findUserByUsername(principal.getName()).getId();
 		Goal currentgoal = grepo.findCurrentGoal(userId);
-		long countOnT = mRepo.findEntryByAuthor(userId).stream().filter(x -> x.getTrackScore() == 1).count();
-		long countOffT = mRepo.findEntryByAuthor(userId).stream().filter(x -> x.getTrackScore() == 0).count();
+		long countOnT = mRepo.findIPEntryByAuthor(userId).stream().filter(x -> x.getTrackScore() == 1).count();
+		long countOffT = mRepo.findIPEntryByAuthor(userId).stream().filter(x -> x.getTrackScore() == 0).count();
 
 		long totalmeals = countOnT + countOffT;
 		double percentCount = (countOnT * 100 / totalmeals);
 		String percentCount1 = String.format("%.1f", percentCount);
 
 		List<MealEntry> entries = mRepo.findVisibleMealEntryByAuthor(uService.findUserByUsername(principal.getName()));
-
+		Collections.reverse(entries);
 		model.addAttribute("entries", entries);
 		model.addAttribute("onTrack", countOnT);
 		model.addAttribute("offTrack", countOffT);

@@ -80,11 +80,11 @@ public class profileAPI {
 		List<String> strList = new ArrayList<String>();
 		User user =uRepo.findByUsername(UserName);
 		int userid = user.getId();
-		long countOnt = mRepo.findEntryByAuthor(userid).stream()
+		long countOnt = mRepo.findIPEntryByAuthor(userid).stream()
 				.filter(x->x.getTrackScore()==1)
 				.count();
 		String countOnT = String.valueOf(countOnt);
-		long countOfft = mRepo.findEntryByAuthor(userid).stream()
+		long countOfft = mRepo.findIPEntryByAuthor(userid).stream()
 				.filter(x->x.getTrackScore() == 0)
 				.count();
 		String countOffT = String.valueOf(countOfft);
