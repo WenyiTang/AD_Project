@@ -2,14 +2,11 @@ package com.example.adproject.api;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Set;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.adproject.helper.BlogEntry;
 import com.example.adproject.helper.EntriesDataTable;
 import com.example.adproject.helper.RecResultJson;
 import com.example.adproject.helper.SearchResult;
@@ -43,32 +39,11 @@ public class RecommenderAPI {
 
 	@Autowired
 	MealEntryService mService;
-	
-	@RequestMapping(value = "/postStringData/{uid}/{input}/{feeling}/{track}", method = {RequestMethod.POST, RequestMethod.GET})
-	public RecResultJson postQuery(@PathVariable("uid") Integer userId, @PathVariable("input") String input,
-			@PathVariable("feeling") String feeling, @PathVariable("track") String track) {
-		String url = "http://localhost:5000/enterquery/" 
-			+ userId + "/" + input + "/" + feeling + "/" + track;
-		RestTemplate restTemplate = new RestTemplate();
-		SearchResult results = new SearchResult();
-		results = restTemplate.getForObject(url, SearchResult.class);
-		
-		MealEntry[] resultArray = new MealEntry[] {
-				mService.findMealEntryById(results.getRes0()),
-				mService.findMealEntryById(results.getRes1()),
-				mService.findMealEntryById(results.getRes2()),
-				mService.findMealEntryById(results.getRes3()),
-				mService.findMealEntryById(results.getRes4()),
-		};
-		
-		RecResultJson r = new RecResultJson(resultArray, results.getGoodResult());
-		
-		return r;
-	}
 
 	//pass mealEntryTable to Flask
-	@RequestMapping(value = "/passData/{uid}", method = {RequestMethod.POST, RequestMethod.GET})
-	public EntriesDataTable passDataToFlask(@PathVariable("uid") String userId) {
+	@RequestMapping(value = "/passData/{uid}/{input}/{feeling}/{track}", method = {RequestMethod.POST, RequestMethod.GET})
+	public RecResultJson passDataToFlask(@PathVariable("uid") String userId, @PathVariable("input") String input,
+			@PathVariable("feeling") String feeling, @PathVariable("track") String track) {
 		User user = uService.findUser(Integer.parseInt(userId));
 		List<MealEntry> entries = mService.findMealEntryByUser(user);
 		//In future to implement include friend's posts
@@ -89,12 +64,19 @@ public class RecommenderAPI {
 			feelings.add(m.getFeeling().toString());
 			track_scores.add(m.getTrackScore());
 		}
-		data.setId(ids.toArray(new Integer[size]));
-		data.setTitle(titles.toArray(new String[size]));
-		data.setDescription(descriptions.toArray(new String[size]));
-		data.setFeeling(feelings.toArray(new String[size]));
-		data.setTrack_score(track_scores.toArray(new Integer[size]));
-		return data;
+		
+		data.setId(ids);
+		data.setTitle(titles);
+		data.setDescription(descriptions);
+		data.setFeeling(feelings);
+		data.setTrack_score(track_scores);
+
+		data.setInput(input);
+		data.setFeel(feeling);
+		data.setTrack(track);
+		
+		RecResultJson r = sendData(data);
+		return r;
 	}
 	
 	@RequestMapping(value = "/getEntryCount/{uid}", method = RequestMethod.GET)
@@ -110,5 +92,24 @@ public class RecommenderAPI {
 		File file = new File(path);
 		byte[] fileContent = Files.readAllBytes(file.toPath());
 		return fileContent;
+	}
+	
+	private RecResultJson sendData(EntriesDataTable data) {
+		
+		String url = "http://testdeploy4-env.eba-4ipwwsa4.us-east-1.elasticbeanstalk.com/getData";
+		RestTemplate restTemplate = new RestTemplate();
+		SearchResult results = new SearchResult();
+		results = restTemplate.postForObject(url, data, SearchResult.class);
+		
+		MealEntry[] resultArray = new MealEntry[] {
+				mService.findMealEntryById(results.getRes0()),
+				mService.findMealEntryById(results.getRes1()),
+				mService.findMealEntryById(results.getRes2()),
+				mService.findMealEntryById(results.getRes3()),
+				mService.findMealEntryById(results.getRes4()),
+		};
+		
+		RecResultJson r = new RecResultJson(resultArray, results.getGoodResult());
+		return r;
 	}
 }
