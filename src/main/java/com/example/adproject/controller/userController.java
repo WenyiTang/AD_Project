@@ -202,18 +202,34 @@ public class userController {
 			return "./goal/goal-progress";
 		}else
 		{
-			double percentCount = (countOnT * 100 / totalmeals);
-			String percentCount1 = String.format("%.1f", percentCount);
+			if(totalmeals ==0) {
+				String percentCount1 = "0.0";
 
-			List<MealEntry> entries = mRepo.findVisibleMealEntryByAuthor(uService.findUserByUsername(principal.getName()));
-			Collections.reverse(entries);
-			model.addAttribute("entries", entries);
-			model.addAttribute("onTrack", countOnT);
-			model.addAttribute("offTrack", countOffT);
-			model.addAttribute("totalMeals", totalmeals);
-			model.addAttribute("percentCount", percentCount1);
-			model.addAttribute("goal", currentgoal);
-			return "./goal/goal-progress";
+				List<MealEntry> entries = mRepo.findVisibleMealEntryByAuthor(uService.findUserByUsername(principal.getName()));
+				Collections.reverse(entries);
+				model.addAttribute("entries", entries);
+				model.addAttribute("onTrack", countOnT);
+				model.addAttribute("offTrack", countOffT);
+				model.addAttribute("totalMeals", totalmeals);
+				model.addAttribute("percentCount", percentCount1);
+				model.addAttribute("goal", currentgoal);
+				return "./goal/goal-progress";
+			}
+			else {
+				double percentCount = (countOnT * 100 / totalmeals);
+				String percentCount1 = String.format("%.1f", percentCount);
+
+				List<MealEntry> entries = mRepo.findVisibleMealEntryByAuthor(uService.findUserByUsername(principal.getName()));
+				Collections.reverse(entries);
+				model.addAttribute("entries", entries);
+				model.addAttribute("onTrack", countOnT);
+				model.addAttribute("offTrack", countOffT);
+				model.addAttribute("totalMeals", totalmeals);
+				model.addAttribute("percentCount", percentCount1);
+				model.addAttribute("goal", currentgoal);
+				return "./goal/goal-progress";
+			}
+		
 		}
 		
 	}
