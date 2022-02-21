@@ -111,14 +111,6 @@ public class User {
 			inverseJoinColumns = @JoinColumn(name = "role_id")
 			)
 	private Set<Role> roles = new HashSet<>();
-	
-	/* Test of using enum for role differentiation for Spring Security */
-//	@Column(name="role", columnDefinition = "ENUM('USER', 'ADMIN')")
-//	@Enumerated(EnumType.STRING)
-//	private RoleEnum role; 
-	
-//	@OneToOne
-//	private Session session;
 
 	public User(Integer id, String username, String password, String name, String gender, LocalDate dateOfBirth,
 			double height, double weight, String profilePic) {
