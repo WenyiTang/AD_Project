@@ -56,8 +56,7 @@ public class profileAPI {
 
 			User user =uRepo.findByUsername(UserName);
         	Goal currentgoal = gRepo.findCurrentGoal(user.getId());
-//        	String currentGoal1 =currentgoal.getGoalDescription();
-//        	return currentGoal1;
+        
         	return currentgoal;
         
     }
@@ -89,12 +88,21 @@ public class profileAPI {
 				.count();
 		String countOffT = String.valueOf(countOfft);
 		long totalmeals = countOnt + countOfft;
-		double percentCount = (countOnt*100/totalmeals) ;
-		String percentCount1 = String.format("%.1f",percentCount);
-		strList.add(countOnT);
-		strList.add(countOffT);
-		strList.add(percentCount1);
-		return strList;
+		if(totalmeals ==0) {
+			String percentCount1 = "0.0";
+			strList.add(countOnT);
+			strList.add(countOffT);
+			strList.add(percentCount1);
+			return strList;}
+		else {
+			double percentCount = (countOnt*100/totalmeals) ;
+			String percentCount1 = String.format("%.1f",percentCount);
+			strList.add(countOnT);
+			strList.add(countOffT);
+			strList.add(percentCount1);
+			return strList;
+		}
+		
 	}
 	
 	@RequestMapping(value = "/saveProfile",method = RequestMethod.POST)
