@@ -45,23 +45,29 @@ public class RequestApi {
     @RequestMapping(value = "/setGoal",method = RequestMethod.POST)
     public ResultJson generateUserGoal(@RequestParam String UserName, @RequestParam String goalDescription,
                                        @RequestParam String totalMealCount, @RequestParam String targetCount) {
-        // write your code ....
-        System.out.println("data from client------VVVV");
-        System.out.println(UserName);
-
 
         User user = uRepo.findByUsername(UserName);
-
         Goal goal = new Goal();
         goal.setGoalDescription(goalDescription);
         goal.setTotalMealCount(Integer.valueOf(totalMealCount));
         goal.setTargetCount(Integer.valueOf(targetCount));
         goal.setStatus(StatusEnum.IN_PROGRESS);
         goal.setAuthor(user);
-        gRepo.saveAndFlush(goal);
         if (user != null){
+
+            if (user.getGoals().size() > 0){
+                Goal currentGoal = gRepo.findCurrentGoal(user.getId());
+                if (currentGoal != null){
+                    // current have goal in progress, show error message
+
+                    return new ResultJson(300,"current already have goal in progress");
+                }
+            }
+
+            gRepo.saveAndFlush(goal);
             user.getGoals().add(goal);
             uRepo.saveAndFlush(user);
+
         }else {
             return ResultJson.error("User does not exist");
         }
@@ -82,7 +88,7 @@ public class RequestApi {
                         mealEntry.isVisibility(),mealEntry.getTitle(),mealEntry.getDescription(),mealEntry.getTrackScore(),mealEntry.getTimeStamp()));
                 }
 
-            String goalStr = " ";
+            String goalStr = "";
                 Goal goal = gRepo.findCurrentGoal(user.getId());
                 if (goal!= null){
                     goalStr = goal.getGoalDescription();
@@ -115,7 +121,7 @@ public class RequestApi {
 
             return goalStr;
         }else {
-            return " ";
+            return "";
         }
     }
 
