@@ -10,7 +10,7 @@ $(document).ready(function() {
         document.getElementById("req_display").innerHTML = "Sent Requests";
         $.ajax({
             method: 'GET',
-            url: "http://3.1.222.99:9999/api/friends/requests",
+            url: "http://localhost:8080/api/friends/requests",
             data: {
                 username: $("#username").val(),
                 sent: "true"
@@ -31,7 +31,7 @@ $(document).ready(function() {
         document.getElementById("req_display").innerHTML = "Received Requests";
         $.ajax({
             method: 'GET',
-            url: "http://3.1.222.99:9999/api/friends/requests",
+            url: "http://localhost:8080/api/friends/requests",
             data: {
                 username: $("#username").val(),
                 sent: "false"
@@ -71,7 +71,7 @@ function buildTable_sent(data) {
             $("#yes_btn").on('click', function (e) {
                 $.ajax({
                     method: 'GET',
-                    url: "http://3.1.222.99:9999/api/friends/request/process",
+                    url: "http://localhost:8080/api/friends/request/process",
                     data: {
                         username: username_this,
                         sender: $("#delete_req" + user.userId).val(),
@@ -117,7 +117,7 @@ function buildTable_received(data) {
             $("#yes_btn").on('click', function (e) {
                 $.ajax({
                     method: 'GET',
-                    url: "http://3.1.222.99:9999/api/friends/request/process",
+                    url: "http://localhost:8080/api/friends/request/process",
                     data: {
                         username: username_this,
                         sender: $("#accept_req" + user.userId).val(),
@@ -141,7 +141,7 @@ function buildTable_received(data) {
             $("#yes_btn").on('click', function (e) {
                 $.ajax({
                     method: 'GET',
-                    url: "http://3.1.222.99:9999/api/friends/request/process",
+                    url: "http://localhost:8080/api/friends/request/process",
                     data: {
                         username: username_this,
                         sender: $("#reject_req" + user.userId).val(),

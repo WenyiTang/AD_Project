@@ -10,7 +10,7 @@ class Feed extends React.Component {
     // i.e. it runs when the page is first loaded I think
     componentDidMount() {
         fetch (
-            "http://3.1.222.99:9999/api/blogentry/page?" +
+            "http://localhost:8080/api/blogentry/page?" +
             new URLSearchParams({
                 activeUserId: this.state.activeUserId,
                 pageNo: this.state.pageNo,
@@ -36,7 +36,7 @@ class Feed extends React.Component {
         );
 
         fetch (
-            "http://3.1.222.99:9999/api/blogentry/page?" +
+            "http://localhost:8080/api/blogentry/page?" +
             new URLSearchParams({
                 activeUserId: this.state.activeUserId,
                 pageNo: this.state.pageNo,
@@ -57,7 +57,7 @@ class Feed extends React.Component {
     likeEntry = (id,liked) => {
         if(liked) {
             fetch(
-                "http://3.1.222.99:9999/api/likes/unlike?" +
+                "http://localhost:8080/api/likes/unlike?" +
                   new URLSearchParams({
                       userId: this.state.activeUserId,
                       mealEntryId: id,
@@ -82,7 +82,7 @@ class Feed extends React.Component {
         }
         else {
             fetch(
-                "http://3.1.222.99:9999/api/likes/like?" +
+                "http://localhost:8080/api/likes/like?" +
                   new URLSearchParams({
                     userId: this.state.activeUserId,
                     mealEntryId: id,

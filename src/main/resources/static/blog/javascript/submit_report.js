@@ -40,7 +40,7 @@ function submitReport() {
     let mealEntryId = flagForm.getAttribute("data-mealEntryId");
 
     fetch (
-        "http://3.1.222.99:9999/api/report/submit?" +
+        "http://localhost:8080/api/report/submit?" +
         new URLSearchParams({
             userId: userId,
             mealEntryId: mealEntryId,
@@ -53,7 +53,7 @@ function submitReport() {
         }
     ).then(
         report => {
-            window.location.href = "http://3.1.222.99:9999/blog/view/entry/" + mealEntryId;
+            window.location.href = "http://localhost:8080/blog/view/entry/" + mealEntryId;
 
             // to view Report persisted to database, uncomment line below
             // console.log(report.json());

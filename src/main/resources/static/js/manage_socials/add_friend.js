@@ -5,7 +5,7 @@ $(document).ready(function() {
         $("#usersTbl").empty();
         $.ajax({
             method: 'GET',
-            url: "http://3.1.222.99:9999/api/friends/find_users",
+            url: "http://localhost:8080/api/friends/find_users",
             data: {
                 username: $("#username").val(),
                 query: $("#query").val()

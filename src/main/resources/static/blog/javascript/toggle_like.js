@@ -30,7 +30,7 @@ function toggleLike(id) {
   // if entry is not liked by user
   if (imgSrc == "/blog/images/thumb-logo-no-fill.svg") {
     fetch(
-      "http://3.1.222.99:9999/api/likes/like?" +
+      "http://localhost:8080/api/likes/like?" +
         new URLSearchParams({
           userId: userId,
           mealEntryId: mealEntryId,
@@ -58,7 +58,7 @@ function toggleLike(id) {
   // if entry is liked by user
   else {
     fetch(
-      "http://3.1.222.99:9999/api/likes/unlike?" +
+      "http://localhost:8080/api/likes/unlike?" +
         new URLSearchParams({
             userId: userId,
             mealEntryId: mealEntryId,
