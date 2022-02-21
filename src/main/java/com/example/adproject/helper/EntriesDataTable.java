@@ -1,5 +1,7 @@
 package com.example.adproject.helper;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,9 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EntriesDataTable {
 
-	private Integer[] id;
-	private String[] title;
-	private String[] description;
-	private String[] feeling;
-	private Integer[] track_score;
+	private List<Integer> id;
+	private List<String> title;
+	private List<String> description;
+	private List<String> feeling;
+	private List<Integer> track_score;
+	private String input;
+	private String feel;
+	private String track;
 }
