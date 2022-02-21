@@ -24,11 +24,11 @@
          <h2 align="center">Current Goal OverView</h2>
          <div class = "row" th:object="${goal}" method="get">
             <div class="col-6">
-               <div style="position:absolute; width: 600px; height: 400px; top:40%;
+               <div style="position:relative; width: 600px; height: 400px; top:40%;
                   left:40%;
-                  margin:-200px 0 0 -300px;">
+                  margin:-100px 0 0 -200px;">
                   <img class="img2" th:src="@{/images/cutweight.jpg}" width="450px" height= "250px" alt=""/>
-                  <span style="position: absolute; top: 80px; left: 50px;font-size:32px;font-weight:bold;" th:text="${goal.goalDescription}">Current Goal</span>
+                  <span style="position: relative;font-size:32px;font-weight:bold; margin:-100px 0 0 -400px;" th:text="${goal.goalDescription}">Current Goal</span>
                	  <div class="goalDetail">
                	  <p>
 					<span th:text="#{fieldLabel.TargetCountAndTotalCount}"></span>
